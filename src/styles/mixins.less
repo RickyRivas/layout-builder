@@ -1,0 +1,336 @@
+// font-mixins
+.th() {
+    font-weight: 100;
+}
+
+.xlt() {
+    font-weight: 200;
+}
+
+.lt() {
+    font-weight: 300;
+}
+
+.roman() {
+    font-weight: 400;
+}
+
+.mbold() {
+    font-weight: 500;
+}
+
+.sbold() {
+    font-weight: 600;
+}
+
+.bold() {
+    font-weight: 700;
+}
+
+.xbold() {
+    font-weight: 800;
+}
+
+.ubold() {
+    font-weight: 900;
+}
+
+.black() {
+    font-weight: 900;
+}
+
+.italic() {
+    font-style: italic;
+}
+
+.upp() {
+    text-transform: uppercase;
+}
+
+.loww() {
+    text-transform: lowercase;
+}
+
+.noo() {
+    text-transform: none;
+}
+
+.normal() {
+    font-style: normal;
+}
+
+//word and paragraph mixins
+.ls(@spacing) {
+    letter-spacing: @spacing;
+}
+
+.lh(@val) {
+    line-height: @val;
+}
+
+.fs(@val) {
+    font-size: @val;
+}
+
+.aligncenter() {
+    text-align: center;
+}
+
+.alignright() {
+    text-align: right;
+}
+
+.alignleft() {
+    text-align: left;
+}
+
+.justify() {
+    text-align: justify;
+}
+
+// helper mixins
+.clear() {
+    clear: both;
+}
+
+.clearright() {
+    clear: right;
+}
+
+.clearleft() {
+    clear: left;
+}
+
+.wall() {
+    width: 100%
+}
+
+//width all
+.hall() {
+    height: 100%;
+}
+
+//height all
+.auto() {
+    width: auto;
+}
+
+.autoy() {
+    height: auto;
+}
+
+//y-axis
+.autox() {
+    width: auto;
+    height: auto;
+}
+
+//x and y axis
+.zerox() {
+    width: 0;
+    height: 0;
+}
+
+.line() {
+    width: 100%;
+    height: 1px;
+}
+
+.show() {
+    display: block;
+}
+
+.hide() {
+    display: none;
+}
+
+//display properties
+.inline() {
+    display: inline;
+}
+
+.inline-block() {
+    display: inline-block;
+}
+
+.ib() {
+    display: inline-block;
+}
+
+.va(@args) {
+    vertical-align: @args;
+}
+
+//flex properties
+.flex() {
+    display: flex;
+}
+
+.if() {
+    display: inline-flex;
+}
+
+.inline-flex() {
+    display: inline-flex;
+}
+
+.fdir(@args) {
+    flex-direction: @args;
+}
+
+//flex-direction
+.jc(@args) {
+    justify-content: @args;
+}
+
+//justify-content
+.ai(@args) {
+    align-items: @args;
+}
+
+//align-items
+
+.left() {
+    float: left;
+}
+
+.right() {
+    float: right;
+}
+
+.nofloat() {
+    float: none;
+}
+
+.behave() {
+    display: block;
+    float: left;
+}
+
+.center() {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.rounded(@radius) {
+    border-radius: @radius;
+}
+
+.round() {
+    border-radius: 50%;
+}
+
+.bc(@color) {
+    background-color: @color;
+}
+
+.vertical-align() {
+    position: absolute;
+    top: 50%;
+    transform: translate3d(0, -50%, 0);
+}
+
+.overlay() {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.inlay() {
+    width: auto;
+    height: auto;
+    display: block;
+    position: absolute;
+}
+
+// use with .trbl
+.trbl(@val) {
+    top: @val;
+    right: @val;
+    bottom: @val;
+    left: @val;
+}
+
+.grey() {
+    -webkit-filter: grayscale(1);
+    filter: grayscale(100%);
+}
+
+.gray() {
+    -webkit-filter: grayscale(1);
+    filter: grayscale(100%);
+}
+
+//==================
+//functional mixins
+//==================
+
+//centered flyouts 
+.droplocation(@dropdowncentered) when (@dropdowncentered =true) {
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.droplocation(@dropdowncentered) when (@dropdowncentered =false) {
+    left: @dropdownoffset / -20em;
+}
+
+//text-align for centered flyouts
+.droptextalign(@dropdowncentered) when (@dropdowncentered =true) {
+    text-align: center;
+}
+
+.droptextalign(@dropdowncentered) when (@dropdowncentered =false) {
+    text-align: left;
+}
+
+//centered flyout for last flyout
+.droplocationlast(@dropdowncentered) when (@dropdowncentered =false) {
+    left: auto;
+    right: @dropdownoffset / -20em;
+}
+
+//text-align for centered  last flyout
+.droptextalignlast(@dropdowncentered) when (@dropdowncentered =true) {
+    text-align: center;
+}
+
+.droptextalignlast(@dropdowncentered) when (@dropdowncentered =false) {
+    text-align: right;
+}
+
+
+//tertiary-nav side orientation
+.tertside(@tertside) when (@tertside =right) {
+    left: 100%;
+}
+
+.tertside(@tertside) when (@tertside =left) {
+    left: auto;
+    right: 100%;
+}
+
+//ul width conditional mixin
+.ulcond(left) {
+    width: auto;
+}
+
+.ulcond(right) {
+    width: auto;
+}
+
+.ulcond(none) {
+    width: 100%;
+}
+
+//ul ul li a padding conditional mixin
+.ululliacond(@a) when (@a =0) {
+    padding: 0 ((@dropdownlinkheight/@secondary)*1em);
+}
+
+.ululliacond(@a) when (@a > 0) {
+    padding: 0 ((@dropdownoffset/@secondary)*1em);
+}
