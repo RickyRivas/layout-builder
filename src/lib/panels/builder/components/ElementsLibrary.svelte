@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { iframeState, selectElement } from '../../routes/shared.svelte';
+	import { iframeState, selectElement } from '$lib/shared.svelte';
 	type element = {
 		icon: string;
 		type: string;
@@ -32,12 +32,15 @@
 	}
 </script>
 
-{#each elements as element}
-	<button
-		onclick={() => {
-			addElementToFrame(element);
-		}}
-	>
-		{element.type}
-	</button>
-{/each}
+<div id="elements-library">
+	<h2>Add Elements</h2>
+	{#each elements as element}
+		<button
+			onclick={() => {
+				addElementToFrame(element);
+			}}
+		>
+			{element.type}
+		</button>
+	{/each}
+</div>

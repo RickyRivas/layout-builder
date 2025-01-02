@@ -1,7 +1,7 @@
 <script>
 	import { findDefaultPropertyValue } from '$lib/helpers';
 	import { positionValues, offsetProperties } from '$lib/properties';
-	import { iframeState, updateIframeStylesheet } from '../../routes/shared.svelte';
+	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
 
 	let selectedPositionValue = $state();
 

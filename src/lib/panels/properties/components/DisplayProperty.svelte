@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { findDefaultPropertyValue } from '$lib/helpers';
-	import { iframeState, updateIframeStylesheet } from '../../routes/shared.svelte';
+	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
 	import { displayValues } from '$lib/properties';
 
 	let selectedDisplayValue = $state();

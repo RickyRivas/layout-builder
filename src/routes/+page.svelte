@@ -1,9 +1,10 @@
 <script>
-	import PropertiesPanel from '$lib/components/PropertiesPanel.svelte';
-	import BuilderPanel from '$lib/components/BuilderPanel.svelte';
+	import PropertiesPanel from '$lib/panels/properties/PropertiesPanel.svelte';
+	import BuilderPanel from '$lib/panels/builder/BuilderPanel.svelte';
+	import GhostSelector from '$lib/GhostSelector.svelte';
+
+	import { iframeState, initIframe } from '$lib/shared.svelte';
 	import { onMount } from 'svelte';
-	import { iframeState, initIframe } from './shared.svelte';
-	import GhostSelector from '$lib/components/GhostSelector.svelte';
 
 	let iframeElement;
 

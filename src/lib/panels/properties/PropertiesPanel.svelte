@@ -1,7 +1,7 @@
 <script>
-	import DisplayProperty from '$lib/propertyComponents/DisplayProperty.svelte';
-	import ElementIdentifier from '$lib/propertyComponents/ElementIdentifiers.svelte';
-	import PositionProperty from '$lib/propertyComponents/PositionProperty.svelte';
+	import DisplayProperty from '$lib/panels/properties/components/DisplayProperty.svelte';
+	import ElementIdentifier from '$lib/panels/properties/components/ElementIdentifiers.svelte';
+	import PositionProperty from '$lib/panels/properties/components/PositionProperty.svelte';
 </script>
 
 <aside id="properties-panel">

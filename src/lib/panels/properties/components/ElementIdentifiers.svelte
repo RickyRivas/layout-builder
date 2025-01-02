@@ -1,5 +1,5 @@
 <script>
-	import { iframeState } from '../../routes/shared.svelte';
+	import { iframeState } from '$lib/shared.svelte';
 	let currentId = $state('');
 	let currentClasses = $state('');
 
