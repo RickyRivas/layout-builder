@@ -1,10 +1,10 @@
 <script>
 	import { findDefaultPropertyValue } from '$lib/helpers';
+	import { positionValues, offsetProperties } from '$lib/properties';
 	import { iframeState, updateIframeStylesheet } from '../../routes/shared.svelte';
-	const positionValues = ['static', 'relative', 'absolute', 'fixed', 'sticky'];
+
 	let selectedPositionValue = $state();
 
-	const offsetProperties = ['top', 'right', 'bottom', 'left', 'zIndex'];
 	let offsetValues = $state({
 		top: '',
 		right: '',
@@ -33,8 +33,6 @@
 		updateIframeStylesheet(iframeState.selected, property, value);
 		offsetValues[property] = value;
 	}
-
-	$inspect(selectedPositionValue);
 </script>
 
 <h3>Position</h3>

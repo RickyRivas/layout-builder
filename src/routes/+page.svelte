@@ -1,9 +1,9 @@
 <script>
-	import PropertiesSidebar from '$lib/components/PropertiesSidebar.svelte';
-	import PanelSidebar from '$lib/components/PanelSidebar.svelte';
+	import PropertiesPanel from '$lib/components/PropertiesPanel.svelte';
+	import BuilderPanel from '$lib/components/BuilderPanel.svelte';
 	import { onMount } from 'svelte';
 	import { iframeState, initIframe } from './shared.svelte';
-	import { getSelector } from '$lib/helpers';
+	import GhostSelector from '$lib/components/GhostSelector.svelte';
 
 	let iframeElement;
 
@@ -14,15 +14,10 @@
 </script>
 
 <section id="main-view">
-	<PanelSidebar />
+	<BuilderPanel />
 	<div class="iframe-container">
-		{#if iframeState.selected}
-			<p>Selected: {getSelector(iframeState.selected)}</p>
-		{/if}
-		{#if iframeState.updating}
-			<span>Updating...</span>
-		{/if}
+		<GhostSelector />
 		<iframe id="preview" bind:this={iframeElement} title="preview" />
 	</div>
-	<PropertiesSidebar />
+	<PropertiesPanel />
 </section>

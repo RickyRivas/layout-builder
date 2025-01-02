@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { findDefaultPropertyValue } from '$lib/helpers';
 	import { iframeState, updateIframeStylesheet } from '../../routes/shared.svelte';
+	import { displayValues } from '$lib/properties';
 
-	const displayValues = ['block', 'inline-block', 'flex', 'inline-flex', 'grid', 'inline-grid'];
 	let selectedDisplayValue = $state();
 
 	// watch for when an element is selected or created
