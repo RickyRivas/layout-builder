@@ -25,8 +25,6 @@
 			treeNodes = buildTreefromBody();
 		}
 	});
-
-	$inspect(treeNodes);
 </script>
 
 <h2>Hierarchy Tree</h2>

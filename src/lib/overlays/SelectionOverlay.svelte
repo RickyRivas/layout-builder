@@ -1,7 +1,6 @@
 <script>
 	import { iframeState } from '$lib/shared.svelte';
 
-	let resizeObserver;
 	let overlay = $state({
 		top: 0,
 		left: 0,
@@ -10,8 +9,8 @@
 		visible: false
 	});
 
-	function updatePosition(element) {
-		const rect = element.getBoundingClientRect();
+	function updatePosition() {
+		const rect = iframeState.selected.getBoundingClientRect();
 		overlay = {
 			top: rect.top,
 			left: rect.left,
@@ -22,24 +21,12 @@
 	}
 
 	$effect(() => {
-		if (iframeState.selected && iframeState.document) {
-			// initial position
-			updatePosition(iframeState.selected);
-
-			// cleanup prev observer
-			if (resizeObserver) resizeObserver.disconnect();
-
-			// setup new observer
-			resizeObserver = new ResizeObserver((entries) => {
-				for (const entry of entries) {
-					updatePosition(entry.target);
-				}
-			});
-
-			resizeObserver.observe(iframeState.selected);
-		} else {
-			overlay.visible = false;
-			if (resizeObserver) resizeObserver.disconnect();
+		if (iframeState.selected) {
+			updatePosition();
+			window.addEventListener('update-selection-overlay', updatePosition);
+			return () => {
+				window.removeEventListener('update-selection-overlay', updatePosition);
+			};
 		}
 	});
 </script>

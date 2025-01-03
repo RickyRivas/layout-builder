@@ -1,10 +1,14 @@
 export function getSelector(element) {
-    let selector = '';
-    if (element.id) selector += `#${element.id}`;
-    if (element.classList.length > 0) {
-        selector += `.${element.classList.value.replaceAll(' ', '.')}`;
+    let selector = element.tagName.toLowerCase()
+
+    if (element.id) {
+        return `${selector}#${element.id}`
     }
-    if (!selector) return `${element.tagName.toLowerCase()}`;
+
+    if (element.classList.length > 0) {
+        selector += `.${Array.from(element.classList).join('.')}`
+    }
+
     return selector;
 }
 

@@ -13,8 +13,11 @@
 	$effect(() => {
 		if (!iframeState.selected) return;
 
-		// ids
-		iframeState.selected.id = currentId;
+		if (currentId.trim()) {
+			iframeState.selected.id = currentId.trim();
+		} else {
+			iframeState.selected.removeAttribute('id');
+		}
 
 		// classes
 		const oldClasses = iframeState.selected.className.split(' ');

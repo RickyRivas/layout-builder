@@ -3,23 +3,23 @@
 	type element = {
 		icon: string;
 		type: string;
-		textContent: string;
+		textContent?: string | null;
+		isContainer?: boolean | null;
+		allowedChildren?: string[];
 	};
 
-	const containerElements = [
+	const elements: element[] = [
 		{
-			type: 'section',
 			icon: '/',
+			type: 'section',
 			isContainer: true,
 			allowedChildren: ['h1', 'h2', 'h3', 'p', 'button', 'div']
-		}
-	];
-
-	const childElements: element[] = [
+		},
 		{
 			icon: '',
 			type: 'button',
-			textContent: 'A new button'
+			textContent: 'A new button',
+			allowedChildren: ['span']
 		},
 		{
 			icon: '',
@@ -35,15 +35,28 @@
 			icon: '',
 			type: 'h3',
 			textContent: 'Heading 3'
+		},
+		{
+			icon: '',
+			type: 'div',
+			textContent: '',
+			allowedChildren: ['h1', 'h2', 'h3', 'p', 'button', 'div']
+		},
+		{
+			icon: '',
+			type: 'p',
+			textContent:
+				'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga quibusdam doloribus, consequatur explicabo asperiores ad corporis itaque exercitationem enim adipisci soluta dolor, eius maxime tenetur beatae laudantium id saepe suscipit.'
 		}
 	];
 
 	function addElementToFrame(element: element) {
-		// create
+		// create new element
 		const newElement = document.createElement(element.type);
 		if (element.textContent) newElement.textContent = element.textContent;
 
 		// if no exisiting elements, must add a container element
+		// TODO: automatically add a container element.
 		if (iframeState.document.body.children.length === 0) {
 			if (!element.isContainer) {
 				alert('Please add a section first.');
@@ -52,21 +65,37 @@
 
 			iframeState.document.body.appendChild(newElement);
 		} else {
-			// check parent child relationship of already selected element
-			if (iframeState.selected) {
-				const parentElement = element.isContainer
-					? iframeState.selected.closest('header, section, footer')
-					: iframeState.selected;
+			// check if selected element allows this type of child
+			const selectedTag = iframeState.selected.tagName.toLowerCase();
+			const selectedTemplate = elements.find((e) => e.type === selectedTag);
 
-				if (!parentElement) {
-					alert('please add a parent container.');
+			// can be added as child of selected element
+			if (selectedTemplate?.allowedChildren?.includes(element.type)) {
+				iframeState.selected.appendChild(newElement);
+			} else {
+				// find nearest valid container
+				const validParents = elements
+					.filter((e) => e.allowedChildren?.includes(element.type))
+					.map((e) => e.type);
+
+				const targetContainer = iframeState.selected.closest(validParents.join(','));
+
+				if (!targetContainer) {
+					alert(
+						`${element.type} cannot be added here. Valid parents are ${validParents.join(', ')}`
+					);
 					return;
 				}
 
-				parentElement.appendChild(newElement);
-			} else {
-				alert('please select where to add an element');
-				return;
+				// added after selected element if in same container
+				if (iframeState.selected !== targetContainer) {
+					iframeState.selected.parentNode.insertBefore(
+						newElement,
+						iframeState.selected.nextSibling
+					);
+				} else {
+					targetContainer.appendChild(newElement);
+				}
 			}
 		}
 
@@ -76,19 +105,7 @@
 
 <div id="elements-library">
 	<h2>Add Elements</h2>
-	<h3>Containers</h3>
-	{#each containerElements as element}
-		<button
-			onclick={() => {
-				addElementToFrame(element);
-			}}
-		>
-			{element.type}
-		</button>
-	{/each}
-
-	<h3>Child Elements</h3>
-	{#each childElements as element}
+	{#each elements as element}
 		<button
 			onclick={() => {
 				addElementToFrame(element);

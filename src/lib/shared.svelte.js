@@ -52,8 +52,15 @@ export function updateIframeStylesheet(selected, property, value) {
     }
 
     iframeState.updating = false
+
+    // update position of GhostSelector
+    updateGhostPosition()
 }
 
+export function updateGhostPosition() {
+    const event = new CustomEvent('update-selection-overlay')
+    window.dispatchEvent(event)
+}
 
 export function initIframe(iframe) {
     iframe.addEventListener('load', () => {
