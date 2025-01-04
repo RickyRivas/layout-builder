@@ -5,14 +5,15 @@
 </script>
 
 <aside id="properties-panel">
+	<!-- -->
 	<h2>Selector</h2>
-	<div id="accordion">
-		<div class="accordion-item">
-			<ElementIdentifier />
-		</div>
+	<div class="accordion-block">
+		<ElementIdentifier />
 	</div>
-	<h2>All Properties</h2>
-	<div id="accordion">
+
+	<!-- -->
+	<h2>Style Properties</h2>
+	<div class="accordion-block">
 		<div class="accordion-item">
 			<DisplayProperty />
 		</div>

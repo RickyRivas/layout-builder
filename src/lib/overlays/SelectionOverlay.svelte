@@ -38,14 +38,41 @@
 	style:width={overlay.width + 'px'}
 	style:height={overlay.height + 'px'}
 	style:opacity={overlay.visible ? 1 : 0}
-></div>
+>
+	<span></span><span></span><span></span><span></span>
+</div>
 
-<style>
+<style lang="less">
 	.ghost-selector {
 		display: block;
 		position: absolute;
 		border: 2px solid #0099ff;
 		pointer-events: none;
 		z-index: 1;
+
+		span {
+			position: absolute;
+			width: 15px;
+			height: 15px;
+			background-color: #fff;
+			border: 2px solid #0099ff;
+			border-radius: 50%;
+			&:nth-child(1) {
+				top: -7.5px;
+				left: -7.5px;
+			}
+			&:nth-child(2) {
+				top: -7.5px;
+				right: -7.5px;
+			}
+			&:nth-child(3) {
+				bottom: -7.5px;
+				left: -7.5px;
+			}
+			&:nth-child(4) {
+				bottom: -7.5px;
+				right: -7.5px;
+			}
+		}
 	}
 </style>
