@@ -1,4 +1,4 @@
-import { getSelector } from "$lib/helpers"
+import { getSelector, findMatchingElements, handleMultipleMatches, updateStyleRule } from "$lib/helpers"
 export const iframeState = $state({
     document: null,
     stylesheet: null,
@@ -23,39 +23,26 @@ export function selectElement(target) {
 export function updateIframeStylesheet(selected, property, value) {
     iframeState.updating = true
 
-    let selector = getSelector(selected);
-    let hasIdentifier = selected.classList.length > 0 || selected.id;
-    const matchingElements = iframeState.document.querySelectorAll(
-        hasIdentifier ? selector : `${ selector }:not([id]):not([class])`
-    );
+    try {
+        const selector = getSelector(selected);
 
-    if (matchingElements.length > 1) {
-        const applyToAll = prompt(`Apply to all ${ selected.tagName }'s?`);
+        // find matching elements
+        const matchingElements = findMatchingElements(selected, selector)
 
-        if (!applyToAll) {
-            const newClassName = `${ selected.tagName.toLowerCase() }-${ matchingElements.length }`;
-            selected.classList.add(newClassName);
-            selector = '.' + newClassName;
-        }
+        // handle mutiple matches
+        const finalSelector = handleMultipleMatches(selected, matchingElements)
+
+        // update or create style rule
+        updateStyleRule(finalSelector, property, value)
+
+        // update overlay position
+        updateGhostPosition()
+
+    } finally {
+        iframeState.updating = false
     }
-
-    // update
-    const rules = iframeState.stylesheet.cssRules;
-    const ruleExistForElement = Array.from(rules).find((rule) => rule.selectorText === selector);
-
-    if (ruleExistForElement) {
-        // update
-        ruleExistForElement.style[ property ] = value;
-    } else {
-        // insert
-        iframeState.stylesheet.insertRule(`${ selector } { ${ property }: ${ value }; }`, rules.length);
-    }
-
-    iframeState.updating = false
-
-    // update position of GhostSelector
-    updateGhostPosition()
 }
+
 
 export function updateGhostPosition() {
     const event = new CustomEvent('update-selection-overlay')
