@@ -5,6 +5,7 @@
 
 	import { iframeState, initIframe } from '$lib/shared.svelte';
 	import { onMount } from 'svelte';
+	import HoverOverlay from '$lib/overlays/HoverOverlay.svelte';
 
 	let iframeElement;
 
@@ -18,6 +19,7 @@
 	<BuilderPanel />
 	<div class="iframe-container">
 		<SelectionOverlay />
+		<HoverOverlay />
 		<iframe id="preview" bind:this={iframeElement} title="preview" />
 	</div>
 	<PropertiesPanel />

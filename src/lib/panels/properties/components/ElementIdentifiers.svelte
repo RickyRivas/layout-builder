@@ -20,6 +20,9 @@
 	function updateId(newId) {
 		if (!iframeState.selected) return;
 
+		// reactive
+		iframeState.updating = true;
+
 		// get old selector before updating id
 		const oldSelector = getSelector(iframeState.selected);
 
@@ -44,10 +47,14 @@
 		});
 
 		currentId = newId;
+
+		iframeState.updating = false;
 	}
 
 	function updateClasses(newClasses) {
 		if (!iframeState.selected) return;
+
+		iframeState.updating = true;
 
 		// get old selector before updating class
 		const oldSelector = getSelector(iframeState.selected);
@@ -70,6 +77,8 @@
 		});
 
 		currentClasses = newClasses;
+
+		iframeState.updating = false;
 	}
 </script>
 

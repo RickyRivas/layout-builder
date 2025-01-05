@@ -25,6 +25,13 @@
 			treeNodes = buildTreefromBody();
 		}
 	});
+
+	// watch for identifier updates
+	$effect(() => {
+		if (iframeState.document && !iframeState.updating) {
+			treeNodes = buildTreefromBody();
+		}
+	});
 </script>
 
 <h2>Hierarchy Tree</h2>

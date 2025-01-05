@@ -46,9 +46,10 @@
 	.ghost-selector {
 		display: block;
 		position: absolute;
-		border: 2px solid #0099ff;
+		outline: 2px solid #0099ff;
 		pointer-events: none;
-		z-index: 1;
+		z-index: 2;
+		outline-offset: -1px;
 
 		span {
 			position: absolute;
@@ -57,6 +58,7 @@
 			background-color: #fff;
 			border: 2px solid #0099ff;
 			border-radius: 50%;
+
 			&:nth-child(1) {
 				top: -7.5px;
 				left: -7.5px;
