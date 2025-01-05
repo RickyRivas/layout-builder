@@ -44,8 +44,6 @@
 			iframeState.document.body.removeEventListener('mouseout', handleMouseOut);
 		};
 	});
-
-	$inspect(hoveredElementSelector);
 </script>
 
 <div
@@ -88,14 +86,14 @@
 		display: block;
 		position: absolute;
 		bottom: calc(100% + 0px);
-		background-color: #fff;
 		left: 0;
-		border: 2px solid #00cea8;
+		background-color: #00cea8;
 		font-size: 12px;
 		line-height: 14px;
 		text-transform: uppercase;
 		font-weight: bold;
 		padding: 0 5px;
 		white-space: nowrap;
+		color: #000;
 	}
 </style>

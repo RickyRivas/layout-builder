@@ -1,5 +1,6 @@
 <script>
-	import { iframeState, selectElement } from '$lib/shared.svelte';
+	import { getSelector } from '$lib/helpers';
+	import { iframeState, selectElement, updateGhostPosition } from '$lib/shared.svelte';
 	import TreeNode from './TreeNode.svelte';
 
 	let treeNodes = $state([]);
@@ -18,6 +19,34 @@
 		}
 
 		return Array.from(iframeState.document.body.children).map((child) => createNodeData(child));
+	}
+
+	function removeElement(element) {
+		// // if this element is selected, select parent
+		if (element === iframeState.selected) {
+			selectElement(element.parentElement);
+		}
+
+		// Get element's selector before removal
+		const selector = getSelector(element);
+
+		// Remove matching style rules
+		const rules = Array.from(iframeState.stylesheet.cssRules);
+		for (let i = rules.length - 1; i >= 0; i--) {
+			const rule = rules[i];
+			if (rule instanceof CSSStyleRule && rule.selectorText === selector) {
+				iframeState.stylesheet.deleteRule(i);
+			}
+		}
+
+		// remove
+		element.remove();
+
+		// indicator
+		updateGhostPosition();
+
+		// rebuild
+		treeNodes = buildTreefromBody();
 	}
 
 	$effect(() => {
@@ -40,7 +69,7 @@
 {#if treeNodes.length > 0}
 	<ul>
 		{#each treeNodes as node}
-			<TreeNode {node} onclick={() => {}} />
+			<TreeNode {node} {onclick} {removeElement} />
 		{/each}
 	</ul>
 {/if}
