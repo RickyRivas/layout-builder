@@ -1,4 +1,4 @@
-import { getSelector, findMatchingElements, handleMultipleMatches, updateStyleRule } from "$lib/helpers"
+import { getSelector, findMatchingElements, handleMultipleMatches, updateStyleRule, getFullSelector } from "$lib/helpers"
 export const iframeState = $state({
     document: null,
     stylesheet: null,
@@ -26,9 +26,9 @@ export function findDefaultPropertyValue(element, property, allowedValues) {
 
 export function updateIframeStylesheet(selected, property, value) {
     iframeState.updating = true
-    console.log('updateIframeStylesheet', selected, property, value)
     try {
-        const selector = getSelector(selected);
+        const selector = getFullSelector(selected);
+        console.log('updateIframeStylesheet', selector)
 
         // find matching elements
         const matchingElements = findMatchingElements(selected, selector)

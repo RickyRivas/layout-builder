@@ -25,15 +25,44 @@ export function getSelector(element) {
     return selector;
 }
 
+export function getFullSelector(element) {
+    let parts = []
+    let current = element
+
+    // build path from element up to body
+    while (current && current !== iframeState.document.body) {
+        let part = ''
+
+        // if element has ID or classes, dont include tag name
+        if (current.id) {
+            part = `#${element.id}`
+        } else if (current.classList.length) {
+            part = `.${Array.from(current.classList).join('.')}`
+        } else {
+            // only use tag name if no identifiers exist
+            part = current.tagName.toLowerCase()
+        }
+
+        parts.unshift(part);
+        current = current.parentElement
+    }
+
+    return parts.join(' ')
+}
 
 export function updateStyleRule(selector, property, value) {
     const rules = Array.from(iframeState.stylesheet.cssRules)
-    const existingRule = rules.find(rule => rule.selectorText === selector)
+    const existingRule = rules.find(rule => {
+        // compare using the full selector path
+        const fullSelector = getFullSelector(iframeState.selected)
+        return rule.selectorText === fullSelector
+    })
 
     if (existingRule) {
         existingRule.style[property] = value
     } else {
-        const ruleText = `${selector} { ${property} : ${value}; }`
+        const fullSelector = getFullSelector(iframeState.selected);
+        const ruleText = `${fullSelector} { ${property} : ${value}; }`
         iframeState.stylesheet.insertRule(ruleText, rules.length)
     }
 }
@@ -47,7 +76,7 @@ export function findMatchingElements(element, selector) {
 
 
 export function handleMultipleMatches(element, matches) {
-    if (matches.length <= 1) return getSelector(element)
+    if (matches.length <= 1) return getFullSelector(element)
 
     // automatically create new classname
     const newClassName = generateReadableClassName(element)
@@ -59,9 +88,42 @@ export function generateReadableClassName(element) {
     const parent = element.parentElement
     if (!parent) return `${element.tagName.toLowerCase()}-1`
 
+    // get the full parent path for this element
+    let parentPath = '';
+    let current = parent
+
+    while (current && current !== iframeState.document.body) {
+        let part = current.tagName.toLowerCase()
+        if (current.id) {
+            part = `#${current.id}`;
+        } else if (current.classList.length) {
+            part = `.${Array.from(current.classList).join('.')}`
+        }
+        parentPath = part + ' ' + parentPath
+        current = current.parentElement
+    }
+
+    // find elements that share the same parent path
     const similarElements = Array
         .from(parent.children)
-        .filter(child => child.tagName === element.tagName)
+        .filter(child => {
+            if (child.tagName !== element.tagName) return false
+
+            // check if this element has the same parent path
+            let childPath = '';
+            let currentParent = child.parentElement;
+            while (currentParent && currentParent !== iframeState.document.body) {
+                let part = currentParent.tagName.toLowerCase()
+                if (currentParent.id) {
+                    part = `#${currentParent.id}`;
+                } else if (currentParent.classList.length) {
+                    part = `.${Array.from(currentParent.classList).join('.')}`
+                }
+                childPath = part + ' ' + childPath
+                currentParent = currentParent.parentElement
+            }
+            return childPath === parentPath
+        })
 
 
     // get the index of element in this container
