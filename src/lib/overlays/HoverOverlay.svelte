@@ -1,5 +1,5 @@
 <script>
-	import { getSelector } from '$lib/helpers';
+	import { getFullSelector } from '$lib/helpers';
 	import { iframeState } from '$lib/shared.svelte';
 
 	let hoveredElementSelector = $state();
@@ -28,7 +28,7 @@
 		function handleMouseOver(e) {
 			const target = e.target;
 			if (target === iframeState.selected) return;
-			hoveredElementSelector = getSelector(target);
+			hoveredElementSelector = getFullSelector(target);
 			updatePosition(target);
 		}
 		function handleMouseOut() {

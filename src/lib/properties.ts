@@ -10,6 +10,7 @@ export const flexDirectionValues = ['row', 'row-reverse', 'column', 'column-reve
 export const justifyContentValues = ['normal', 'flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'];
 export const alignItemsValues = ['normal', 'flex-start', 'flex-end', 'center', 'stretch', 'baseline'];
 export const flexWrapValues = ['nowrap', 'wrap', 'wrap-reverse'];
+export const flexGapValues = ['20px', '40px', '60px', '80px'];
 
 // Grid properties
 export const gridTemplateColumnsPresets = [
@@ -17,4 +18,4 @@ export const gridTemplateColumnsPresets = [
     { label: '3 columns', value: 'repeat(3, 1fr)' },
     { label: '4 columns', value: 'repeat(4, 1fr)' }
 ];
-export const gridGapValues = ['0.5rem', '1rem', '1.5rem', '2rem'];
+export const gridGapValues = ['20px', '40px', '60px', '80px'];

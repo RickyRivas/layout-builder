@@ -35,7 +35,7 @@ export function getFullSelector(element) {
 
         // if element has ID or classes, dont include tag name
         if (current.id) {
-            part = `#${element.id}`
+            part = `#${current.id}`
         } else if (current.classList.length) {
             part = `.${Array.from(current.classList).join('.')}`
         } else {
@@ -71,17 +71,33 @@ export function findMatchingElements(element, selector) {
     const hasIdentifier = element.classList.length > 0 || element.id
     const querySelector = hasIdentifier ? selector : `${element.tagName.toLowerCase()}:not([id]):not([class])`
 
-    return Array.from(iframeState.document.querySelectorAll(querySelector))
+    const matches = Array.from(iframeState.document.querySelectorAll(querySelector))
+
+    // Filter matches to only include elements with same tag AND classes
+    return matches.filter(match =>
+        match.tagName === element.tagName &&
+        match.className === element.className
+    );
 }
 
 
 export function handleMultipleMatches(element, matches) {
     if (matches.length <= 1) return getFullSelector(element)
 
-    // automatically create new classname
+    // get matching elements that share both tag name and classes
+    const trueMatches = matches.filter(match =>
+        match.tagName === element.tagName && match.className === element.className
+    )
+
+    // if this is the only element of its exact type, no need for additional classes
+    if (trueMatches.length <= 1) {
+        return getFullSelector(element)
+    }
+
+    // otherwise, add the generated class
     const newClassName = generateReadableClassName(element)
     element.classList.add(newClassName)
-    return `${element.tagName.toLowerCase()}.${newClassName}`
+    return getFullSelector(element)
 }
 
 export function generateReadableClassName(element) {
@@ -129,4 +145,20 @@ export function generateReadableClassName(element) {
     // get the index of element in this container
     const index = similarElements.indexOf(element) + 1
     return `${element.tagName.toLowerCase()}-${index}`
+}
+
+
+export function generateUnformattedCss() {
+    if (!iframeState.stylesheet) return '';
+
+    const rules = Array.from(iframeState.stylesheet.cssRules);
+    let cssContent = '';
+
+    rules.forEach(rule => {
+        console.log(rule)
+        cssContent += `${rule.selectorText} { ${rule.style.cssText} }\n`;
+    });
+
+    console.log('generating', cssContent)
+    return cssContent;
 }

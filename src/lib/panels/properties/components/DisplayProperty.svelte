@@ -6,6 +6,7 @@
 		flexWrapValues,
 		alignItemsValues,
 		justifyContentValues,
+		flexGapValues,
 		gridGapValues,
 		gridTemplateColumnsPresets
 	} from '$lib/properties';
@@ -17,7 +18,8 @@
 		'flex-direction': '',
 		'justify-content': '',
 		'align-items': '',
-		'flex-wrap': ''
+		'flex-wrap': '',
+		gap: ''
 	});
 	let selectedGridProps = $state({
 		'grid-template-columns': '',
@@ -39,7 +41,8 @@
 				'flex-direction': '',
 				'justify-content': '',
 				'align-items': '',
-				'flex-wrap': ''
+				'flex-wrap': '',
+				gap: ''
 			};
 			selectedGridProps = {
 				'grid-template-columns': '',
@@ -180,6 +183,23 @@
 						bind:group={selectedFlexProps['flex-wrap']}
 					/>
 					<label for="display-flex-wrap-property-{value}">
+						{value}
+					</label>
+				{/each}
+			</div>
+
+			<!--  flex gap -->
+			<h3>Gap</h3>
+			<div class="chips-radio-group">
+				{#each flexGapValues as value}
+					<input
+						type="radio"
+						name="display-flex-gap-property"
+						id="display-flex-gap-property-{value}"
+						{value}
+						bind:group={selectedFlexProps['gap']}
+					/>
+					<label for="display-flex-gap-property-{value}">
 						{value}
 					</label>
 				{/each}

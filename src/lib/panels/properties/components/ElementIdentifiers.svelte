@@ -1,5 +1,5 @@
 <script>
-	import { getSelector } from '$lib/helpers';
+	import { getFullSelector, getSelector } from '$lib/helpers';
 	import { iframeState } from '$lib/shared.svelte';
 
 	let currentElement = $state();
@@ -16,6 +16,15 @@
 		}
 	});
 
+	// when outside func generates a class, update here
+	$effect(() => {
+		if (currentElement === iframeState.selected && !iframeState.updating) {
+			currentId = iframeState.selected.id;
+			currentClasses = iframeState.selected.className;
+			currentElement = iframeState.selected;
+		}
+	});
+
 	// when we update a class or id, update stylesheet too :)
 	function updateId(newId) {
 		if (!iframeState.selected) return;
@@ -23,8 +32,9 @@
 		// reactive
 		iframeState.updating = true;
 
-		// get old selector before updating id
-		const oldSelector = getSelector(iframeState.selected);
+		// get current path before making changes
+		const oldElement = iframeState.selected;
+		const oldPath = getFullSelector(oldElement);
 
 		// update
 		if (newId.trim()) {
@@ -33,13 +43,14 @@
 			iframeState.selected.removeAttribute('id');
 		}
 
-		// get new selector after ID update
-		const newSelector = getSelector(iframeState.selected);
+		// get new path after ID update
+		const newPath = getFullSelector(iframeState.selected);
 
-		// update stylesheet rules
+		// update all rules that reference this elements path
 		const rules = iframeState.stylesheet.cssRules;
 		Array.from(rules).forEach((rule, index) => {
-			if (rule && rule.selectorText === oldSelector) {
+			if (rule.selectorText.includes(oldPath)) {
+				const newSelector = rule.selectorText.replace(oldPath, newPath);
 				const styleText = rule.style.cssText;
 				iframeState.stylesheet.deleteRule(index);
 				iframeState.stylesheet.insertRule(`${newSelector} { ${styleText} }`, index);
@@ -56,20 +67,22 @@
 
 		iframeState.updating = true;
 
-		// get old selector before updating class
-		const oldSelector = getSelector(iframeState.selected);
+		// get current path before making changes
+		const oldElement = iframeState.selected;
+		const oldPath = getFullSelector(oldElement);
 
 		// update elements classes
 		const newClassArray = newClasses.trim();
 		iframeState.selected.className = newClassArray;
 
 		// get new selector before classes update
-		const newSelector = getSelector(iframeState.selected);
+		const newPath = getFullSelector(iframeState.selected);
 
 		// update any rules that used the old selector
 		const rules = Array.from(iframeState.stylesheet.cssRules);
 		rules.forEach((rule, index) => {
-			if (rule && rule.selectorText === oldSelector) {
+			if (rule && rule.selectorText.includes(oldPath)) {
+				const newSelector = rule.selectorText.replace(oldPath, newPath);
 				const styleText = rule.style.cssText;
 				iframeState.stylesheet.deleteRule(index);
 				iframeState.stylesheet.insertRule(`${newSelector} { ${styleText} }`, index);

@@ -28,7 +28,6 @@ export function updateIframeStylesheet(selected, property, value) {
     iframeState.updating = true
     try {
         const selector = getFullSelector(selected);
-        console.log('updateIframeStylesheet', selector)
 
         // find matching elements
         const matchingElements = findMatchingElements(selected, selector)
