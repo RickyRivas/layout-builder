@@ -1,8 +1,11 @@
 <script>
 	import PropertyGroup from '$lib/panels/properties/components/PropertyGroup.svelte';
-	import { findDefaultPropertyValue } from '$lib/helpers';
 	import { positionValues, offsetProperties } from '$lib/properties';
-	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
+	import {
+		iframeState,
+		updateIframeStylesheet,
+		findDefaultPropertyValue
+	} from '$lib/shared.svelte';
 
 	let selectedPositionValue = $state();
 	let offsetValues = $state({

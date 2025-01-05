@@ -25,11 +25,6 @@ export function getSelector(element) {
     return selector;
 }
 
-export function findDefaultPropertyValue(element, property, allValues) {
-    return allValues.find(
-        (value) => value === getComputedStyle(element)[property]
-    );
-}
 
 export function updateStyleRule(selector, property, value) {
     const rules = Array.from(iframeState.stylesheet.cssRules)
@@ -45,7 +40,7 @@ export function updateStyleRule(selector, property, value) {
 
 export function findMatchingElements(element, selector) {
     const hasIdentifier = element.classList.length > 0 || element.id
-    const querySelector = hasIdentifier ? selector : `${selector}:not([id]):not([class])`
+    const querySelector = hasIdentifier ? selector : `${element.tagName.toLowerCase()}:not([id]):not([class])`
 
     return Array.from(iframeState.document.querySelectorAll(querySelector))
 }
@@ -57,7 +52,7 @@ export function handleMultipleMatches(element, matches) {
     // automatically create new classname
     const newClassName = generateReadableClassName(element)
     element.classList.add(newClassName)
-    return `.${newClassName}`
+    return `${element.tagName.toLowerCase()}.${newClassName}`
 }
 
 export function generateReadableClassName(element) {

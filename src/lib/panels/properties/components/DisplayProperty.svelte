@@ -1,42 +1,109 @@
 <script lang="ts">
-	import { findDefaultPropertyValue } from '$lib/helpers';
 	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
-	import { displayValues } from '$lib/properties';
+	import {
+		displayValues,
+		flexDirectionValues,
+		flexWrapValues,
+		alignItemsValues,
+		justifyContentValues,
+		gridGapValues,
+		gridTemplateColumnsPresets
+	} from '$lib/properties';
 	import PropertyGroup from './PropertyGroup.svelte';
 
-	let selectedDisplayValue = $state();
+	let currentElement = $state('');
+	let selectedDisplayValue = $state('');
+	let selectedFlexProps = $state({
+		'flex-direction': '',
+		'justify-content': '',
+		'align-items': '',
+		'flex-wrap': ''
+	});
+	let selectedGridProps = $state({
+		'grid-template-columns': '',
+		gap: ''
+	});
 
-	function handlePropertyChange(value) {
-		if (!iframeState.selected) return;
-
-		selectedDisplayValue = value;
-		updateIframeStylesheet(iframeState.selected, 'display', value);
-	}
-
-	// watch for when an element is selected or created
 	$effect(() => {
 		if (!iframeState.selected) return;
 
-		const computedValue = findDefaultPropertyValue(iframeState.selected, 'display', displayValues);
+		// first time or new element selected
+		if (!currentElement || currentElement !== iframeState.selected) {
+			const computedStyle = getComputedStyle(iframeState.selected);
 
-		// only update if value has changed
-		if (computedValue !== selectedDisplayValue) {
-			selectedDisplayValue = computedValue;
+			// display
+			selectedDisplayValue = computedStyle['display'];
+
+			// reset
+			selectedFlexProps = {
+				'flex-direction': '',
+				'justify-content': '',
+				'align-items': '',
+				'flex-wrap': ''
+			};
+			selectedGridProps = {
+				'grid-template-columns': '',
+				gap: ''
+			};
+
+			// Update flex properties
+			Object.keys(selectedFlexProps).forEach((prop) => {
+				selectedFlexProps[prop] = computedStyle[prop];
+			});
+
+			// Update grid properties
+			Object.keys(selectedGridProps).forEach((prop) => {
+				selectedGridProps[prop] = computedStyle[prop];
+			});
+
+			currentElement = iframeState.selected;
+			return;
 		}
+
+		// if same element, check if display value has changed
+		const currentDisplayValue = getComputedStyle(iframeState.selected)['display'];
+		if (currentDisplayValue === selectedDisplayValue) return;
+
+		// update stylesheet
+		updateIframeStylesheet(iframeState.selected, 'display', selectedDisplayValue);
+	});
+
+	// Watch for flex property changes
+	$effect(() => {
+		if (!iframeState.selected || !selectedDisplayValue.includes('flex')) return;
+
+		Object.entries(selectedFlexProps).forEach(([property, value]) => {
+			const currentValue = getComputedStyle(iframeState.selected)[property];
+			if (value !== currentValue) {
+				updateIframeStylesheet(iframeState.selected, property, value);
+			}
+		});
+	});
+
+	// Watch for grid property changes
+	$effect(() => {
+		if (!iframeState.selected || !selectedDisplayValue.includes('grid')) return;
+
+		Object.entries(selectedGridProps).forEach(([property, value]) => {
+			const currentValue = getComputedStyle(iframeState.selected)[property];
+			if (value !== currentValue) {
+				updateIframeStylesheet(iframeState.selected, property, value);
+			}
+		});
 	});
 </script>
 
+<!-- Main Displays -->
 <PropertyGroup title="Display">
 	{#snippet propertyContent()}
 		<div class="chips-radio-group">
-			{#each displayValues as value, i}
+			{#each displayValues as value}
 				<input
 					type="radio"
 					name="display-property"
 					id="display-property-{value}"
 					{value}
-					checked={value === selectedDisplayValue}
-					onchange={() => handlePropertyChange(value)}
+					bind:group={selectedDisplayValue}
 				/>
 				<label for="display-property-{value}">
 					{value}
@@ -45,3 +112,113 @@
 		</div>
 	{/snippet}
 </PropertyGroup>
+
+<!-- flex -->
+{#if selectedDisplayValue.includes('flex')}
+	<PropertyGroup title="Flex Properties">
+		{#snippet propertyContent()}
+			<!-- Flex Direction -->
+			<h3>Direction</h3>
+			<div class="chips-radio-group">
+				{#each flexDirectionValues as value}
+					<input
+						type="radio"
+						name="display-flex-dir-property"
+						id="display-flex-dir-property-{value}"
+						{value}
+						bind:group={selectedFlexProps['flex-direction']}
+					/>
+					<label for="display-flex-dir-property-{value}">
+						{value}
+					</label>
+				{/each}
+			</div>
+
+			<!-- Justify Content -->
+			<h3>Justify Content</h3>
+			<div class="chips-radio-group">
+				{#each justifyContentValues as value}
+					<input
+						type="radio"
+						name="display-flex-jc-property"
+						id="display-flex-jc-property-{value}"
+						{value}
+						bind:group={selectedFlexProps['justify-content']}
+					/>
+					<label for="display-flex-jc-property-{value}">
+						{value}
+					</label>
+				{/each}
+			</div>
+
+			<!-- Align Items -->
+			<h3>Align Items</h3>
+			<div class="chips-radio-group">
+				{#each alignItemsValues as value}
+					<input
+						type="radio"
+						name="display-flex-ai-property"
+						id="display-flex-ai-property-{value}"
+						{value}
+						bind:group={selectedFlexProps['align-items']}
+					/>
+					<label for="display-flex-ai-property-{value}">
+						{value}
+					</label>
+				{/each}
+			</div>
+
+			<!--  flex wrap -->
+			<h3>Flex-wrap</h3>
+			<div class="chips-radio-group">
+				{#each flexWrapValues as value}
+					<input
+						type="radio"
+						name="display-flex-wrap-property"
+						id="display-flex-wrap-property-{value}"
+						{value}
+						bind:group={selectedFlexProps['flex-wrap']}
+					/>
+					<label for="display-flex-wrap-property-{value}">
+						{value}
+					</label>
+				{/each}
+			</div>
+		{/snippet}
+	</PropertyGroup>
+{/if}
+
+<!-- Grid Properties -->
+{#if selectedDisplayValue.includes('grid')}
+	<PropertyGroup title="Grid Properties">
+		{#snippet propertyContent()}
+			<h3>Template Columns</h3>
+			<div class="chips-radio-group">
+				{#each gridTemplateColumnsPresets as preset}
+					<input
+						type="radio"
+						name="grid-template-columns"
+						id="grid-template-columns-{preset.value}"
+						value={preset.value}
+						bind:group={selectedGridProps['grid-template-columns']}
+					/>
+					<label for="grid-template-columns-{preset.value}">{preset.label}</label>
+				{/each}
+			</div>
+
+			<h3>Gap</h3>
+			<div class="chips-radio-group">
+				{#each gridGapValues as value}
+					<input
+						type="radio"
+						name="grid-gap"
+						id="grid-gap-{value}"
+						{value}
+						bind:group={selectedGridProps['gap']}
+					/>
+					<label for="grid-gap-{value}">{value}</label>
+				{/each}
+			</div>
+		{/snippet}
+	</PropertyGroup>
+{/if}

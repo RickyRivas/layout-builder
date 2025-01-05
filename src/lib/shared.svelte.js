@@ -10,7 +10,6 @@ export const iframeState = $state({
 })
 
 export function selectElement(target) {
-    if (target.tagName === 'BODY') return
     // remove active dataset off currently selected
     const prevSelected = iframeState.document.querySelector(`[${ iframeState.selector }]`)
     if (prevSelected) prevSelected.removeAttribute(iframeState.selector)
@@ -20,9 +19,14 @@ export function selectElement(target) {
     iframeState.selected.setAttribute(iframeState.selector, true)
 }
 
+export function findDefaultPropertyValue(element, property, allowedValues) {
+    const computedValue = getComputedStyle(element)[ property ];
+    return allowedValues.find(value => value === computedValue) || allowedValues[ 0 ];
+}
+
 export function updateIframeStylesheet(selected, property, value) {
     iframeState.updating = true
-
+    console.log('updateIframeStylesheet', selected, property, value)
     try {
         const selector = getSelector(selected);
 
