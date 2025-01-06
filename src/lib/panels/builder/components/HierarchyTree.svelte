@@ -1,8 +1,7 @@
 <script>
-	import { getSelector } from '$lib/helpers';
+	import { getElementSelector, getParentPath, getSelectorForStyle } from '$lib/helpers';
 	import { iframeState, selectElement, updateGhostPosition } from '$lib/shared.svelte';
 	import TreeNode from './TreeNode.svelte';
-
 	let treeNodes = $state([]);
 
 	function buildTreefromBody() {
@@ -28,7 +27,7 @@
 		}
 
 		// Get element's selector before removal
-		const selector = getSelector(element);
+		const selector = getElementSelector(element);
 
 		// Remove matching style rules
 		const rules = Array.from(iframeState.stylesheet.cssRules);

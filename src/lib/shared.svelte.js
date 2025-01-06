@@ -1,4 +1,4 @@
-import { getSelector, findMatchingElements, handleMultipleMatches, updateStyleRule, getFullSelector } from "$lib/helpers"
+import { updateStyleRule } from "$lib/helpers"
 export const iframeState = $state({
     document: null,
     stylesheet: null,
@@ -24,23 +24,15 @@ export function findDefaultPropertyValue(element, property, allowedValues) {
     return allowedValues.find(value => value === computedValue) || allowedValues[ 0 ];
 }
 
-export function updateIframeStylesheet(selected, property, value) {
+export function updateIframeStylesheet(property, value) {
+    if (!iframeState.selected) return
     iframeState.updating = true
+
     try {
-        const selector = getFullSelector(selected);
-
-        // find matching elements
-        const matchingElements = findMatchingElements(selected, selector)
-
-        // handle mutiple matches
-        const finalSelector = handleMultipleMatches(selected, matchingElements)
-
         // update or create style rule
-        updateStyleRule(finalSelector, property, value)
-
+        updateStyleRule(property, value)
         // update overlay position
         updateGhostPosition()
-
     } finally {
         iframeState.updating = false
     }

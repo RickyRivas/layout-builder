@@ -1,100 +1,61 @@
 <script lang="ts">
+	import { containers, elements } from '$lib/element-config';
 	import { iframeState, selectElement } from '$lib/shared.svelte';
-	type element = {
-		icon: string;
+
+	type ElementConfig = {
 		type: string;
-		textContent?: string | null;
-		isContainer?: boolean | null;
+		defaultClass: string;
+		textContent?: string;
 		allowedChildren?: string[];
+		iconPath?: string;
 	};
 
-	const elements: element[] = [
-		{
-			icon: '/',
-			type: 'section',
-			isContainer: true,
-			allowedChildren: ['h1', 'h2', 'h3', 'p', 'button', 'div']
-		},
-		{
-			icon: '',
-			type: 'button',
-			textContent: 'A new button',
-			allowedChildren: ['span']
-		},
-		{
-			icon: '',
-			type: 'h1',
-			textContent: 'Heading 1'
-		},
-		{
-			icon: '',
-			type: 'h2',
-			textContent: 'Heading 2'
-		},
-		{
-			icon: '',
-			type: 'h3',
-			textContent: 'Heading 3'
-		},
-		{
-			icon: '',
-			type: 'div',
-			textContent: '',
-			allowedChildren: ['h1', 'h2', 'h3', 'p', 'button', 'div']
-		},
-		{
-			icon: '',
-			type: 'p',
-			textContent:
-				'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga quibusdam doloribus, consequatur explicabo asperiores ad corporis itaque exercitationem enim adipisci soluta dolor, eius maxime tenetur beatae laudantium id saepe suscipit.'
-		}
-	];
-
-	function addElementToFrame(element: element) {
+	function addElementToFrame(elementConfig: ElementConfig) {
 		// create new element
-		const newElement = document.createElement(element.type);
-		if (element.textContent) newElement.textContent = element.textContent;
+		const newElement = document.createElement(elementConfig.type);
 
-		// if no exisiting elements, must add a container element
-		// TODO: automatically add a container element.
-		if (iframeState.document.body.children.length === 0) {
-			if (!element.isContainer) {
-				alert('Please add a section first.');
-				return;
-			}
+		// Add default class
+		if (elementConfig.defaultClass) {
+			newElement.classList.add(elementConfig.defaultClass);
+		}
 
-			iframeState.document.body.appendChild(newElement);
-		} else {
-			// check if selected element allows this type of child
-			const selectedTag = iframeState.selected.tagName.toLowerCase();
-			const selectedTemplate = elements.find((e) => e.type === selectedTag);
+		// Add text content if specified
+		if (elementConfig.textContent) newElement.textContent = elementConfig.textContent;
 
-			// can be added as child of selected element
-			if (selectedTemplate?.allowedChildren?.includes(element.type)) {
-				iframeState.selected.appendChild(newElement);
-			} else {
-				// find nearest valid container
-				const validParents = elements
-					.filter((e) => e.allowedChildren?.includes(element.type))
-					.map((e) => e.type);
-
-				const targetContainer = iframeState.selected.closest(validParents.join(','));
-
-				if (!targetContainer) {
-					alert(
-						`${element.type} cannot be added here. Valid parents are ${validParents.join(', ')}`
-					);
+		// handle element placement
+		if (!iframeState.selected) {
+			// if nothing is selected and body is empty, add containers to the body
+			if (iframeState.document.body.children.length === 0) {
+				// if no elements exisit, only allow containers to be added
+				if (containers.includes(elementConfig)) {
+					selectElement(iframeState.document.body);
+					iframeState.document.body.appendChild(newElement);
+				} else {
+					alert('Please add a container element first (like section or header)');
 					return;
 				}
+			} else {
+				alert('Please select where to add the element');
+				return;
+			}
+		} else {
+			// check if element can contain this element
+			const selectedConfig = [...containers, ...elements].find(
+				(config) => config.type === iframeState.selected.tagName.toLowerCase()
+			);
 
-				// added after selected element if in same container
-				if (iframeState.selected !== targetContainer) {
-					iframeState.selected.parentNode.insertBefore(
-						newElement,
-						iframeState.selected.nextSibling
-					);
+			if (selectedConfig?.allowedChildren?.includes(elementConfig.type)) {
+				// add as child if selected container allows it
+				iframeState.selected.appendChild(newElement);
+			} else {
+				// Find closest container within body
+				const container = iframeState.selected.closest('section, header, footer, div, nav');
+				if (container && container !== iframeState.document.body) {
+					// Add after selected element but inside the container
+					container.insertBefore(newElement, iframeState.selected.nextSibling);
 				} else {
-					targetContainer.appendChild(newElement);
+					// If no container found, add to body
+					iframeState.document.body.appendChild(newElement);
 				}
 			}
 		}
@@ -105,6 +66,17 @@
 
 <div id="elements-library">
 	<h2>Add Elements</h2>
+	<h3>Containers</h3>
+	{#each containers as container}
+		<button
+			onclick={() => {
+				addElementToFrame(container);
+			}}
+		>
+			{container.type}
+		</button>
+	{/each}
+	<h3>Elements</h3>
 	{#each elements as element}
 		<button
 			onclick={() => {

@@ -68,7 +68,7 @@
 		if (currentDisplayValue === selectedDisplayValue) return;
 
 		// update stylesheet
-		updateIframeStylesheet(iframeState.selected, 'display', selectedDisplayValue);
+		updateIframeStylesheet('display', selectedDisplayValue);
 	});
 
 	// Watch for flex property changes
@@ -78,7 +78,7 @@
 		Object.entries(selectedFlexProps).forEach(([property, value]) => {
 			const currentValue = getComputedStyle(iframeState.selected)[property];
 			if (value !== currentValue) {
-				updateIframeStylesheet(iframeState.selected, property, value);
+				updateIframeStylesheet(property, value);
 			}
 		});
 	});
@@ -90,7 +90,7 @@
 		Object.entries(selectedGridProps).forEach(([property, value]) => {
 			const currentValue = getComputedStyle(iframeState.selected)[property];
 			if (value !== currentValue) {
-				updateIframeStylesheet(iframeState.selected, property, value);
+				updateIframeStylesheet(property, value);
 			}
 		});
 	});

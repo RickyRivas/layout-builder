@@ -20,13 +20,13 @@
 		if (!iframeState.selected) return;
 
 		selectedPositionValue = value;
-		updateIframeStylesheet(iframeState.selected, 'position', value);
+		updateIframeStylesheet('position', value);
 	}
 
 	function handleOffsetChange(property, value) {
 		if (!iframeState.selected) return;
 
-		updateIframeStylesheet(iframeState.selected, property, value);
+		updateIframeStylesheet(property, value);
 		offsetValues[property] = value;
 	}
 
