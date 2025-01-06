@@ -68,10 +68,12 @@
 </script>
 
 <div class="unit-input">
-	<label for="unit-input-{name}">
-		{#if label}
+	{#if label}
+		<label for="unit-input-{name}">
 			{label}
-		{/if}
+		</label>
+	{/if}
+	<div>
 		<input
 			id="unit-input-{name}"
 			name="unit-input-{name}"
@@ -79,17 +81,10 @@
 			bind:value={numericValue}
 			oninput={() => updateValue(numericValue, currentUnit)}
 		/>
-	</label>
-	<button
-		class="unit-button"
-		onclick={(e) => {
-			showUnitsList = !showUnitsList;
-			const newIndex = showUnitsList ? '1' : 'auto';
-			e.target.parentElement.style.zIndex = newIndex;
-		}}
-	>
-		{currentUnit}
-	</button>
+		<button class="unit-button" onclick={() => (showUnitsList = !showUnitsList)}>
+			{currentUnit}
+		</button>
+	</div>
 
 	{#if showUnitsList}
 		<div class="units-list">
@@ -108,14 +103,21 @@
 
 <style lang="less">
 	.unit-input {
-		display: flex;
+		display: block;
 		position: relative;
 
+		label {
+			width: 100%;
+			display: block;
+		}
+
 		input {
-			text-align: center;
 			width: 100%;
 		}
 
+		& > div {
+			display: flex;
+		}
 		.units-list {
 			position: absolute;
 			top: 100%;
