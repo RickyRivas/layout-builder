@@ -86,10 +86,6 @@ export function getSelectorForStyle() {
     const parentPath = getParentPath()
     const fullSelector = parentPath ? `${parentPath} ${selector}` : selector
 
-    console.log('getSelectorForStyle() selector', selector)
-    console.log('getSelectorForStyle() parentPath', parentPath)
-    console.log('getSelectorForStyle() fullSelector', fullSelector)
-
     // return full path for unique elements
     return fullSelector
 }

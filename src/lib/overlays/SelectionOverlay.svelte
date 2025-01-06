@@ -48,7 +48,7 @@
 		position: absolute;
 		outline: 2px solid #0099ff;
 		pointer-events: none;
-		z-index: 2;
+		z-index: 1;
 		outline-offset: -1px;
 
 		span {

@@ -113,13 +113,9 @@
 				</label>
 			{/each}
 		</div>
-	{/snippet}
-</PropertyGroup>
 
-<!-- flex -->
-{#if selectedDisplayValue.includes('flex')}
-	<PropertyGroup title="Flex Properties">
-		{#snippet propertyContent()}
+		<!-- flex -->
+		{#if selectedDisplayValue.includes('flex')}
 			<!-- Flex Direction -->
 			<h3>Direction</h3>
 			<div class="chips-radio-group">
@@ -204,14 +200,10 @@
 					</label>
 				{/each}
 			</div>
-		{/snippet}
-	</PropertyGroup>
-{/if}
+		{/if}
 
-<!-- Grid Properties -->
-{#if selectedDisplayValue.includes('grid')}
-	<PropertyGroup title="Grid Properties">
-		{#snippet propertyContent()}
+		<!-- Grid Properties -->
+		{#if selectedDisplayValue.includes('grid')}
 			<h3>Template Columns</h3>
 			<div class="chips-radio-group">
 				{#each gridTemplateColumnsPresets as preset}
@@ -239,6 +231,6 @@
 					<label for="grid-gap-{value}">{value}</label>
 				{/each}
 			</div>
-		{/snippet}
-	</PropertyGroup>
-{/if}
+		{/if}
+	{/snippet}
+</PropertyGroup>
