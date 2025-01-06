@@ -1,5 +1,5 @@
 <script>
-	import PropertyGroup from '$lib/panels/properties/components/PropertyGroup.svelte';
+	import PropertyGroup from '$lib/panels/properties/PropertyGroup.svelte';
 	import { positionValues, offsetProperties } from '$lib/properties';
 	import {
 		iframeState,

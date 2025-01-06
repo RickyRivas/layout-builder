@@ -1,28 +1,19 @@
 <script>
-	import DisplayProperty from '$lib/panels/properties/components/DisplayProperty.svelte';
-	import ElementIdentifier from '$lib/panels/properties/components/ElementIdentifiers.svelte';
-	import PositionProperty from '$lib/panels/properties/components/PositionProperty.svelte';
-	import SpacingProperty from '$lib/panels/properties/components/SpacingProperty.svelte';
+	import ElementIdentifier from '$lib/panels/properties/ElementIdentifiers.svelte';
+	import PositionProperty from '$lib/panels/properties/position/PositionProperty.svelte';
+	import SpacingProperties from '$lib/panels/properties/spacing/SpacingProperties.svelte';
+	import DisplayProperties from '$lib/panels/properties/display/DisplayProperties.svelte';
+	import SizingProperties from './sizing/SizingProperties.svelte';
 </script>
 
 <aside id="properties-panel">
 	<!-- -->
 	<h2>Selector</h2>
-	<div class="accordion-block">
-		<ElementIdentifier />
-	</div>
-
+	<ElementIdentifier />
 	<!-- -->
 	<h2>Style Properties</h2>
-	<div class="accordion-block">
-		<div class="accordion-item">
-			<DisplayProperty />
-		</div>
-		<div class="accordion-item">
-			<PositionProperty />
-		</div>
-		<div class="accordion-item">
-			<SpacingProperty />
-		</div>
-	</div>
+	<DisplayProperties />
+	<PositionProperty />
+	<SpacingProperties />
+	<SizingProperties />
 </aside>

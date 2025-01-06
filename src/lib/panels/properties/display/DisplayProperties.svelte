@@ -10,7 +10,7 @@
 		gridGapValues,
 		gridTemplateColumnsPresets
 	} from '$lib/properties';
-	import PropertyGroup from './PropertyGroup.svelte';
+	import PropertyGroup from '$lib/panels/properties/PropertyGroup.svelte';
 
 	let currentElement = $state('');
 	let selectedDisplayValue = $state('');
