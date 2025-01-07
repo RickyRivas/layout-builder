@@ -1,6 +1,7 @@
 <script>
 	import { getSelectorForStyle } from '$lib/helpers';
 	import { iframeState } from '$lib/shared.svelte';
+	import PanelGroup from '$lib/components/PanelGroup.svelte';
 
 	let currentElement = $state();
 	let currentId = $state('');
@@ -91,28 +92,32 @@
 	}
 </script>
 
-<div class="form-control">
-	<label for="element-classes">
-		Classname(s)
-		<input
-			type="text"
-			name="element-classes"
-			id="element-classes"
-			bind:value={currentClasses}
-			oninput={(e) => updateClasses(e.target.value)}
-		/>
-	</label>
-</div>
+<PanelGroup title="Selector" keepOpen={true}>
+	{#snippet panelContent()}
+		<div class="form-control">
+			<label for="element-classes">
+				Classname(s)
+				<input
+					type="text"
+					name="element-classes"
+					id="element-classes"
+					bind:value={currentClasses}
+					oninput={(e) => updateClasses(e.target.value)}
+				/>
+			</label>
+		</div>
 
-<div class="form-control">
-	<label for="element-id">
-		Id
-		<input
-			type="text"
-			name="element-id"
-			id="element-id"
-			bind:value={currentId}
-			oninput={(e) => updateId(e.target.value)}
-		/>
-	</label>
-</div>
+		<div class="form-control">
+			<label for="element-id">
+				Id
+				<input
+					type="text"
+					name="element-id"
+					id="element-id"
+					bind:value={currentId}
+					oninput={(e) => updateId(e.target.value)}
+				/>
+			</label>
+		</div>
+	{/snippet}
+</PanelGroup>

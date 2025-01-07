@@ -7,15 +7,11 @@
 	import TypographyProperties from './typography/TypographyProperties.svelte';
 </script>
 
-<aside id="properties-panel">
-	<!-- -->
-	<h2>Selector</h2>
+<div id="properties-panel" class="panel panel-right">
 	<ElementIdentifier />
-	<!-- -->
-	<h2>Style Properties</h2>
 	<DisplayProperties />
 	<PositionProperty />
 	<SpacingProperties />
 	<SizingProperties />
 	<TypographyProperties />
-</aside>
+</div>

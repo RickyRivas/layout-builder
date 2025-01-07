@@ -1,5 +1,6 @@
 <!-- panels/properties/typography/FontWeightProperty.svelte -->
 <script lang="ts">
+	import RadioButtonGroup from '$lib/components/RadioButtonGroup.svelte';
 	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
 
 	const weightValues = [
@@ -22,18 +23,20 @@
 </script>
 
 <h3>Font Weight</h3>
-<div class="chips-radio-group">
-	{#each weightValues as { value, label }}
-		<input
-			type="radio"
-			name="font-weight"
-			id="font-weight-{value}"
-			{value}
-			bind:group={selectedWeight}
-			onchange={() => updateWeight(value)}
-		/>
-		<label for="font-weight-{value}">
-			{label}
-		</label>
-	{/each}
-</div>
+<RadioButtonGroup>
+	{#snippet content()}
+		{#each weightValues as { value, label }}
+			<input
+				type="radio"
+				name="font-weight"
+				id="font-weight-{value}"
+				{value}
+				bind:group={selectedWeight}
+				onchange={() => updateWeight(value)}
+			/>
+			<label for="font-weight-{value}">
+				{label}
+			</label>
+		{/each}
+	{/snippet}
+</RadioButtonGroup>

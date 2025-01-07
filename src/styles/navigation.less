@@ -1,0 +1,18 @@
+#mainnav {
+    .flex;
+    .jc(center);
+    .ai(center);
+    width: 100%;
+    background-color: var(--bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 1em;
+    z-index: 3000;
+
+    @media only screen and (min-width:1024px) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: var(--mainnav-height);
+        .jc(flex-start);
+    }
+}

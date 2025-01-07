@@ -7,7 +7,7 @@
 	// $inspect(css);
 </script>
 
-<aside id="builder-panel">
+<div id="builder-panel" class="panel panel-left">
 	<ElementsLibrary />
 	<HierarchyTree />
 	<button
@@ -15,4 +15,4 @@
 			css = generateUnformattedCss();
 		}}>Generate CSS</button
 	>
-</aside>
+</div>

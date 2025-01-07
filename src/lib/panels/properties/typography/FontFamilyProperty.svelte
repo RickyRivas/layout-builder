@@ -1,4 +1,5 @@
 <script lang="ts">
+	import RadioButtonGroup from '$lib/components/RadioButtonGroup.svelte';
 	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
 
 	// store in global style iframe state later
@@ -20,19 +21,21 @@
 </script>
 
 <h3>Font Family</h3>
-<div class="chips-radio-group">
-	{#each availableFonts as font}
-		<input
-			type="radio"
-			name="font-family"
-			id="font-family-{font}"
-			class:active={selectedFont.split(',')[0].replace(/['"]/g, '').trim() === font}
-			value={font}
-			bind:group={selectedFont}
-			onchange={() => updateFont(font)}
-		/>
-		<label for="font-family-{font}" style:font-family={font}>
-			{font}
-		</label>
-	{/each}
-</div>
+<RadioButtonGroup>
+	{#snippet content()}
+		{#each availableFonts as font}
+			<input
+				type="radio"
+				name="font-family"
+				id="font-family-{font}"
+				class:active={selectedFont.split(',')[0].replace(/['"]/g, '').trim() === font}
+				value={font}
+				bind:group={selectedFont}
+				onchange={() => updateFont(font)}
+			/>
+			<label for="font-family-{font}" style:font-family={font}>
+				{font}
+			</label>
+		{/each}
+	{/snippet}
+</RadioButtonGroup>

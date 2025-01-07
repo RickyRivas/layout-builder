@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
-	import PropertyGroup from '$lib/panels/properties/PropertyGroup.svelte';
+	import PanelGroup from '$lib/components/PanelGroup.svelte';
 	import UnitInput from '$lib/panels/properties/UnitInput.svelte';
 
 	// State for spacing values
@@ -82,8 +82,8 @@
 	}
 </script>
 
-<PropertyGroup title="Spacing">
-	{#snippet propertyContent()}
+<PanelGroup title="Spacing">
+	{#snippet panelContent()}
 		<div class="spacing-widget">
 			{#each Object.entries(spacing) as [key, value]}
 				<div class={key}>
@@ -98,7 +98,7 @@
 			{/each}
 		</div>
 	{/snippet}
-</PropertyGroup>
+</PanelGroup>
 
 <style lang="less">
 	.spacing-widget {

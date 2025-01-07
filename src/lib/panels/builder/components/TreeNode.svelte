@@ -8,18 +8,16 @@
 	<div class="tree-node" class:active={node.element === iframeState.selected}>
 		<button onclick={() => selectElement(node.element)}>
 			<span>{node.element.tagName.toLowerCase()}</span>
+			{#if node.element.id}
+				<span class="tree-tag id-tag">{node.element.id}</span>
+			{:else if node.element.classList.length}
+				{#each node.element.classList as classname}
+					<span class="tree-tag">
+						{classname}
+					</span>
+				{/each}
+			{/if}
 		</button>
-		{#if node.element.classList.length}
-			{#each node.element.classList as classname}
-				<span class="class-tag">
-					{classname}
-				</span>
-			{/each}
-		{/if}
-		{#if node.element.id}
-			<span class="id-tag">{node.element.id}</span>
-		{/if}
-		<button onclick={() => removeElement(node.element)}>X</button>
 	</div>
 	{#if node.children.length > 0}
 		<ul>
@@ -29,35 +27,3 @@
 		</ul>
 	{/if}
 </li>
-
-<style lang="less">
-	ul {
-		margin-left: 1em;
-	}
-
-	.tree-node.active > button {
-		background-color: #000;
-		color: #fff;
-	}
-
-	.class-tag {
-		display: inline-block;
-		font-size: 12px;
-		line-height: 20px;
-		text-transform: uppercase;
-		padding: 0 2px;
-		background-color: var(--primary);
-		color: #fff;
-		margin-right: 2px;
-	}
-	.id-tag {
-		display: inline-block;
-		font-size: 12px;
-		line-height: 20px;
-		text-transform: uppercase;
-		padding: 0 2px;
-		background-color: var(--secondary);
-		color: #fff;
-		margin-right: 2px;
-	}
-</style>

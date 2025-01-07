@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { containers, elements } from '$lib/element-config';
+	import PanelGroup from '$lib/components/PanelGroup.svelte';
 	import { iframeState, selectElement } from '$lib/shared.svelte';
 
 	type ElementConfig = {
@@ -64,26 +65,29 @@
 	}
 </script>
 
-<div id="elements-library">
-	<h2>Add Elements</h2>
-	<h3>Containers</h3>
-	{#each containers as container}
-		<button
-			onclick={() => {
-				addElementToFrame(container);
-			}}
-		>
-			{container.type}
-		</button>
-	{/each}
-	<h3>Elements</h3>
-	{#each elements as element}
-		<button
-			onclick={() => {
-				addElementToFrame(element);
-			}}
-		>
-			{element.type}
-		</button>
-	{/each}
-</div>
+<PanelGroup title="Element Library" keepOpen={true}>
+	{#snippet panelContent()}
+		<div id="elements-library">
+			<h3>Containers</h3>
+			{#each containers as container}
+				<button
+					onclick={() => {
+						addElementToFrame(container);
+					}}
+				>
+					{container.type}
+				</button>
+			{/each}
+			<h3>Elements</h3>
+			{#each elements as element}
+				<button
+					onclick={() => {
+						addElementToFrame(element);
+					}}
+				>
+					{element.type}
+				</button>
+			{/each}
+		</div>
+	{/snippet}
+</PanelGroup>

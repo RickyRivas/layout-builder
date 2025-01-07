@@ -2,7 +2,7 @@
 	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
 	import UnitInput from '$lib/panels/properties/UnitInput.svelte';
 	import { getSelectorForStyle } from '$lib/helpers';
-	import PropertyGroup from '../PropertyGroup.svelte';
+	import PanelGroup from '$lib/components/PanelGroup.svelte';
 
 	let sizing = $state({
 		// Width values
@@ -35,13 +35,13 @@
 	});
 </script>
 
-<PropertyGroup title="Sizing">
-	{#snippet propertyContent()}
+<PanelGroup title="Sizing">
+	{#snippet panelContent()}
 		{#each Object.entries(sizing) as [key, value]}
 			<div class="form-control">
 				<UnitInput
 					name={key}
-					label={key}
+					label={key.replaceAll('-', ' ')}
 					{value}
 					onUpdate={(e) => {
 						updateIframeStylesheet(key, e);
@@ -50,4 +50,4 @@
 			</div>
 		{/each}
 	{/snippet}
-</PropertyGroup>
+</PanelGroup>

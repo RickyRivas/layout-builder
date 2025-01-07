@@ -1,0 +1,28 @@
+@border: 2px solid var(--form-bordercolor);
+@fs: 16px;
+
+.form-control {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+
+    input[type='text'],
+    input[type='number'] {
+        display: block;
+        width: 100%;
+        box-shadow: var(--light-box-shadow);
+        background-color: var(--form-field-bg);
+        position: relative;
+        color: var(--text);
+        transition: border-color .33s ease,
+            background-color .33s ease,
+            color .33s ease;
+        font: inherit;
+        outline: none;
+        border: 0px;
+        border-radius: var(--border-radius);
+        .lh((40/16));
+        resize: none;
+        padding: 0 .5em;
+    }
+}

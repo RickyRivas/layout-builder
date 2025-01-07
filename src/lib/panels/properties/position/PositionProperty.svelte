@@ -1,5 +1,6 @@
 <script>
-	import PropertyGroup from '$lib/panels/properties/PropertyGroup.svelte';
+	import RadioButtonGroup from '$lib/components/RadioButtonGroup.svelte';
+	import PanelGroup from '$lib/components/PanelGroup.svelte';
 	import { positionValues, offsetProperties } from '$lib/properties';
 	import {
 		iframeState,
@@ -59,23 +60,25 @@
 	});
 </script>
 
-<PropertyGroup title="Position">
-	{#snippet propertyContent()}
-		<div class="chips-radio-group">
-			{#each positionValues as value, i}
-				<input
-					type="radio"
-					name="position-property"
-					id="position-property-{value}"
-					{value}
-					checked={value === selectedPositionValue}
-					onchange={() => handlePositionChange(value)}
-				/>
-				<label for="position-property-{value}" class:active={value === selectedPositionValue}>
-					{value}
-				</label>
-			{/each}
-		</div>
+<PanelGroup title="Position">
+	{#snippet panelContent()}
+		<RadioButtonGroup>
+			{#snippet content()}
+				{#each positionValues as value, i}
+					<input
+						type="radio"
+						name="position-property"
+						id="position-property-{value}"
+						{value}
+						checked={value === selectedPositionValue}
+						onchange={() => handlePositionChange(value)}
+					/>
+					<label for="position-property-{value}" class:active={value === selectedPositionValue}>
+						{value}
+					</label>
+				{/each}
+			{/snippet}
+		</RadioButtonGroup>
 
 		{#if showOffsetControls()}
 			<div class="offset-controls">
@@ -97,4 +100,4 @@
 			</div>
 		{/if}
 	{/snippet}
-</PropertyGroup>
+</PanelGroup>

@@ -7,45 +7,43 @@
 // default theme css vars
 :root {
     // colors
-    --primary: #E59E6D;
+    --primary: #606c38;
     --primary-light: #f9f3f3;
-    --secondary: #46643E;
-    --light-grey: rgba(0, 0, 0, .1);
-    --intermediate: #D6D2C4;
-    --tertiary: #E5E1E6;
-    --quaternary: #AFCDD7;
+    --secondary: #a3b18a;
 
     // text
-    --heading: #1A1A1A;
-    --text: #4E4B66;
-    --link: #3A5133;
+    --heading: #353a44;
+    --text: #353a44;
+
     // shadows
     --box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
-    --box-shadow-lg: rgba(0, 0, 0, 0.1) 0px 10px 20px;
-    --light-box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+
     // section backgrounds
     --bg: #fff;
     --bg-alternate: #FAF8F7;
+
     // header
     --mainnav-bg: #fff;
     --mainnav-link: var(--primary);
     --mainnav-linkbg: var(--primary-light);
+
     // padding
     --padding-sm: 3em 0;
     --padding-lg: 5em 0;
+
     // border
-    --border-radius: .8em;
+    --border-radius: 5px;
+    --border-color: #b6c0cd;
+
     // forms
-    --form-bg: #fff;
-    --form-text: #4E4B66;
-    --form-field: #F7F7F7;
-    --form-borderradius: .2em;
-    --form-bordercolor: #ebebeb;
-    --form-placeholder: rgba(0, 0, 0, .5);
+    --form-field-bg: #f4f4f4;
     --form-field-success: #33C27F;
     --form-field-success-bg: #e7f2ed;
     --form-field-error: #d62828;
     --form-field-error-bg: #ffdfdf;
+
+    --mainnav-height: 50px;
+    --panel-width: unit((300/20), em);
 }
 
 html {
@@ -53,16 +51,19 @@ html {
 }
 
 body {
-    font-family: 'Inter', serif;
-    font-size: 16px;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     overflow: hidden;
     display: block;
     position: relative;
     color: var(--text);
-    background-color: var(--bg);
+    background-color: var(--bg-alternate);
+    background-image: radial-gradient(#3a3a3a .75px, #14141400 .75px);
+    background-size: 15px 15px;
+    background-position: center;
 
     @media (min-width: 1300px) {
         font-size: 20px;
+        background-attachment: fixed;
     }
 
     @media (min-width: 2000px) {
@@ -90,6 +91,10 @@ h6 {
     text-rendering: auto;
     text-transform: capitalize;
     .bold;
+}
+
+h1 {
+    font-size: unit((23/20), em);
 }
 
 h2:not(.title) {
@@ -135,12 +140,17 @@ h6 {
     clip: rect(0 0 0 0);
 }
 
-.chips-radio-group {
+.radio-button-group {
     .flex;
     .jc(flex-start);
     .ai(center);
     flex-wrap: wrap;
     gap: 10px;
+
+    .radio-button {
+        display: block;
+        position: relative;
+    }
 
     input {
         display: none;
@@ -152,11 +162,11 @@ h6 {
         }
     }
 
-    label {
-        border: 1px solid var(--primary);
-        font-size: 14px;
-        line-height: 18px;
-        padding: 0 4px;
+    .radio-button-icon {
+        .ib;
+        width: 44px;
+        height: 44px;
+        background-color: var(--primary);
     }
 }
 
@@ -178,16 +188,23 @@ section#main-view {
     margin-bottom: 1em;
 }
 
-aside {
-    min-height: 100vw;
-    background-color: #f4f4f4;
-    width: 100%;
-    max-width: 300px;
-}
-
 .iframe-container {
     width: 100%;
     position: relative;
+    background-color: var(--bg);
+    border: 1px solid var(--border-color);
+    border-bottom: 0px;
+    min-height: 100vh;
+    .flex;
+
+    @media only screen and (min-width:1024px) {
+        min-height: calc(100vh - var(--mainnav-height) - 1em);
+        height: 100%;
+        width: 100%;
+        max-width: calc(calc(100% - 2em) - var(--panel-width)*2);
+        margin: 0 auto;
+        margin-top: calc(var(--mainnav-height) + 1em);
+    }
 }
 
 iframe#preview {
@@ -195,6 +212,4 @@ iframe#preview {
     border: 0;
     background: none;
     width: 100%;
-    height: 100%;
-    border: 1px solid #f4f4f4;
 }
