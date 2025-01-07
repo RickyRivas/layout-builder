@@ -1,26 +1,27 @@
 <script lang="ts">
-	import { getSelectorForStyle } from '$lib/helpers';
-	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
+	import { getPropertyValue } from '$lib/helpers';
+	import { updateIframeStylesheet } from '$lib/shared.svelte';
+	import { fontSizeUnits } from '$lib/units';
 	import UnitInput from '../UnitInput.svelte';
 
 	let fontSize = $state('');
+	let prevValue = null; // Track previous value
 
 	$effect(() => {
-		if (!iframeState.selected) return;
-		const rules = Array.from(iframeState.stylesheet.cssRules);
-		const selector = getSelectorForStyle();
-		const existingRule = rules.find(
-			(rule) => rule instanceof CSSStyleRule && rule.selectorText === selector
-		);
+		const newValue = getPropertyValue('fontSize');
 
-		// Use computed style if no declared style exists
-		fontSize = existingRule?.style.fontSize || getComputedStyle(iframeState.selected).fontSize;
+		// Only update if value actually changed
+		if (newValue !== prevValue) {
+			prevValue = newValue;
+			fontSize = newValue;
+		}
 	});
 </script>
 
 <h3>Font Size</h3>
 <UnitInput
+	allowedUnits={fontSizeUnits}
 	name={'font-size'}
 	value={fontSize}
-	onUpdate={(value) => updateIframeStylesheet('font-size', value)}
+	onUpdate={(e) => updateIframeStylesheet('font-size', e)}
 />

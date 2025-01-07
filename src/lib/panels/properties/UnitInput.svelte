@@ -1,15 +1,13 @@
 <script>
 	import { iframeState } from '$lib/shared.svelte';
 
-	let { value, onUpdate, name, label = '' } = $props();
+	let { value, onUpdate, name, label = '', allowedUnits } = $props();
 	let currentElement = $state(null);
 
-	const units = ['px', 'em', 'rem', '%', 'auto', 'none'];
 	let showUnitsList = $state(false);
 	let currentUnit = $state('px');
 	let numericValue = $state('');
 
-	// When value prop changes, parse it into numeric and unit parts
 	$effect(() => {
 		if (!iframeState.selected) return;
 
@@ -21,16 +19,16 @@
 		}
 
 		if (value) {
-			// Special handling for 'auto'
-			if (value === 'auto' || value === 'none') {
-				numericValue = '';
-				currentUnit = 'auto';
+			// Handle special values
+			if (['auto', 'none', '0'].includes(value)) {
+				numericValue = value === '0' ? '0' : '';
+				currentUnit = value;
 				return;
 			}
 
+			// Parse numeric values with units
 			const match = value.match(/^([\d.]+)(\D+)$/);
 			if (match) {
-				// Convert to integer
 				const intValue = parseInt(match[1]);
 				numericValue = isNaN(intValue) ? '' : intValue.toString();
 				currentUnit = match[2];
@@ -39,15 +37,16 @@
 	});
 
 	function updateValue(newNumericValue, newUnit) {
-		if (newUnit === 'auto' || value === 'none') {
-			onUpdate('auto');
+		// Handle special values
+		if (['auto', 'none'].includes(newUnit)) {
+			onUpdate(newUnit);
 			return;
 		}
 
-		if (newNumericValue) {
-			// Convert to integer
+		// Handle numeric values
+		if (newNumericValue || newNumericValue === '0') {
 			const intValue = parseInt(newNumericValue);
-			if (!isNaN(intValue)) {
+			if (!isNaN(intValue) || newNumericValue === '0') {
 				const newValue = `${intValue}${newUnit}`;
 				onUpdate(newValue);
 			}
@@ -55,7 +54,7 @@
 	}
 
 	$effect(() => {
-		if (currentUnit === 'auto') {
+		if (['auto', 'none'].includes(currentUnit)) {
 			numericValue = '';
 		}
 	});
@@ -78,8 +77,9 @@
 			id="unit-input-{name}"
 			name="unit-input-{name}"
 			type="text"
-			bind:value={numericValue}
-			oninput={() => updateValue(numericValue, currentUnit)}
+			value={['auto', 'none'].includes(currentUnit) ? currentUnit : numericValue}
+			disabled={['auto', 'none'].includes(currentUnit)}
+			oninput={(e) => updateValue(e.target.value, currentUnit)}
 		/>
 		<button class="unit-button" onclick={() => (showUnitsList = !showUnitsList)}>
 			{currentUnit}
@@ -88,11 +88,11 @@
 
 	{#if showUnitsList}
 		<div class="units-list">
-			{#each units as unit}
+			{#each allowedUnits as unit}
 				<button
 					class="unit-option"
 					class:active={unit === currentUnit}
-					onclick={(e) => changeUnit(unit)}
+					onclick={() => changeUnit(unit)}
 				>
 					{unit}
 				</button>

@@ -2,46 +2,40 @@
 	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
 	import PanelGroup from '$lib/components/PanelGroup.svelte';
 	import UnitInput from '$lib/panels/properties/UnitInput.svelte';
+	import { spacingUnits, marginUnits } from '$lib/units';
+	import { getPropertyValue } from '$lib/helpers';
 
 	// State for spacing values
-	const spacing = $state({
-		'margin-top': '',
-		'margin-right': '',
-		'margin-bottom': '',
-		'margin-left': '',
-		'padding-top': '',
-		'padding-right': '',
-		'padding-bottom': '',
-		'padding-left': ''
-	});
+	const spacingConfig = {
+		'margin-top': { units: marginUnits, value: '', defaultValue: '0' },
+		'margin-right': { units: marginUnits, value: '', defaultValue: '0' },
+		'margin-bottom': { units: marginUnits, value: '', defaultValue: '0' },
+		'margin-left': { units: marginUnits, value: '', defaultValue: '0' },
+		'padding-top': { units: spacingUnits, value: '', defaultValue: '0' },
+		'padding-right': { units: spacingUnits, value: '', defaultValue: '0' },
+		'padding-bottom': { units: spacingUnits, value: '', defaultValue: '0' },
+		'padding-left': { units: spacingUnits, value: '', defaultValue: '0' }
+	};
 
-	// Watch for element selection
+	let spacing = $state(spacingConfig);
+	let prevValues = {};
+
 	$effect(() => {
-		if (!iframeState.selected) return;
+		Object.keys(spacing).forEach((property) => {
+			const newValue = getPropertyValue(property, spacing[property].defaultValue);
 
-		const computedStyle = getComputedStyle(iframeState.selected);
-
-		// Update margin values
-		spacing['margin-top'] = computedStyle.marginTop;
-		spacing['margin-right'] = computedStyle.marginRight;
-		spacing['margin-bottom'] = computedStyle.marginBottom;
-		spacing['margin-left'] = computedStyle.marginLeft;
-
-		// Update padding values
-		spacing['padding-top'] = computedStyle.paddingTop;
-		spacing['padding-right'] = computedStyle.paddingRight;
-		spacing['padding-bottom'] = computedStyle.paddingBottom;
-		spacing['padding-left'] = computedStyle.paddingLeft;
+			if (newValue !== prevValues[property]) {
+				prevValues[property] = newValue;
+				spacing[property].value = newValue;
+			}
+		});
 	});
 
 	function updateSpacing(property, value) {
 		if (!iframeState.selected) return;
 
 		// Extract base property (margin/padding) and side
-		const [baseProperty, side] = property.split('-') as [
-			'margin' | 'padding',
-			'top' | 'right' | 'bottom' | 'left'
-		];
+		const [baseProperty, side] = property.split('-');
 
 		// Get all current values
 		const computedStyle = getComputedStyle(iframeState.selected);
@@ -85,14 +79,13 @@
 <PanelGroup title="Spacing">
 	{#snippet panelContent()}
 		<div class="spacing-widget">
-			{#each Object.entries(spacing) as [key, value]}
-				<div class={key}>
+			{#each Object.entries(spacing) as [property, config]}
+				<div class={property}>
 					<UnitInput
-						{value}
-						name={key}
-						onUpdate={(e) => {
-							updateSpacing(key, e);
-						}}
+						allowedUnits={config.units}
+						value={config.value}
+						name={property}
+						onUpdate={(e) => updateSpacing(property, e)}
 					/>
 				</div>
 			{/each}
@@ -123,7 +116,7 @@
 			grid-area: 3 / 1;
 		}
 		.padding-top {
-			grid-area: 3 / 2;
+			grid-area: 2 / 3;
 		}
 		.padding-right {
 			grid-area: 3 / 4;
@@ -132,7 +125,7 @@
 			grid-area: 4 / 3;
 		}
 		.padding-left {
-			grid-area: 2 / 3;
+			grid-area: 3 / 2;
 		}
 	}
 </style>

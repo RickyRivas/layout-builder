@@ -1,18 +1,20 @@
 <script lang="ts">
 	import RadioButtonGroup from '$lib/components/RadioButtonGroup.svelte';
-	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
+	import { getPropertyValue } from '$lib/helpers';
+	import { updateIframeStylesheet } from '$lib/shared.svelte';
 
 	const alignValues = ['start', 'left', 'center', 'right', 'justify'];
-	let selectedAlign = $state('');
+
+	let textAlignValue = $state('');
+	let prevValue = $state(null);
 
 	$effect(() => {
-		if (!iframeState.selected) return;
-		selectedAlign = getComputedStyle(iframeState.selected).textAlign || 'left';
+		let newValue = getPropertyValue('textAlign');
+		if (newValue !== prevValue) {
+			prevValue = newValue;
+			textAlignValue = prevValue;
+		}
 	});
-
-	function updateAlign(value) {
-		updateIframeStylesheet('text-align', value);
-	}
 </script>
 
 <h3>Text Align</h3>
@@ -24,8 +26,8 @@
 				name="text-align"
 				id="text-align-{value}"
 				{value}
-				bind:group={selectedAlign}
-				onchange={() => updateAlign(value)}
+				bind:group={textAlignValue}
+				onchange={() => updateIframeStylesheet('text-align', textAlignValue)}
 			/>
 			<label for="text-align-{value}">
 				{value}

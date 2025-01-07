@@ -92,15 +92,16 @@ export function getSelectorForStyle() {
 
 
 export function updateStyleRule(property, value) {
-    const selector = getSelectorForStyle()
-    const rules = Array.from(iframeState.stylesheet.cssRules)
-    const existingRule = rules.find(rule => rule.selectorText === selector)
+    const selector = getSelectorForStyle();
+    const rules = Array.from(iframeState.stylesheet.cssRules);
+
+    const existingRule = rules.find(rule => rule.selectorText === selector);
 
     if (existingRule) {
-        existingRule.style[property] = value
+        existingRule.style[property] = value;
     } else {
-        const ruleText = `${selector} { ${property} : ${value}; }`
-        iframeState.stylesheet.insertRule(ruleText, rules.length)
+        const ruleText = `${selector} { ${property} : ${value}; }`;
+        iframeState.stylesheet.insertRule(ruleText, rules.length);
     }
 }
 
@@ -117,4 +118,34 @@ export function generateUnformattedCss() {
 
     console.log('generating', cssContent)
     return cssContent;
+}
+
+
+// reuseable prop handlers
+export function findExistingStyleRule(selector) {
+    const rules = Array.from(iframeState.stylesheet.cssRules);
+
+    const foundRule = rules.find(rule => {
+        // Check rule type (1 is STYLE_RULE) and selector match
+        return rule.type === 1 && rule.selectorText === selector;
+    });
+
+    return foundRule;
+}
+
+// only return values that exist in the stylesheet rules, 
+// and ignore computed values if they weren't explicitly set
+export function getPropertyValue(propertyName, defaultValue = '') {
+    if (!iframeState.selected || iframeState.updating) {
+        return defaultValue;
+    }
+
+    const selector = getSelectorForStyle();
+    const existingRule = findExistingStyleRule(selector);
+
+    if (existingRule && existingRule.style[propertyName]) {
+        return existingRule.style[propertyName];
+    }
+
+    return defaultValue;
 }

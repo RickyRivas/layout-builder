@@ -1,51 +1,69 @@
 <script lang="ts">
-	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
+	import { widthUnits, heightUnits, minSizeUnits, maxSizeUnits } from '$lib/units';
+	import { updateIframeStylesheet } from '$lib/shared.svelte';
+	import { getPropertyValue } from '$lib/helpers';
 	import UnitInput from '$lib/panels/properties/UnitInput.svelte';
-	import { getSelectorForStyle } from '$lib/helpers';
 	import PanelGroup from '$lib/components/PanelGroup.svelte';
 
-	let sizing = $state({
-		// Width values
-		['width']: '',
-		['min-width']: '',
-		['max-width']: '',
-		// Height values
-		['height']: '',
-		['min-height']: '',
-		['max-height']: ''
-	});
+	const sizingConfig = {
+		width: {
+			units: widthUnits,
+			value: '',
+			defaultValue: 'auto'
+		},
+		'min-width': {
+			units: minSizeUnits,
+			value: '',
+			defaultValue: '0'
+		},
+		'max-width': {
+			units: maxSizeUnits,
+			value: '',
+			defaultValue: 'none'
+		},
+		height: {
+			units: heightUnits,
+			value: '',
+			defaultValue: 'auto'
+		},
+		'min-height': {
+			units: minSizeUnits,
+			value: '',
+			defaultValue: '0'
+		},
+		'max-height': {
+			units: maxSizeUnits,
+			value: '',
+			defaultValue: 'none'
+		}
+	};
+
+	let sizing = $state(sizingConfig);
+	let prevValues = {};
 
 	// Watch for element selection
 	$effect(() => {
-		if (!iframeState.selected) return;
+		Object.keys(sizing).forEach((property) => {
+			const newValue = getPropertyValue(property, sizing[property].defaultValue);
 
-		// Find matching rule in stylesheet
-		const rules = Array.from(iframeState.stylesheet.cssRules);
-		const selector = getSelectorForStyle(); // your selector function
-
-		const existingRule = rules.find((rule) => rule.selectorText === selector);
-
-		sizing.width = existingRule?.style.width || 'auto';
-		sizing['min-width'] = existingRule?.style.minWidth || 'auto';
-		sizing['max-width'] = existingRule?.style.maxWidth || 'none';
-
-		sizing.height = existingRule?.style.height || 'auto';
-		sizing['min-height'] = existingRule?.style.minHeight || 'auto';
-		sizing['min-height'] = existingRule?.style.maxHeight || 'none';
+			if (newValue !== prevValues[property]) {
+				prevValues[property] = newValue;
+				sizing[property].value = newValue;
+			}
+		});
 	});
 </script>
 
 <PanelGroup title="Sizing">
 	{#snippet panelContent()}
-		{#each Object.entries(sizing) as [key, value]}
+		{#each Object.entries(sizing) as [property, config]}
 			<div class="form-control">
 				<UnitInput
-					name={key}
-					label={key.replaceAll('-', ' ')}
-					{value}
-					onUpdate={(e) => {
-						updateIframeStylesheet(key, e);
-					}}
+					allowedUnits={config.units}
+					name={property}
+					label={property}
+					value={config.value}
+					onUpdate={(e) => updateIframeStylesheet(property, e)}
 				/>
 			</div>
 		{/each}

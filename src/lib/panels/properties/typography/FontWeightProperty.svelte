@@ -1,7 +1,7 @@
-<!-- panels/properties/typography/FontWeightProperty.svelte -->
 <script lang="ts">
 	import RadioButtonGroup from '$lib/components/RadioButtonGroup.svelte';
-	import { iframeState, updateIframeStylesheet } from '$lib/shared.svelte';
+	import { getPropertyValue } from '$lib/helpers';
+	import { updateIframeStylesheet } from '$lib/shared.svelte';
 
 	const weightValues = [
 		{ value: '400', label: 'Regular' },
@@ -10,16 +10,17 @@
 		{ value: '700', label: 'Bold' }
 	];
 
-	let selectedWeight = $state('');
+	let fontWeight = $state();
+	let prevValue = $state(null);
 
 	$effect(() => {
-		if (!iframeState.selected) return;
-		selectedWeight = getComputedStyle(iframeState.selected).fontWeight;
-	});
+		const newValue = getPropertyValue('fontWeight');
 
-	function updateWeight(value: string) {
-		updateIframeStylesheet('font-weight', value);
-	}
+		if (newValue !== fontWeight) {
+			prevValue = newValue;
+			fontWeight = newValue;
+		}
+	});
 </script>
 
 <h3>Font Weight</h3>
@@ -28,11 +29,12 @@
 		{#each weightValues as { value, label }}
 			<input
 				type="radio"
-				name="font-weight"
 				id="font-weight-{value}"
 				{value}
-				bind:group={selectedWeight}
-				onchange={() => updateWeight(value)}
+				bind:group={fontWeight}
+				onchange={() => {
+					updateIframeStylesheet('font-weight', value);
+				}}
 			/>
 			<label for="font-weight-{value}">
 				{label}
