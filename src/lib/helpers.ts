@@ -135,7 +135,7 @@ export function findExistingStyleRule(selector) {
 
 // only return values that exist in the stylesheet rules, 
 // and ignore computed values if they weren't explicitly set
-export function getPropertyValue(propertyName, defaultValue = '') {
+export function getPropertyValue(propertyName, defaultValue = '', useComputed = false) {
     if (!iframeState.selected || iframeState.updating) {
         return defaultValue;
     }
@@ -145,6 +145,11 @@ export function getPropertyValue(propertyName, defaultValue = '') {
 
     if (existingRule && existingRule.style[propertyName]) {
         return existingRule.style[propertyName];
+    }
+
+    // Use computed style for properties that need their element defaults
+    if (useComputed) {
+        return getComputedStyle(iframeState.selected)[propertyName];
     }
 
     return defaultValue;
