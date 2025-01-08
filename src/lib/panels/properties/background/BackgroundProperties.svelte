@@ -1,9 +1,10 @@
 <script lang="ts">
+	import ColorPicker from '$lib/components/ColorPicker.svelte';
 	import PanelGroup from '$lib/components/PanelGroup.svelte';
 	import { getPropertyValue } from '$lib/helpers';
 	import { updateIframeStylesheet } from '$lib/shared.svelte';
 
-	let backgroundColor = $state('');
+	let backgroundColor = $state('#000000');
 	let prevValue = null; // Track previous value
 
 	$effect(() => {
@@ -15,20 +16,15 @@
 			backgroundColor = newValue;
 		}
 	});
+
+	function handleColorUpdate(newColor) {
+		backgroundColor = newColor;
+		updateIframeStylesheet('background-color', newColor);
+	}
 </script>
 
 <PanelGroup title="Background">
 	{#snippet panelContent()}
-		<div class="form-control">
-			<label for="input-background-color">background-color</label>
-			<input
-				id="input-background-color"
-				type="color"
-				bind:value={backgroundColor}
-				onchange={(e) => {
-					updateIframeStylesheet('background-color', e.target.value);
-				}}
-			/>
-		</div>
+		<ColorPicker value={backgroundColor} onUpdate={handleColorUpdate} />
 	{/snippet}
 </PanelGroup>

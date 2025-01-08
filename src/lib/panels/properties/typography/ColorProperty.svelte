@@ -1,29 +1,24 @@
 <script lang="ts">
+	import ColorPicker from '$lib/components/ColorPicker.svelte';
 	import { getPropertyValue } from '$lib/helpers';
 	import { updateIframeStylesheet } from '$lib/shared.svelte';
 
-	let color = $state('');
-	let prevValue = null; // Track previous value
+	let prevValue = null;
+	let color = $state('#000000');
 
 	$effect(() => {
 		const newValue = getPropertyValue('color', '', true);
 
-		// Only update if value actually changed
 		if (newValue !== prevValue) {
 			prevValue = newValue;
 			color = newValue;
 		}
 	});
+
+	function handleColorUpdate(newColor) {
+		color = newColor;
+		updateIframeStylesheet('color', newColor);
+	}
 </script>
 
-<div class="form-control">
-	<label for="input-color">Color</label>
-	<input
-		id="input-color"
-		type="color"
-		bind:value={color}
-		onchange={(e) => {
-			updateIframeStylesheet('color', e.target.value);
-		}}
-	/>
-</div>
+<ColorPicker value={color} onUpdate={handleColorUpdate} />

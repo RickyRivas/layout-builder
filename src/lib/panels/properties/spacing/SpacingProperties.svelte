@@ -34,6 +34,8 @@
 	function updateSpacing(property, value) {
 		if (!iframeState.selected) return;
 
+		if (value === null) value = 0;
+
 		// Extract base property (margin/padding) and side
 		const [baseProperty, side] = property.split('-');
 

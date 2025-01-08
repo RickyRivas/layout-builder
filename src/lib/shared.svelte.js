@@ -10,6 +10,10 @@ export const iframeState = $state({
 })
 
 export function selectElement(target) {
+    if (target === iframeState.document.body) {
+        target = iframeState.document.querySelector('section')
+    }
+
     // remove active dataset off currently selected
     const prevSelected = iframeState.document.querySelector(`[${ iframeState.selector }]`)
     if (prevSelected) prevSelected.removeAttribute(iframeState.selector)
@@ -25,6 +29,7 @@ export function findDefaultPropertyValue(element, property, allowedValues) {
 }
 
 export function updateIframeStylesheet(property, value) {
+    console.log(property, value)
     if (!iframeState.selected) return
     iframeState.updating = true
 
@@ -37,8 +42,6 @@ export function updateIframeStylesheet(property, value) {
         iframeState.updating = false
     }
 }
-
-
 export function updateGhostPosition() {
     const event = new CustomEvent('update-selection-overlay')
     window.dispatchEvent(event)
@@ -47,13 +50,16 @@ export function updateGhostPosition() {
 export function initIframe(iframe) {
     iframe.addEventListener('load', () => {
         iframeState.document = iframe.contentDocument;
-        iframeState.stylesheet = iframe.contentDocument.querySelector('#base-styles').sheet;
+        iframeState.stylesheet = iframe.contentDocument.querySelector('#layout-styles').sheet;
 
         // Add click listeners to all elements
         iframeState.document.body.addEventListener('click', (e) => {
             selectElement(e.target)
             e.preventDefault()
         })
+
+        // select base
+        selectElement(iframeState.document.querySelector('section'))
 
         iframeState.initialized = true;
     });

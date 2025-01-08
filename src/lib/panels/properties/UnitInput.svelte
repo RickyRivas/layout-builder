@@ -7,6 +7,7 @@
 	let showUnitsList = $state(false);
 	let currentUnit = $state('px');
 	let numericValue = $state('');
+	let inputValue = $state();
 
 	$effect(() => {
 		if (!iframeState.selected) return;
@@ -19,6 +20,8 @@
 		}
 
 		if (value) {
+			inputValue = ['auto', 'none', 'normal'].includes(currentUnit) ? currentUnit : numericValue;
+
 			// Handle special values
 			if (['auto', 'none', '0', 'normal'].includes(value)) {
 				numericValue = value === '0' ? '0' : '';
@@ -37,6 +40,7 @@
 	});
 
 	function updateValue(newNumericValue, newUnit) {
+		console.log('updateValue()', newNumericValue, newUnit);
 		// Handle special values
 		if (['auto', 'none', 'normal'].includes(newUnit)) {
 			onUpdate(newUnit);
@@ -51,12 +55,22 @@
 				onUpdate(newValue);
 			}
 		}
+
+		// no value, will also remove from stylesheet
+		if (!newNumericValue) {
+			onUpdate(0);
+		}
 	}
 
 	$effect(() => {
 		if (['auto', 'none'].includes(currentUnit)) {
 			numericValue = '';
 		}
+	});
+
+	// no value
+	$effect(() => {
+		if (!inputValue) inputValue = 0;
 	});
 
 	function changeUnit(newUnit) {
@@ -77,10 +91,11 @@
 			id="unit-input-{name}"
 			name="unit-input-{name}"
 			type="text"
-			value={['auto', 'none', 'normal'].includes(currentUnit) ? currentUnit : numericValue}
+			bind:value={inputValue}
 			disabled={['auto', 'none', 'normal'].includes(currentUnit)}
 			oninput={(e) => updateValue(e.target.value, currentUnit)}
 		/>
+		<!-- value={['auto', 'none', 'normal'].includes(currentUnit) ? currentUnit : numericValue} -->
 		<button class="unit-button" onclick={() => (showUnitsList = !showUnitsList)}>
 			{currentUnit}
 		</button>

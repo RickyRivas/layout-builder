@@ -30,12 +30,6 @@ export const containers: ElementConfig[] = [
         defaultClass: 'nav',
         allowedChildren: ['ul', 'button', 'a'],
         iconPath: '/icons/elements/nav.svg'
-    },
-    {
-        type: 'div',
-        defaultClass: 'container',
-        allowedChildren: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'button', 'div', 'ul', 'ol'],
-        iconPath: '/icons/elements/container.svg'
     }
 ];
 
@@ -45,32 +39,37 @@ export const elements: ElementConfig[] = [
         type: 'h1',
         defaultClass: 'heading-1',
         textContent: 'Heading 1',
-        iconPath: '/icons/elements/heading-1.svg'
+        iconPath: '/icons/elements/heading-1.svg',
+        allowedChildren: [],
     },
     {
         type: 'h2',
         defaultClass: 'heading-2',
         textContent: 'Heading 2',
-        iconPath: '/icons/elements/heading-2.svg'
+        iconPath: '/icons/elements/heading-2.svg',
+        allowedChildren: [],
     },
     {
         type: 'h3',
         defaultClass: 'heading-3',
         textContent: 'Heading 3',
-        iconPath: '/icons/elements/heading-3.svg'
+        iconPath: '/icons/elements/heading-3.svg',
+        allowedChildren: [],
     },
     // Text elements
     {
         type: 'p',
         defaultClass: 'paragraph',
         textContent: 'Paragraph text',
-        iconPath: '/icons/elements/paragraph.svg'
+        iconPath: '/icons/elements/paragraph.svg',
+        allowedChildren: [],
     },
     {
         type: 'span',
         defaultClass: 'text',
         textContent: 'Text span',
-        iconPath: '/icons/elements/text.svg'
+        iconPath: '/icons/elements/text.svg',
+        allowedChildren: [],
     },
     // Interactive elements
     {
@@ -104,18 +103,28 @@ export const elements: ElementConfig[] = [
         type: 'li',
         defaultClass: 'list-item',
         textContent: 'List item',
-        iconPath: '/icons/elements/list-item.svg'
+        iconPath: '/icons/elements/list-item.svg',
+        allowedChildren: [],
     },
     // Form elements
     {
         type: 'input',
         defaultClass: 'input',
-        iconPath: '/icons/elements/input.svg'
+        iconPath: '/icons/elements/input.svg',
+        allowedChildren: [],
     },
     {
         type: 'label',
         defaultClass: 'label',
         textContent: 'Label',
-        iconPath: '/icons/elements/label.svg'
+        iconPath: '/icons/elements/label.svg',
+        allowedChildren: [],
+    },
+    // non semantic container
+    {
+        type: 'div',
+        defaultClass: 'container',
+        allowedChildren: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'button', 'div', 'ul', 'ol'],
+        iconPath: '/icons/elements/container.svg'
     }
 ];

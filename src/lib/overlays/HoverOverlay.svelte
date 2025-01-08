@@ -1,5 +1,5 @@
 <script>
-	import { getElementSelector, getParentPath } from '$lib/helpers';
+	import { getElementSelector } from '$lib/helpers';
 	import { iframeState } from '$lib/shared.svelte';
 
 	let hoveredElementSelector = $state();
@@ -12,6 +12,7 @@
 	});
 
 	function updatePosition(target) {
+		if (target === iframeState.document.body) return;
 		const rect = target.getBoundingClientRect();
 		overlay = {
 			top: rect.top,

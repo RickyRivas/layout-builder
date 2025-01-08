@@ -97,6 +97,12 @@ export function updateStyleRule(property, value) {
 
     const existingRule = rules.find(rule => rule.selectorText === selector);
 
+    if (value === null) {
+        if (existingRule) {
+            existingRule.style.removeProperty(property);
+        }
+    }
+
     if (existingRule) {
         existingRule.style[property] = value;
     } else {

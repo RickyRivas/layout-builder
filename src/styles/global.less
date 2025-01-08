@@ -205,6 +205,8 @@ section#main-view {
         margin: 0 auto;
         margin-top: calc(var(--mainnav-height) + 1em);
     }
+
+
 }
 
 iframe#preview {
@@ -212,4 +214,9 @@ iframe#preview {
     border: 0;
     background: none;
     width: 100%;
+}
+
+button[draggable] {
+    cursor: move;
+    user-select: none;
 }

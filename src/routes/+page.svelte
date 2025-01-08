@@ -3,15 +3,22 @@
 	import BuilderPanel from '$lib/panels/builder/BuilderPanel.svelte';
 	import SelectionOverlay from '$lib/overlays/SelectionOverlay.svelte';
 
-	import { iframeState, initIframe } from '$lib/shared.svelte';
+	import { iframeState, initIframe, updateGhostPosition } from '$lib/shared.svelte';
 	import { onMount } from 'svelte';
 	import HoverOverlay from '$lib/overlays/HoverOverlay.svelte';
 
 	let iframeElement;
 
+	function onResize() {
+		updateGhostPosition();
+	}
+
 	onMount(() => {
 		iframeElement.src = iframeState.src;
 		initIframe(iframeElement);
+
+		window.addEventListener('resize', onResize);
+		return () => window.removeEventListener('resize', onResize);
 	});
 </script>
 
