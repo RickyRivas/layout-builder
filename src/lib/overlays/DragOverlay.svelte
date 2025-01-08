@@ -19,7 +19,6 @@
 		if (!iframeState.document) return;
 
 		function handleDragOver(e) {
-			// console.log('drag overlay! over', e.target);
 			e.preventDefault();
 
 			// target changes as we hover over different elements
@@ -47,8 +46,6 @@
 		}
 
 		function handleDragDrop(e) {
-			// console.log('drag overlay! out', e.target);
-			// Clean up
 			indicator.visible = false;
 		}
 
@@ -60,8 +57,6 @@
 			iframeState.document.body.removeEventListener('drop', handleDragDrop);
 		};
 	});
-
-	$inspect(indicator);
 </script>
 
 <div

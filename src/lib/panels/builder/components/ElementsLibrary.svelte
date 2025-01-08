@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { containers, elements } from '$lib/element-config';
+	import { elements } from '$lib/element-config';
 	import PanelGroup from '$lib/components/PanelGroup.svelte';
 	import { iframeState, selectElement } from '$lib/shared.svelte';
 

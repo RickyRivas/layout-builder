@@ -1,9 +1,10 @@
 <script lang="ts">
-	import RadioButtonGroup from '$lib/components/RadioButtonGroup.svelte';
+	import DropDrown from '$lib/components/DropDrown.svelte';
 	import { getPropertyValue } from '$lib/helpers';
 	import { updateIframeStylesheet } from '$lib/shared.svelte';
 
 	const weightValues = [
+		{ value: '200', label: '200 - Extra Light' },
 		{ value: '300', label: '300 - Light' },
 		{ value: '400', label: '400 - Regular' },
 		{ value: '500', label: '500 - Medium' },
@@ -25,22 +26,10 @@
 </script>
 
 <h3>Font Weight</h3>
-<RadioButtonGroup>
-	{#snippet content()}
-		{#each weightValues as { value, label }}
-			<input
-				type="radio"
-				id="font-weight-{value}"
-				{value}
-				bind:group={fontWeight}
-				onchange={() => {
-					console.log(value);
-					updateIframeStylesheet('font-weight', value);
-				}}
-			/>
-			<label for="font-weight-{value}">
-				{label}
-			</label>
-		{/each}
-	{/snippet}
-</RadioButtonGroup>
+<DropDrown
+	value={fontWeight}
+	options={weightValues}
+	onUpdate={(newValue) => {
+		updateIframeStylesheet('font-weight', newValue);
+	}}
+/>
