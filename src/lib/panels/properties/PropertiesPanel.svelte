@@ -5,6 +5,7 @@
 	import DisplayProperties from '$lib/panels/properties/display/DisplayProperties.svelte';
 	import SizingProperties from '$lib/panels/properties/sizing/SizingProperties.svelte';
 	import TypographyProperties from './typography/TypographyProperties.svelte';
+	import BackgroundProperties from './background/BackgroundProperties.svelte';
 </script>
 
 <div id="properties-panel" class="panel panel-right">
@@ -14,4 +15,5 @@
 	<SpacingProperties />
 	<SizingProperties />
 	<TypographyProperties />
+	<BackgroundProperties />
 </div>

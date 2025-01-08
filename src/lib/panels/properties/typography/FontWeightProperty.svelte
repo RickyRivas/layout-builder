@@ -4,10 +4,11 @@
 	import { updateIframeStylesheet } from '$lib/shared.svelte';
 
 	const weightValues = [
-		{ value: '400', label: 'Regular' },
-		{ value: '500', label: 'Medium' },
-		{ value: '600', label: 'Semibold' },
-		{ value: '700', label: 'Bold' }
+		{ value: '300', label: '300 - Light' },
+		{ value: '400', label: '400 - Regular' },
+		{ value: '500', label: '500 - Medium' },
+		{ value: '600', label: '600 - Semibold' },
+		{ value: '700', label: '700 - Bold' }
 	];
 
 	let fontWeight = $state();
@@ -33,6 +34,7 @@
 				{value}
 				bind:group={fontWeight}
 				onchange={() => {
+					console.log(value);
 					updateIframeStylesheet('font-weight', value);
 				}}
 			/>
