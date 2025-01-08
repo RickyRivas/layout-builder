@@ -1,66 +1,42 @@
 <script>
 	import RadioButtonGroup from '$lib/components/RadioButtonGroup.svelte';
 	import PanelGroup from '$lib/components/PanelGroup.svelte';
-	import { positionValues, offsetProperties } from '$lib/properties';
-	import {
-		iframeState,
-		updateIframeStylesheet,
-		findDefaultPropertyValue
-	} from '$lib/shared.svelte';
+	import { positionValues } from '$lib/properties';
+	import { updateIframeStylesheet } from '$lib/shared.svelte';
+	import { getPropertyValue } from '$lib/helpers';
+	import UnitInput from '../UnitInput.svelte';
+	import { positionUnits } from '$lib/units';
 
-	let selectedPositionValue = $state();
-	let offsetValues = $state({
+	let positionValue = $state();
+	let prevPositionValue = $state();
+	let offsetProperties = $state({
 		top: '',
 		right: '',
 		bottom: '',
 		left: '',
 		zIndex: ''
 	});
-
-	function handlePositionChange(value) {
-		if (!iframeState.selected) return;
-
-		selectedPositionValue = value;
-		updateIframeStylesheet('position', value);
-	}
-
-	function handleOffsetChange(property, value) {
-		if (!iframeState.selected) return;
-
-		updateIframeStylesheet(property, value);
-		offsetValues[property] = value;
-	}
-
-	function showOffsetControls() {
-		return ['relative', 'fixed', 'absolute'].includes(selectedPositionValue);
-	}
+	let prevOffsetValues = {};
 
 	$effect(() => {
-		if (!iframeState.selected) return;
-
-		// update pos value
-		const computedPosition = findDefaultPropertyValue(
-			iframeState.selected,
-			'position',
-			positionValues
-		);
-
-		if (computedPosition !== selectedPositionValue) {
-			selectedPositionValue = computedPosition;
+		let newPosValue = getPropertyValue('position', '', true);
+		if (newPosValue !== prevPositionValue) {
+			prevPositionValue = newPosValue;
+			positionValue = newPosValue;
 		}
 
-		// update offset values
-		const computedStyle = getComputedStyle(iframeState.selected);
-		offsetProperties.forEach((prop) => {
-			const computedValue = computedStyle[prop];
-			if (offsetValues[prop] !== computedValue) {
-				offsetValues[prop] = computedValue;
+		Object.keys(offsetProperties).forEach((prop) => {
+			const newValue = getPropertyValue(prop, '', true);
+
+			if (newValue !== offsetProperties[prop]) {
+				prevOffsetValues[prop] = newValue;
+				offsetProperties[prop] = newValue;
 			}
 		});
 	});
 </script>
 
-<PanelGroup title="Position">
+<PanelGroup title="Position" keepOpen={true}>
 	{#snippet panelContent()}
 		<RadioButtonGroup>
 			{#snippet content()}
@@ -70,34 +46,29 @@
 						name="position-property"
 						id="position-property-{value}"
 						{value}
-						checked={value === selectedPositionValue}
-						onchange={() => handlePositionChange(value)}
+						bind:group={positionValue}
+						onchange={() => updateIframeStylesheet('position', value)}
 					/>
-					<label for="position-property-{value}" class:active={value === selectedPositionValue}>
+					<label for="position-property-{value}">
 						{value}
 					</label>
 				{/each}
 			{/snippet}
 		</RadioButtonGroup>
 
-		{#if showOffsetControls()}
-			<div class="offset-controls">
-				<h4>Offset</h4>
-				{#each offsetProperties as property}
-					<div class="form-control">
-						<label for="offset-{property}">
-							{property}
-							<input
-								type="text"
-								value={offsetValues[property]}
-								id="offset-{property}"
-								onchange={(e) => handleOffsetChange(property, e.target.value)}
-								placeholder="auto"
-							/>
-						</label>
-					</div>
-				{/each}
-			</div>
+		{#if positionValue === 'fixed' || positionValue === 'absolute' || positionValue === 'relative'}
+			<h3>Offset</h3>
+			{#each Object.keys(offsetProperties) as property}
+				<div class="form-control">
+					<UnitInput
+						label={property}
+						value={offsetProperties[property]}
+						name="input-{property}"
+						allowedUnits={positionUnits}
+						onUpdate={(newValue) => updateIframeStylesheet(property, newValue)}
+					/>
+				</div>
+			{/each}
 		{/if}
 	{/snippet}
 </PanelGroup>

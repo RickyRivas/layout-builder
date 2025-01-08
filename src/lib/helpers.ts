@@ -112,7 +112,6 @@ export function generateUnformattedCss() {
     let cssContent = '';
 
     rules.forEach(rule => {
-        console.log(rule)
         cssContent += `${rule.selectorText} { ${rule.style.cssText} }\n`;
     });
 
