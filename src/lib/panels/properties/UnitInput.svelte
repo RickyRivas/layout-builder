@@ -20,7 +20,7 @@
 
 		if (value) {
 			// Handle special values
-			if (['auto', 'none', '0'].includes(value)) {
+			if (['auto', 'none', '0', 'normal'].includes(value)) {
 				numericValue = value === '0' ? '0' : '';
 				currentUnit = value;
 				return;
@@ -38,7 +38,7 @@
 
 	function updateValue(newNumericValue, newUnit) {
 		// Handle special values
-		if (['auto', 'none'].includes(newUnit)) {
+		if (['auto', 'none', 'normal'].includes(newUnit)) {
 			onUpdate(newUnit);
 			return;
 		}
@@ -77,8 +77,8 @@
 			id="unit-input-{name}"
 			name="unit-input-{name}"
 			type="text"
-			value={['auto', 'none'].includes(currentUnit) ? currentUnit : numericValue}
-			disabled={['auto', 'none'].includes(currentUnit)}
+			value={['auto', 'none', 'normal'].includes(currentUnit) ? currentUnit : numericValue}
+			disabled={['auto', 'none', 'normal'].includes(currentUnit)}
 			oninput={(e) => updateValue(e.target.value, currentUnit)}
 		/>
 		<button class="unit-button" onclick={() => (showUnitsList = !showUnitsList)}>

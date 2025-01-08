@@ -8,7 +8,7 @@
 	let prevValue = null; // Track previous value
 
 	$effect(() => {
-		const newValue = getPropertyValue('lineHeight');
+		const newValue = getPropertyValue('lineHeight', 'normal', true);
 
 		// Only update if value actually changed
 		if (newValue !== prevValue) {
@@ -18,10 +18,12 @@
 	});
 </script>
 
-<h3>Line Height</h3>
-<UnitInput
-	{value}
-	name="line-height"
-	allowedUnits={lineHeightUnits}
-	onUpdate={(newValue) => updateIframeStylesheet('line-height', newValue)}
-/>
+<div class="form-control">
+	<UnitInput
+		{value}
+		label="Line Height"
+		name="line-height"
+		allowedUnits={lineHeightUnits}
+		onUpdate={(newValue) => updateIframeStylesheet('line-height', newValue)}
+	/>
+</div>

@@ -36,7 +36,7 @@
 	});
 </script>
 
-<PanelGroup title="Position" keepOpen={true}>
+<PanelGroup title="Position">
 	{#snippet panelContent()}
 		<RadioButtonGroup>
 			{#snippet content()}

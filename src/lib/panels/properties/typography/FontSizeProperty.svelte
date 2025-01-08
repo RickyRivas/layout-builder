@@ -8,7 +8,7 @@
 	let prevValue = null; // Track previous value
 
 	$effect(() => {
-		const newValue = getPropertyValue('fontSize');
+		const newValue = getPropertyValue('fontSize', '', true);
 
 		// Only update if value actually changed
 		if (newValue !== prevValue) {
@@ -18,10 +18,12 @@
 	});
 </script>
 
-<h3>Font Size</h3>
-<UnitInput
-	allowedUnits={fontSizeUnits}
-	name={'font-size'}
-	value={fontSize}
-	onUpdate={(e) => updateIframeStylesheet('font-size', e)}
-/>
+<div class="form-control">
+	<UnitInput
+		allowedUnits={fontSizeUnits}
+		label="Font Size"
+		name={'font-size'}
+		value={fontSize}
+		onUpdate={(e) => updateIframeStylesheet('font-size', e)}
+	/>
+</div>

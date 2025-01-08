@@ -14,7 +14,7 @@
 	let prevValue = $state(null);
 
 	$effect(() => {
-		const newValue = getPropertyValue('fontWeight');
+		const newValue = getPropertyValue('fontWeight', '', true);
 
 		if (newValue !== fontWeight) {
 			prevValue = newValue;

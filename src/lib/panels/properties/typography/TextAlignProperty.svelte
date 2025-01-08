@@ -9,7 +9,7 @@
 	let prevValue = $state(null);
 
 	$effect(() => {
-		let newValue = getPropertyValue('textAlign');
+		let newValue = getPropertyValue('textAlign', '', true);
 		if (newValue !== prevValue) {
 			prevValue = newValue;
 			textAlignValue = prevValue;
