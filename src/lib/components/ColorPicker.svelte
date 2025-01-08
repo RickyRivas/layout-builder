@@ -37,7 +37,7 @@
 </script>
 
 <div class="color-picker">
-	<div class="colors">
+	<div class="color-presets">
 		{#each colors as presetColor}
 			<button onclick={() => setColor(presetColor)} style:background={presetColor}> preset </button>
 		{/each}

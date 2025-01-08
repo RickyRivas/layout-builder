@@ -13,6 +13,11 @@
             box-sizing: border-box;
         }
 
+        body {
+            min-height: 100vh;
+            position: relative;
+        }
+
         /* Section (Parent Container) */
         section,
         .section {
@@ -104,23 +109,11 @@
             padding: 16px;
             margin-bottom: 16px;
         }
-
-        body {
-            min-height: 100vh;
-            position: relative;
-        }
-
-        .drop-indicator {
-            position: absolute;
-            pointer-events: none;
-            border: 0 solid #0099ff;
-        }
     </style>
 </head>
 
 <body>
     <section></section>
-    <div class="drop-indicator"></div>
 </body>
 
 </html>

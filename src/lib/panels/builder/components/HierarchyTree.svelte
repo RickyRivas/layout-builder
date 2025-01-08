@@ -1,5 +1,5 @@
 <script>
-	import { getElementSelector, getParentPath, getSelectorForStyle } from '$lib/helpers';
+	import { getElementSelector } from '$lib/helpers';
 	import PanelGroup from '$lib/components/PanelGroup.svelte';
 	import { iframeState, selectElement, updateGhostPosition } from '$lib/shared.svelte';
 	import TreeNode from './TreeNode.svelte';

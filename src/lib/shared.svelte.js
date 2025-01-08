@@ -29,7 +29,6 @@ export function findDefaultPropertyValue(element, property, allowedValues) {
 }
 
 export function updateIframeStylesheet(property, value) {
-    console.log(property, value)
     if (!iframeState.selected) return
     iframeState.updating = true
 
