@@ -25,8 +25,8 @@
 	});
 </script>
 
-<h3>Font Weight</h3>
 <DropDrown
+	label="Font Weight"
 	value={fontWeight}
 	options={weightValues}
 	onUpdate={(newValue) => {

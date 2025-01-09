@@ -5,36 +5,42 @@
 	import UnitInput from '$lib/panels/properties/UnitInput.svelte';
 	import PanelGroup from '$lib/components/PanelGroup.svelte';
 
-	const sizingConfig = {
+	export const sizingConfig = {
 		width: {
 			units: widthUnits,
 			value: '',
-			defaultValue: 'auto'
+			defaultValue: 'auto',
+			label: 'Width'
 		},
 		'min-width': {
 			units: minSizeUnits,
 			value: '',
-			defaultValue: '0'
+			defaultValue: '0',
+			label: 'Min Width'
 		},
 		'max-width': {
 			units: maxSizeUnits,
 			value: '',
-			defaultValue: 'none'
+			defaultValue: 'none',
+			label: 'Max Width'
 		},
 		height: {
 			units: heightUnits,
 			value: '',
-			defaultValue: 'auto'
+			defaultValue: 'auto',
+			label: 'Height'
 		},
 		'min-height': {
 			units: minSizeUnits,
 			value: '',
-			defaultValue: '0'
+			defaultValue: '0',
+			label: 'Min Height'
 		},
 		'max-height': {
 			units: maxSizeUnits,
 			value: '',
-			defaultValue: 'none'
+			defaultValue: 'none',
+			label: 'Max Height'
 		}
 	};
 
@@ -61,7 +67,7 @@
 				<UnitInput
 					allowedUnits={config.units}
 					name={property}
-					label={property}
+					label={config.label}
 					value={config.value}
 					onUpdate={(e) => updateIframeStylesheet(property, e)}
 				/>

@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import HoverOverlay from '$lib/overlays/HoverOverlay.svelte';
 	import DragOverlay from '$lib/overlays/DragOverlay.svelte';
+	import TabPanel from '$lib/components/TabPanel.svelte';
 
 	let iframeElement;
 
@@ -24,12 +25,11 @@
 </script>
 
 <section id="main-view">
-	<BuilderPanel />
+	<TabPanel />
 	<div class="iframe-container">
 		<SelectionOverlay />
 		<HoverOverlay />
 		<DragOverlay />
 		<iframe id="preview" bind:this={iframeElement} title="preview" />
 	</div>
-	<PropertiesPanel />
 </section>

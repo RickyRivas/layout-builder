@@ -17,8 +17,8 @@
 	// });
 </script>
 
-<h3>Font Weight</h3>
 <DropDrown
+	label="Font Family"
 	value={fontFamily}
 	options={fontFamilyValues}
 	onUpdate={(newValue) => {

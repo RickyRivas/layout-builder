@@ -25,6 +25,6 @@
 
 <PanelGroup title="Background">
 	{#snippet panelContent()}
-		<ColorPicker value={backgroundColor} onUpdate={handleColorUpdate} />
+		<ColorPicker label="Background Color" value={backgroundColor} onUpdate={handleColorUpdate} />
 	{/snippet}
 </PanelGroup>

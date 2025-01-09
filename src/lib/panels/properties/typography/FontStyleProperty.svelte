@@ -17,8 +17,7 @@
 	});
 </script>
 
-<h3>Font Style</h3>
-<RadioButtonGroup>
+<RadioButtonGroup label={'Font Style'}>
 	{#snippet content()}
 		{#each fontStyles as { value, label, path }}
 			<div class="radio-button">

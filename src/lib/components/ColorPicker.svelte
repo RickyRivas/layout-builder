@@ -1,5 +1,5 @@
 <script>
-	let { value = '', onUpdate } = $props();
+	let { value = '', onUpdate, label = 'Color Picker' } = $props();
 	let colors = ['#BBFF00', '#06F586', '#ff3e00', '#8D462E', '#FF0037'];
 
 	function toHex(color) {
@@ -29,6 +29,8 @@
 		value = toHex(value);
 	});
 
+	let id = crypto.randomUUID();
+
 	function setColor(newColor) {
 		const hexColor = toHex(newColor);
 		value = hexColor;
@@ -36,38 +38,18 @@
 	}
 </script>
 
-<div class="color-picker-container">
-	<div class="color-presets">
-		{#each colors as presetColor}
-			<button
-				class="preset-btn"
-				onclick={() => setColor(presetColor)}
-				style:background={presetColor}
-				aria-label={`Click to change color to ${presetColor}`}
-			>
-			</button>
-		{/each}
-	</div>
-
-	<div class="form-control">
-		<span>{value}</span>
-		<input type="color" name="color" {value} oninput={(e) => setColor(e.target.value)} />
-	</div>
+<div class="form-control">
+	<label for="color-input-{id}">{label}</label>
+	<input
+		id="color-input-{id}"
+		type="color"
+		name="color"
+		{value}
+		oninput={(e) => setColor(e.target.value)}
+	/>
 </div>
 
 <style lang="less">
-	.color-picker-container {
-		display: block;
-		width: 100%;
-		text-align: center;
-		span {
-			display: block;
-			text-transform: uppercase;
-			font-family: 16px;
-			line-height: 44px;
-		}
-	}
-
 	.color-presets {
 		display: flex;
 		justify-content: space-between;

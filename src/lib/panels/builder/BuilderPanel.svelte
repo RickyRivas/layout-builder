@@ -7,12 +7,10 @@
 	// $inspect(css);
 </script>
 
-<div id="builder-panel" class="panel panel-left">
-	<ElementsLibrary />
-	<HierarchyTree />
-	<button
-		onclick={() => {
-			css = generateUnformattedCss();
-		}}>Generate CSS</button
-	>
-</div>
+<ElementsLibrary />
+<HierarchyTree />
+<button
+	onclick={() => {
+		css = generateUnformattedCss();
+	}}>Generate CSS</button
+>

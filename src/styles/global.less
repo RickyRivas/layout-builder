@@ -7,20 +7,20 @@
 // default theme css vars
 :root {
     // colors
-    --primary: #606c38;
+    --primary: #ff3e00;
     --primary-light: #f9f3f3;
-    --secondary: #a3b18a;
+    --secondary: #f96743;
 
     // text
-    --heading: #353a44;
-    --text: #353a44;
+    --heading: #4a4a55;
+    --text: #4a4a55;
 
     // shadows
     --box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
 
     // section backgrounds
     --bg: #fff;
-    --bg-alternate: #FAF8F7;
+    --bg-alternate: #f0f0f0;
 
     // header
     --mainnav-bg: #fff;
@@ -43,7 +43,7 @@
     --form-field-error-bg: #ffdfdf;
 
     --mainnav-height: 50px;
-    --panel-width: unit((300/20), em);
+    --panel-width: 352px;
 }
 
 html {
@@ -74,11 +74,11 @@ body {
 /* ===============================================
 	h family || hfam 
 =============================================== */
-@h2fs: 22;
-@h3fs: 20;
-@h4fs: 19;
-@h5fs: 18;
-@h6fs: 17;
+@h2fs: 18;
+@h3fs: 17;
+@h4fs: 16;
+@h5fs: 15;
+@h6fs: 14;
 
 h1,
 h2:not(.title),
@@ -103,7 +103,6 @@ h2:not(.title) {
 
 h3:not(.title) {
     font-size: unit((@h3fs/20), em);
-    color: var(--primary);
 }
 
 h3.title {
@@ -122,6 +121,11 @@ h6 {
     font-size: unit((@h6fs/20), em);
 }
 
+.icon {
+    width: 100%;
+    height: auto;
+    .ib;
+}
 
 /* ===============================================
 	.screenreader 
@@ -145,6 +149,7 @@ h6 {
     grid-template-columns: repeat(5, 1fr);
     gap: 5px;
     background-color: var(--form-field-bg);
+    .rounded(var(--border-radius));
 
     .radio-button {
         .flex;
@@ -152,13 +157,12 @@ h6 {
         .ai(center);
         position: relative;
         width: 100%;
-        transition: background-color .33s ease;
 
         label {
             display: block;
             width: 44px;
             line-height: 0;
-            background-color: #3a3a3a;
+            transition: background-color .33s ease, color .33s ease;
         }
 
         input {
@@ -168,6 +172,7 @@ h6 {
             &:checked+label,
             &:hover+label {
                 background-color: var(--primary);
+                color: #fff;
             }
         }
 
@@ -198,36 +203,6 @@ h6 {
     }
 }
 
-section#main-view {
-    .flex;
-    gap: 1em;
-}
-
-.accordion-block,
-.accordion-item {
-    margin-bottom: 1em;
-}
-
-.iframe-container {
-    width: 100%;
-    position: relative;
-    background-color: var(--bg);
-    border: 1px solid var(--border-color);
-    border-bottom: 0px;
-    min-height: 100vh;
-    .flex;
-
-    @media only screen and (min-width:1024px) {
-        min-height: calc(100vh - var(--mainnav-height) - 1em);
-        height: 100%;
-        width: 100%;
-        max-width: calc(calc(100% - 2em) - var(--panel-width)*2);
-        margin: 0 auto;
-        margin-top: calc(var(--mainnav-height) + 1em);
-    }
-
-
-}
 
 iframe#preview {
     display: block;

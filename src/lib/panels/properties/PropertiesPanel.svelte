@@ -8,12 +8,10 @@
 	import BackgroundProperties from './background/BackgroundProperties.svelte';
 </script>
 
-<div id="properties-panel" class="panel panel-right">
-	<ElementIdentifier />
-	<DisplayProperties />
-	<PositionProperty />
-	<SpacingProperties />
-	<SizingProperties />
-	<TypographyProperties />
-	<BackgroundProperties />
-</div>
+<ElementIdentifier />
+<DisplayProperties />
+<PositionProperty />
+<SpacingProperties />
+<SizingProperties />
+<TypographyProperties />
+<BackgroundProperties />

@@ -17,8 +17,7 @@
 	});
 </script>
 
-<h3>Text Align</h3>
-<RadioButtonGroup>
+<RadioButtonGroup label="Text Align">
 	{#snippet content()}
 		{#each textAlignValues as { value, label, path }}
 			<div class="radio-button">

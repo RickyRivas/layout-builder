@@ -3,6 +3,7 @@
 	import PanelGroup from '$lib/components/PanelGroup.svelte';
 	import { iframeState, selectElement, updateGhostPosition } from '$lib/shared.svelte';
 	import TreeNode from './TreeNode.svelte';
+	import { fly } from 'svelte/transition';
 	let treeNodes = $state([]);
 
 	function buildTreefromBody() {
@@ -68,7 +69,7 @@
 		<div id="tree">
 			<!-- recursively render -->
 			{#if treeNodes.length > 0}
-				<ul>
+				<ul in:fly={{ x: 200 }}>
 					{#each treeNodes as node}
 						<TreeNode {node} {onclick} {removeElement} />
 					{/each}

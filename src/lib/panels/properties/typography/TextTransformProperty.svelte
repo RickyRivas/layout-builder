@@ -19,8 +19,7 @@
 	});
 </script>
 
-<h3>Text Transform</h3>
-<RadioButtonGroup>
+<RadioButtonGroup label={'Text Transform'}>
 	{#snippet content()}
 		{#each textTransforms as { value, label, path }}
 			<div class="radio-button">

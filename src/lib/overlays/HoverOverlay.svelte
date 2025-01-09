@@ -88,7 +88,7 @@
 		display: block;
 		position: absolute;
 		bottom: calc(100% + 0px);
-		left: 0;
+		left: -1px;
 		background-color: #00cea8;
 		font-size: 12px;
 		line-height: 14px;
