@@ -72,7 +72,7 @@
 </script>
 
 <!-- Main Displays -->
-<PanelGroup title="Display">
+<PanelGroup title="Display" keepOpen={true}>
 	{#snippet panelContent()}
 		<RadioButtonGroup>
 			{#snippet content()}
@@ -100,8 +100,7 @@
 		<!-- flex -->
 		{#if selectedDisplayValue.includes('flex')}
 			{#each Object.keys(selectedFlexProps) as property}
-				<h3>{selectedFlexProps[property].label}</h3>
-				<RadioButtonGroup>
+				<RadioButtonGroup label={selectedFlexProps[property].label}>
 					{#snippet content()}
 						{#each selectedFlexProps[property].values as { value, label, path }}
 							<div class="radio-button">
@@ -130,8 +129,7 @@
 		<!-- Grid Properties -->
 		{#if selectedDisplayValue.includes('grid')}
 			{#each Object.keys(selectedGridProps) as property}
-				<h3>{property}</h3>
-				<RadioButtonGroup>
+				<RadioButtonGroup label={selectedGridProps[property].label}>
 					{#snippet content()}
 						{#each selectedGridProps[property].values as { value, label, path }}
 							<div class="radio-button">
@@ -140,6 +138,7 @@
 									name="grid-property-{property}-{value}"
 									id="grid-property-{property}-{value}"
 									{value}
+									data-checked={value === selectedGridProps[property].value}
 									bind:group={selectedGridProps[property].value}
 									onchange={() => {
 										updateIframeStylesheet(property, value);

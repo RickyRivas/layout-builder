@@ -19,6 +19,7 @@
 </script>
 
 <UnitInput
+	width="half"
 	allowedUnits={fontSizeUnits}
 	label="Font Size"
 	name={'font-size'}

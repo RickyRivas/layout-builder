@@ -63,15 +63,14 @@
 <PanelGroup title="Sizing">
 	{#snippet panelContent()}
 		{#each Object.entries(sizing) as [property, config]}
-			<div class="form-control">
-				<UnitInput
-					allowedUnits={config.units}
-					name={property}
-					label={config.label}
-					value={config.value}
-					onUpdate={(e) => updateIframeStylesheet(property, e)}
-				/>
-			</div>
+			<UnitInput
+				width="half"
+				allowedUnits={config.units}
+				name={property}
+				label={config.label}
+				value={config.value}
+				onUpdate={(e) => updateIframeStylesheet(property, e)}
+			/>
 		{/each}
 	{/snippet}
 </PanelGroup>

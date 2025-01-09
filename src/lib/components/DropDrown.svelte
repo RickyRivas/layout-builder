@@ -1,6 +1,12 @@
 <script>
 	import { fade, fly } from 'svelte/transition';
-	let { options, value = 'Dropdown Toggle', onUpdate, label = 'Select an option' } = $props();
+	let {
+		options,
+		value = 'Dropdown Toggle',
+		onUpdate,
+		label = 'Select an option',
+		width = 'full'
+	} = $props();
 	function onclick() {
 		isOpen = !isOpen;
 	}
@@ -14,7 +20,7 @@
 	let listboxId = `listbox-${dropdownId}`;
 </script>
 
-<div class="form-control" style:z-index={isOpen ? 777 : 'auto'}>
+<div class="form-control width-{width}" style:z-index={isOpen ? 777 : 'auto'}>
 	<label class="dropdown-label" for="dropdown-button-{dropdownId}">{label}</label>
 	<div class="dropdown-component">
 		<button

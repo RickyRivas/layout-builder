@@ -1,6 +1,4 @@
 <script>
-	import PropertiesPanel from '$lib/panels/properties/PropertiesPanel.svelte';
-	import BuilderPanel from '$lib/panels/builder/BuilderPanel.svelte';
 	import SelectionOverlay from '$lib/overlays/SelectionOverlay.svelte';
 
 	import { iframeState, initIframe, updateGhostPosition } from '$lib/shared.svelte';

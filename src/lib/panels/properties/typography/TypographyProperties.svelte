@@ -12,11 +12,11 @@
 
 <PanelGroup title="Typography">
 	{#snippet panelContent()}
-		<FontFamily />
 		<FontSizeProperty />
 		<LineHeightProperty />
-		<TextAlignProperty />
 		<FontWeightProperty />
+		<FontFamily />
+		<TextAlignProperty />
 		<FontStyleProperty />
 		<TextTransformProperty />
 		<ColorProperty />

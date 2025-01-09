@@ -20,6 +20,7 @@
 
 <UnitInput
 	{value}
+	width="half"
 	label="Line Height"
 	name="line-height"
 	allowedUnits={lineHeightUnits}

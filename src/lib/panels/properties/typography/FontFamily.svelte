@@ -19,6 +19,7 @@
 
 <DropDrown
 	label="Font Family"
+	width="half"
 	value={fontFamily}
 	options={fontFamilyValues}
 	onUpdate={(newValue) => {

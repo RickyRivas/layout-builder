@@ -79,7 +79,7 @@
 	}
 </script>
 
-<PanelGroup title="Spacing" keepOpen={true}>
+<PanelGroup title="Spacing">
 	{#snippet panelContent()}
 		<div class="spacing-tabs">
 			<div class="tab-buttons" role="tablist">

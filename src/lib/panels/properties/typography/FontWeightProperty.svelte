@@ -26,6 +26,7 @@
 </script>
 
 <DropDrown
+	width="half"
 	label="Font Weight"
 	value={fontWeight}
 	options={weightValues}

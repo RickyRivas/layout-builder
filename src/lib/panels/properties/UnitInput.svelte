@@ -1,7 +1,7 @@
 <script>
 	import { iframeState } from '$lib/shared.svelte';
 
-	let { value, onUpdate, name, label = '', allowedUnits } = $props();
+	let { value, onUpdate, name, label = '', allowedUnits, width = 'full' } = $props();
 	let currentElement = $state(null);
 
 	let showUnitsList = $state(false);
@@ -80,7 +80,7 @@
 	}
 </script>
 
-<div class="form-control" style:z-index={showUnitsList ? 777 : 'auto'}>
+<div class="form-control width-{width}" style:z-index={showUnitsList ? 777 : 'auto'}>
 	<div class="unit-input-container">
 		{#if label}
 			<label for="unit-input-{name}">

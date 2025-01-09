@@ -36,38 +36,38 @@
 	});
 </script>
 
-<PanelGroup title="Position">
+<PanelGroup title="Position" keepOpen={true}>
 	{#snippet panelContent()}
-		<RadioButtonGroup>
+		<RadioButtonGroup style="text">
 			{#snippet content()}
 				{#each positionValues as value, i}
-					<input
-						type="radio"
-						name="position-property"
-						id="position-property-{value}"
-						{value}
-						bind:group={positionValue}
-						onchange={() => updateIframeStylesheet('position', value)}
-					/>
-					<label for="position-property-{value}">
-						{value}
-					</label>
+					<div class="radio-button">
+						<input
+							type="radio"
+							name="position-property"
+							id="position-property-{value}"
+							{value}
+							bind:group={positionValue}
+							onchange={() => updateIframeStylesheet('position', value)}
+						/>
+						<label for="position-property-{value}">
+							{value}
+						</label>
+					</div>
 				{/each}
 			{/snippet}
 		</RadioButtonGroup>
 
 		{#if positionValue === 'fixed' || positionValue === 'absolute' || positionValue === 'relative'}
-			<h3>Offset</h3>
 			{#each Object.keys(offsetProperties) as property}
-				<div class="form-control">
-					<UnitInput
-						label={property}
-						value={offsetProperties[property]}
-						name="input-{property}"
-						allowedUnits={positionUnits}
-						onUpdate={(newValue) => updateIframeStylesheet(property, newValue)}
-					/>
-				</div>
+				<UnitInput
+					width="half"
+					label={property}
+					value={offsetProperties[property]}
+					name="input-{property}"
+					allowedUnits={positionUnits}
+					onUpdate={(newValue) => updateIframeStylesheet(property, newValue)}
+				/>
 			{/each}
 		{/if}
 	{/snippet}
