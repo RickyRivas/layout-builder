@@ -18,12 +18,10 @@
 	});
 </script>
 
-<div class="form-control">
-	<UnitInput
-		{value}
-		label="Line Height"
-		name="line-height"
-		allowedUnits={lineHeightUnits}
-		onUpdate={(newValue) => updateIframeStylesheet('line-height', newValue)}
-	/>
-</div>
+<UnitInput
+	{value}
+	label="Line Height"
+	name="line-height"
+	allowedUnits={lineHeightUnits}
+	onUpdate={(newValue) => updateIframeStylesheet('line-height', newValue)}
+/>

@@ -36,15 +36,54 @@
 	}
 </script>
 
-<div class="color-picker">
+<div class="color-picker-container">
 	<div class="color-presets">
 		{#each colors as presetColor}
-			<button onclick={() => setColor(presetColor)} style:background={presetColor}> preset </button>
+			<button
+				class="preset-btn"
+				onclick={() => setColor(presetColor)}
+				style:background={presetColor}
+				aria-label={`Click to change color to ${presetColor}`}
+			>
+			</button>
 		{/each}
 	</div>
 
 	<div class="form-control">
-		<input type="color" name="color" {value} oninput={(e) => setColor(e.target.value)} />
 		<span>{value}</span>
+		<input type="color" name="color" {value} oninput={(e) => setColor(e.target.value)} />
 	</div>
 </div>
+
+<style lang="less">
+	.color-picker-container {
+		display: block;
+		width: 100%;
+		text-align: center;
+		span {
+			display: block;
+			text-transform: uppercase;
+			font-family: 16px;
+			line-height: 44px;
+		}
+	}
+
+	.color-presets {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		align-items: center;
+		.preset-btn {
+			display: block;
+			width: 44px;
+			height: 44px;
+			border: 0px;
+			border-radius: 50%;
+			border: 2px solid var(--border-color);
+		}
+	}
+	input[type='color'] {
+		display: block;
+		width: 100%;
+	}
+</style>

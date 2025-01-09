@@ -18,12 +18,10 @@
 	});
 </script>
 
-<div class="form-control">
-	<UnitInput
-		allowedUnits={fontSizeUnits}
-		label="Font Size"
-		name={'font-size'}
-		value={fontSize}
-		onUpdate={(e) => updateIframeStylesheet('font-size', e)}
-	/>
-</div>
+<UnitInput
+	allowedUnits={fontSizeUnits}
+	label="Font Size"
+	name={'font-size'}
+	value={fontSize}
+	onUpdate={(e) => updateIframeStylesheet('font-size', e)}
+/>

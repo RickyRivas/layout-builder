@@ -21,4 +21,5 @@
 	}
 </script>
 
+<h3>Color</h3>
 <ColorPicker value={color} onUpdate={handleColorUpdate} />

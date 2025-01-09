@@ -7,10 +7,12 @@
 	import TextAlignProperty from './TextAlignProperty.svelte';
 	import TextTransformProperty from './TextTransformProperty.svelte';
 	import ColorProperty from './ColorProperty.svelte';
+	import FontFamily from './FontFamily.svelte';
 </script>
 
 <PanelGroup title="Typography">
 	{#snippet panelContent()}
+		<FontFamily />
 		<FontSizeProperty />
 		<LineHeightProperty />
 		<TextAlignProperty />

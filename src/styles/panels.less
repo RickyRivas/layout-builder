@@ -38,15 +38,23 @@
 }
 
 .panel-group-content {
+    .flex;
+    .fdir(column);
+    gap: var(--panel-inline-padding);
     padding: var(--panel-inline-padding);
     padding-top: 0px;
 }
 
-.panel-group-tab {
+h3.panel-group-tab {
     display: block;
     width: 100%;
+    color: var(--text);
+    transition: color .33s ease;
 
     button {
+        .flex;
+        .jc(space-between);
+        .ai(center);
         font: inherit;
         .fs((18/20em));
         .lh(44px);
@@ -57,6 +65,33 @@
         border-radius: 0px;
         width: 100%;
         text-align: left;
-        color: var(--text);
+        color: currentColor;
+
+        .icon,
+        &>svg {
+            width: 24px;
+            height: auto;
+            .ib;
+            transition: transform .33s ease;
+        }
+
+        &.no-icon {
+            .jc(flex-start);
+
+            .icon,
+            &>svg {
+                .hide;
+            }
+        }
+    }
+
+    &:hover,
+    &.active {
+        color: var(--primary);
+
+        .icon,
+        svg {
+            transform: rotate(-180deg);
+        }
     }
 }
