@@ -1,6 +1,6 @@
 <script>
 	import { getSelectorForStyle } from '$lib/helpers';
-	import { iframeState } from '$lib/shared.svelte';
+	import { iframeState, updateGhostPosition } from '$lib/shared.svelte';
 	import PanelGroup from '$lib/components/PanelGroup.svelte';
 
 	let currentElement = $state();
@@ -59,6 +59,7 @@
 
 		currentId = newId;
 		iframeState.updating = false;
+		updateGhostPosition();
 	}
 
 	function updateClasses(newClasses) {
@@ -89,6 +90,7 @@
 		currentClasses = newClasses;
 
 		iframeState.updating = false;
+		updateGhostPosition();
 	}
 </script>
 

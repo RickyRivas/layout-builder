@@ -29,7 +29,7 @@
 
 	$effect(() => {
 		Object.keys(spacing).forEach((property) => {
-			const newValue = getPropertyValue(property, spacing[property].defaultValue);
+			const newValue = getPropertyValue(property, spacing[property].defaultValue, true);
 
 			if (newValue !== prevValues[property]) {
 				prevValues[property] = newValue;

@@ -16,8 +16,6 @@
 	let isSaved = $state(false);
 	let isValid = $state(true);
 
-	console.log('value', value, label);
-
 	$effect(() => {
 		if (!iframeState.selected) return;
 

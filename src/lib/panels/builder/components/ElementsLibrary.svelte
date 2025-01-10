@@ -176,6 +176,7 @@
 		}
 
 		draggedType = null;
+		iframeState.selectedPanelIndex = 1;
 	}
 
 	function addElementToFrame(elementConfig) {
@@ -217,23 +218,6 @@
 
 		selectElement(newElement);
 	}
-
-	// init drag/drop when iframe is ready
-	$effect(() => {
-		if (iframeState.initialized) {
-			return initIframeDragDrop();
-		}
-	});
-
-	onDestroy(() => {
-		if (iframeState.document.body) {
-			iframeState.document.body.removeEventListener('mouseover', handleMouseOver);
-			iframeState.document.body.removeEventListener('mouseout', handleMouseOut);
-			iframeState.document.body.removeEventListener('dragstart', handleIframeDragStart);
-			iframeState.document.body.removeEventListener('dragover', handleDragOver);
-			iframeState.document.body.removeEventListener('drop', handleDrop);
-		}
-	});
 
 	function updateIndicator(target, canAcceptChild, cursorY, position) {
 		if (!indicator) return;
@@ -283,6 +267,24 @@
 			indicator.style.height = '0';
 		}
 	}
+
+	// init drag/drop when iframe is ready
+	$effect(() => {
+		if (iframeState.initialized) {
+			return initIframeDragDrop();
+		}
+	});
+
+	onDestroy(() => {
+		if (iframeState.initialized && iframeState.document.body) {
+			iframeState.document.body.removeEventListener('mouseover', handleMouseOver);
+			iframeState.document.body.removeEventListener('mouseout', handleMouseOut);
+			iframeState.document.body.removeEventListener('dragstart', handleIframeDragStart);
+			iframeState.document.body.removeEventListener('dragover', handleDragOver);
+			iframeState.document.body.removeEventListener('drop', handleDrop);
+		}
+	});
+
 	onMount(() => {
 		indicator = document.querySelector('.iframe-container .drop-indicator');
 	});

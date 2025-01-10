@@ -6,7 +6,8 @@ export const iframeState = $state({
     src: '/base-frame.html',
     selector: 'data-builder-selected',
     selected: null,
-    updating: false
+    updating: false,
+    selectedPanelIndex: 0
 })
 
 export function selectElement(target) {
@@ -63,3 +64,4 @@ export function initIframe(iframe) {
         iframeState.initialized = true;
     });
 }
+
