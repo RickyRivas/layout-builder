@@ -112,6 +112,7 @@
 	{#each Object.entries(spacing) as [property, config]}
 		<div class={property}>
 			<UnitInput
+				defaultValue=""
 				label={config.label}
 				allowedUnits={config.units}
 				value={config.value}

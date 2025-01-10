@@ -8,25 +8,25 @@
 		'margin-top': {
 			units: marginUnits,
 			value: '',
-			defaultValue: '0',
+			defaultValue: '0px',
 			label: 'Top'
 		},
 		'margin-right': {
 			units: marginUnits,
 			value: '',
-			defaultValue: '0',
+			defaultValue: '0px',
 			label: 'Right'
 		},
 		'margin-bottom': {
 			units: marginUnits,
 			value: '',
-			defaultValue: '0',
+			defaultValue: '0px',
 			label: 'Bottom'
 		},
 		'margin-left': {
 			units: marginUnits,
 			value: '',
-			defaultValue: '0',
+			defaultValue: '0px',
 			label: 'Left'
 		}
 	};
@@ -36,25 +36,25 @@
 		'padding-top': {
 			units: spacingUnits,
 			value: '',
-			defaultValue: '0',
+			defaultValue: '0px',
 			label: 'Top'
 		},
 		'padding-right': {
 			units: spacingUnits,
 			value: '',
-			defaultValue: '0',
+			defaultValue: '0px',
 			label: 'Right'
 		},
 		'padding-bottom': {
 			units: spacingUnits,
 			value: '',
-			defaultValue: '0',
+			defaultValue: '0px',
 			label: 'Bottom'
 		},
 		'padding-left': {
 			units: spacingUnits,
 			value: '',
-			defaultValue: '0',
+			defaultValue: '0px',
 			label: 'Left'
 		}
 	};

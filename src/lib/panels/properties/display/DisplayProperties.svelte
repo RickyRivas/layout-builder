@@ -12,29 +12,34 @@
 		gridTemplateColumnsPresets
 	} from '$lib/properties';
 	import RadioButton from '$lib/components/RadioButton.svelte';
+	import DropDrown from '$lib/components/DropDrown.svelte';
 
 	let selectedDisplayValue = $state('');
 	let prevDisplayValue = null;
 	let selectedFlexProps = $state({
-		'flex-direction': {
-			value: '',
-			label: 'Flex Direction',
-			values: flexDirectionValues
-		},
 		'justify-content': {
 			value: '',
 			label: 'Justify Content',
-			values: justifyContentValues
+			values: justifyContentValues,
+			component: 'unit'
 		},
 		'align-items': {
 			value: '',
 			label: 'Align Items',
-			values: alignItemsValues
+			values: alignItemsValues,
+			component: 'unit'
 		},
-		'flex-wrap': {
+		// 'flex-wrap': {
+		// 	value: '',
+		// 	label: 'Flex Wrap',
+		// 	values: flexWrapValues,
+		// 	component: 'unit'
+		// },
+		'flex-direction': {
 			value: '',
-			label: 'Flex Wrap',
-			values: flexWrapValues
+			label: 'Flex Direction',
+			values: flexDirectionValues,
+			component: 'dropdown'
 		}
 	});
 	let prevFlexValues = {};
@@ -72,7 +77,7 @@
 </script>
 
 <!-- Main Displays -->
-<PanelGroup title="Display">
+<PanelGroup title="Display" keepOpen={true}>
 	{#snippet panelContent()}
 		<RadioButtonGroup>
 			{#snippet content()}
@@ -92,34 +97,47 @@
 		</RadioButtonGroup>
 
 		<!-- flex -->
+		<!-- dropdown component or radio -->
 		{#if selectedDisplayValue.includes('flex')}
 			{#each Object.keys(selectedFlexProps) as property}
-				<RadioButtonGroup label={selectedFlexProps[property].label}>
-					{#snippet content()}
-						{#each selectedFlexProps[property].values as { value, label, path }}
-							<RadioButton
-								group={selectedFlexProps[property].value}
-								{value}
-								{label}
-								{path}
-								{property}
-								onChange={(newValue) => {
-									updateIframeStylesheet(property, newValue);
-								}}
-							/>
-						{/each}
-					{/snippet}
-				</RadioButtonGroup>
+				{#if selectedFlexProps[property].component === 'unit'}
+					<RadioButtonGroup label={selectedFlexProps[property].label}>
+						{#snippet content()}
+							{#each selectedFlexProps[property].values as { value, label, path }}
+								<RadioButton
+									group={selectedFlexProps[property].value}
+									{value}
+									{label}
+									{path}
+									{property}
+									onChange={(newValue) => {
+										updateIframeStylesheet(property, newValue);
+									}}
+								/>
+							{/each}
+						{/snippet}
+					</RadioButtonGroup>
+				{:else if selectedFlexProps[property].component === 'dropdown'}
+					<DropDrown
+						label={selectedFlexProps[property].label}
+						value={selectedFlexProps[property].value}
+						options={selectedFlexProps[property].values}
+						onUpdate={(newValue) => {
+							updateIframeStylesheet(property, newValue);
+						}}
+					/>
+				{/if}
 			{/each}
 		{/if}
 
 		<!-- Grid Properties -->
 		{#if selectedDisplayValue.includes('grid')}
 			{#each Object.keys(selectedGridProps) as property}
-				<RadioButtonGroup label={selectedGridProps[property].label}>
+				<RadioButtonGroup label="Columns" style="text">
 					{#snippet content()}
 						{#each selectedGridProps[property].values as { value, label, path }}
 							<RadioButton
+								style="text"
 								group={selectedGridProps[property].value}
 								{value}
 								{label}

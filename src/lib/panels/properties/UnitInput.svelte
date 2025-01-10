@@ -1,86 +1,79 @@
 <script>
+	import DynamicIcon from '$lib/components/DynamicIcon.svelte';
 	import { iframeState } from '$lib/shared.svelte';
 
-	let { value, onUpdate, name, label = '', allowedUnits, width = 'full' } = $props();
+	let {
+		value,
+		onUpdate,
+		name,
+		label = '',
+		width = 'full',
+		defaultValue,
+		allowedUnits = []
+	} = $props();
 	let currentElement = $state(null);
+	let inputValue = $state('');
+	let isSaved = $state(false);
+	let isValid = $state(true);
 
-	let showUnitsList = $state(false);
-	let currentUnit = $state('px');
-	let numericValue = $state('');
-	let inputValue = $state();
+	console.log('value', value, label);
 
 	$effect(() => {
 		if (!iframeState.selected) return;
 
-		// Reset values if element changed
+		// Reset if element changed
 		if (currentElement !== iframeState.selected) {
-			numericValue = '';
-			currentUnit = 'px';
 			currentElement = iframeState.selected;
 		}
 
-		if (value) {
-			inputValue = ['auto', 'none', 'normal'].includes(currentUnit) ? currentUnit : numericValue;
-
-			// Handle special values
-			if (['auto', 'none', '0', 'normal'].includes(value)) {
-				numericValue = value === '0' ? '0' : '';
-				currentUnit = value;
-				return;
-			}
-
-			// Parse numeric values with units
-			const match = value.match(/^([\d.]+)(\D+)$/);
-			if (match) {
-				const intValue = parseInt(match[1]);
-				numericValue = isNaN(intValue) ? '' : intValue.toString();
-				currentUnit = match[2];
-			}
-		}
+		// Update input value when prop changes
+		inputValue = value;
 	});
 
-	function updateValue(newNumericValue, newUnit) {
-		console.log('updateValue()', newNumericValue, newUnit);
-		// Handle special values
-		if (['auto', 'none', 'normal'].includes(newUnit)) {
-			onUpdate(newUnit);
+	function validateInput(value) {
+		// Allow empty values (will be handled in save)
+		if (!value?.trim()) return false;
+
+		// Check if value is a special unit (auto, none, normal)
+		if (allowedUnits.includes(value)) return true;
+
+		// Check for valid number + unit combination
+		const match = value.match(/^-?\d+(\.\d+)?(\D+)$/);
+		if (!match) return false;
+
+		// Check if unit is allowed
+		return allowedUnits.some((unit) => value.endsWith(unit));
+	}
+
+	function onclick() {
+		if (!validateInput(inputValue)) {
+			// Show invalid state
+			isValid = false;
+			// Reset after 1s
+			setTimeout(() => {
+				isValid = true;
+			}, 1000);
+
+			// Reset value
+			inputValue = value || defaultValue;
 			return;
 		}
 
-		// Handle numeric values
-		if (newNumericValue || newNumericValue === '0') {
-			const intValue = parseInt(newNumericValue);
-			if (!isNaN(intValue) || newNumericValue === '0') {
-				const newValue = `${intValue}${newUnit}`;
-				onUpdate(newValue);
-			}
+		if (!inputValue?.trim()) {
+			inputValue = defaultValue;
+			onUpdate(defaultValue);
+		} else if (inputValue !== value) {
+			onUpdate(inputValue);
 		}
 
-		// no value, will also remove from stylesheet
-		if (!newNumericValue) {
-			onUpdate(0);
-		}
-	}
-
-	$effect(() => {
-		if (['auto', 'none'].includes(currentUnit)) {
-			numericValue = '';
-		}
-	});
-
-	// no value
-	$effect(() => {
-		if (!inputValue) inputValue = 0;
-	});
-
-	function changeUnit(newUnit) {
-		currentUnit = newUnit;
-		updateValue(numericValue, newUnit);
-		showUnitsList = false;
+		isSaved = true;
+		setTimeout(() => {
+			isSaved = false;
+		}, 1000);
 	}
 </script>
 
-<div class="form-control width-{width}" style:z-index={showUnitsList ? 777 : 'auto'}>
+<div class="form-control width-{width}">
 	<div class="unit-input-container">
 		{#if label}
 			<label for="unit-input-{name}">
@@ -92,28 +85,22 @@
 				id="unit-input-{name}"
 				name="unit-input-{name}"
 				type="text"
+				class:invalid={!isValid}
 				bind:value={inputValue}
-				disabled={['auto', 'none', 'normal'].includes(currentUnit)}
-				oninput={(e) => updateValue(e.target.value, currentUnit)}
+				title={`Allowed units: ${allowedUnits.join(', ')}`}
+				onkeydown={(e) => {
+					if (e.key === 'Enter') {
+						onclick();
+					}
+				}}
 			/>
-			<button class="unit-list-button" onclick={() => (showUnitsList = !showUnitsList)}>
-				{currentUnit}
+			<button class="save-button" {onclick} class:invalid={!isValid} class:saved={isSaved}>
+				<DynamicIcon
+					path="M43.08 7.206a3.147 3.147 0 0 1 0 4.448l-25.14 25.14a3.147 3.147 0 0 1-4.45 0L.92 24.224a3.147 3.147 0 0 1 0-4.448 3.147 3.147 0 0 1 4.45 0l10.35 10.34 22.92-22.91a3.147 3.147 0 0 1 4.45 0h-.01Z"
+					fill="currentcolor"
+				/>
 			</button>
 		</div>
-
-		{#if showUnitsList}
-			<div class="unit-input-list">
-				{#each allowedUnits as unit}
-					<button
-						class="unit-option"
-						class:active={unit === currentUnit}
-						onclick={() => changeUnit(unit)}
-					>
-						{unit}
-					</button>
-				{/each}
-			</div>
-		{/if}
 	</div>
 </div>
 
@@ -125,18 +112,29 @@
 		.unit-input-field {
 			display: flex;
 			position: relative;
-			border-radius: var(--border-radius);
 			background: var(--border-color);
 
-			.unit-list-button {
+			button.save-button {
 				border-radius: 0px;
 				border: 0;
-				font-size: 12px;
-				line-height: 40px;
+				line-height: 0;
 				background: none;
-				padding: 0 1em;
+				padding: 10px;
 				text-transform: uppercase;
-				background-color: var(--for);
+				width: 44px;
+				min-width: 44px;
+				transition:
+					color 0.33s ease,
+					background-color 0.33s ease;
+
+				&.saved {
+					background-color: green;
+					color: #fff;
+				}
+				&.invalid {
+					background-color: red;
+					color: #fff;
+				}
 			}
 		}
 
@@ -162,7 +160,6 @@
 			background-color: #fff;
 			padding: 2px;
 			width: 100%;
-			border-radius: var(--border-radius);
 			box-shadow: var(--box-shadow);
 
 			.unit-option {
@@ -173,7 +170,6 @@
 				line-height: 40px;
 				border: 0px;
 				background-color: #fff;
-				border-radius: calc(var(--border-radius) / 2);
 				transition: background-color 0.33s ease;
 				&:hover,
 				&.selected {

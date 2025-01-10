@@ -193,11 +193,26 @@
 		// if no elements add to section
 		const section = iframeState.document.querySelector('body > section');
 
-		// if section is empty or section is selected, add element to section
-		if (section.children.length === 0 || iframeState.selected === section) {
+		// If no element is selected or section is empty, add to section
+		if (!iframeState.selected || section.children.length === 0) {
 			section.appendChild(newElement);
 		} else {
-			iframeState.selected.parentElement.insertBefore(newElement, iframeState.selected.nextSibling);
+			// Check if selected element can accept this type as a child
+			const selectedConfig = elements.find(
+				(config) => config.type === iframeState.selected.tagName.toLowerCase()
+			);
+			const canAcceptChild = selectedConfig?.allowedChildren?.includes(elementConfig.type);
+
+			if (canAcceptChild) {
+				// Add as child of selected element
+				iframeState.selected.appendChild(newElement);
+			} else {
+				// Add as sibling after selected element
+				iframeState.selected.parentElement.insertBefore(
+					newElement,
+					iframeState.selected.nextSibling
+				);
+			}
 		}
 
 		selectElement(newElement);

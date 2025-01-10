@@ -64,6 +64,7 @@
 	{#snippet panelContent()}
 		{#each Object.entries(sizing) as [property, config]}
 			<UnitInput
+				defaultValue={config.defaultValue}
 				width="half"
 				allowedUnits={config.units}
 				name={property}
