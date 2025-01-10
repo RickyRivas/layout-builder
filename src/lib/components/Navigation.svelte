@@ -15,6 +15,12 @@
 <nav id="mainnav" class:active={isActive}>
 	<a id="logo" href="/"> Layout Builder </a>
 	<div class="toggles">
+		<button
+			id="code-modal-trigger"
+			onclick={() => {
+				iframeState.showCodeModal = !iframeState.showCodeModal;
+			}}><span>View Code</span></button
+		>
 		<form
 			class="theme-toggle custom"
 			method="POST"

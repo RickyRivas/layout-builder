@@ -8,7 +8,8 @@ export const iframeState = $state({
     selected: null,
     updating: false,
     selectedPanelIndex: 0,
-    showMobilePanel: false
+    showMobilePanel: false,
+    showCodeModal: false
 })
 
 export function selectElement(target) {

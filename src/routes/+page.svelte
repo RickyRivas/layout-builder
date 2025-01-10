@@ -6,6 +6,7 @@
 	import HoverOverlay from '$lib/overlays/HoverOverlay.svelte';
 	import DragOverlay from '$lib/overlays/DragOverlay.svelte';
 	import TabPanel from '$lib/components/TabPanel.svelte';
+	import Modal from '$lib/components/Modal.svelte';
 
 	let iframeElement;
 
@@ -43,3 +44,17 @@
 		<iframe id="preview" bind:this={iframeElement} title="preview" />
 	</div>
 </section>
+
+{#if iframeState.showCodeModal}
+	<Modal
+		onescape={() => {
+			iframeState.showCodeModal = false;
+		}}
+	>
+		<h2>Generated Code</h2>
+		<h3>HTML</h3>
+		<div class="html-output"></div>
+		<h3>CSS</h3>
+		<div class="css-output"></div>
+	</Modal>
+{/if}

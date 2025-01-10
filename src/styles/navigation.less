@@ -23,6 +23,11 @@
     text-decoration: none;
 }
 
+.toggles {
+    .flex;
+    gap: var(--gutter);
+}
+
 #nav-toggle {
     display: inline-flex;
     .va(middle);
@@ -97,22 +102,25 @@
     }
 }
 
+#code-modal-trigger {
+    display: block;
+    .buttonreset;
+    color: var(--primary);
+    transition: color .33s ease;
+
+    &:hover,
+    &:focus {
+        color: var(--text)
+    }
+}
+
 form.theme-toggle {
     .ib;
     .va(middle);
-
     position: relative;
     z-index: 5;
     .lh(0);
-    margin: 0 .4em 0 0;
-
-    @media only screen and (max-width: 1023px) {
-        font-size: 20px;
-    }
-
-    @media only screen and (min-width: 1024px) {
-        margin: 0 0 0 .4em;
-    }
+    font-size: 20px;
 
     button {
         @square: (40/20em);
