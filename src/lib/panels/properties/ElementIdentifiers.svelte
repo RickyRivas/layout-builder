@@ -49,11 +49,17 @@
 		// update all rules that reference this elements path
 		const rules = iframeState.stylesheet.cssRules;
 		Array.from(rules).forEach((rule, index) => {
-			if (rule.selectorText.includes(oldSelector)) {
-				const updatedSelector = rule.selectorText.replace(oldSelector, newSelector);
+			// Split selectors if there are multiple (comma-separated)
+			const selectors = rule.selectorText.split(',').map((s) => s.trim());
+
+			// Check if any selector exactly matches our old selector
+			if (selectors.includes(oldSelector)) {
+				// Replace only the exact matching selector
+				const updatedSelectors = selectors.map((s) => (s === oldSelector ? newSelector : s));
+
 				const styleText = rule.style.cssText;
 				iframeState.stylesheet.deleteRule(index);
-				iframeState.stylesheet.insertRule(`${updatedSelector} { ${styleText} }`, index);
+				iframeState.stylesheet.insertRule(`${updatedSelectors.join(', ')} { ${styleText} }`, index);
 			}
 		});
 
@@ -79,11 +85,17 @@
 		// update any rules that used the old selector
 		const rules = Array.from(iframeState.stylesheet.cssRules);
 		rules.forEach((rule, index) => {
-			if (rule.selectorText.includes(oldSelector)) {
-				const updatedSelector = rule.selectorText.replace(oldSelector, newSelector);
+			// Split selectors if there are multiple
+			const selectors = rule.selectorText.split(',').map((s) => s.trim());
+
+			// Check for exact selector match
+			if (selectors.includes(oldSelector)) {
+				// Replace only the exact matching selector
+				const updatedSelectors = selectors.map((s) => (s === oldSelector ? newSelector : s));
+
 				const styleText = rule.style.cssText;
 				iframeState.stylesheet.deleteRule(index);
-				iframeState.stylesheet.insertRule(`${updatedSelector} { ${styleText} }`, index);
+				iframeState.stylesheet.insertRule(`${updatedSelectors.join(', ')} { ${styleText} }`, index);
 			}
 		});
 

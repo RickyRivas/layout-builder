@@ -8,6 +8,7 @@
 	import TabPanel from '$lib/components/TabPanel.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import PreviewBlock from '$lib/components/PreviewBlock.svelte';
+	import DragManager from '$lib/components/DragManager.svelte';
 
 	let iframeElement;
 
@@ -45,6 +46,8 @@
 		<iframe id="preview" bind:this={iframeElement} title="preview" />
 	</div>
 </section>
+
+<DragManager />
 
 {#if iframeState.showCodeModal}
 	<Modal
