@@ -217,6 +217,7 @@
 		}
 
 		selectElement(newElement);
+		iframeState.selectedPanelIndex = 1;
 	}
 
 	function updateIndicator(target, canAcceptChild, cursorY, position) {

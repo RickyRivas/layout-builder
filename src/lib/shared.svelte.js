@@ -7,7 +7,8 @@ export const iframeState = $state({
     selector: 'data-builder-selected',
     selected: null,
     updating: false,
-    selectedPanelIndex: 0
+    selectedPanelIndex: 0,
+    showMobilePanel: false
 })
 
 export function selectElement(target) {

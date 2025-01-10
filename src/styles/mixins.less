@@ -264,73 +264,9 @@
     filter: grayscale(100%);
 }
 
-//==================
-//functional mixins
-//==================
-
-//centered flyouts 
-.droplocation(@dropdowncentered) when (@dropdowncentered =true) {
-    left: 50%;
-    transform: translate(-50%, 0);
-}
-
-.droplocation(@dropdowncentered) when (@dropdowncentered =false) {
-    left: @dropdownoffset / -20em;
-}
-
-//text-align for centered flyouts
-.droptextalign(@dropdowncentered) when (@dropdowncentered =true) {
-    text-align: center;
-}
-
-.droptextalign(@dropdowncentered) when (@dropdowncentered =false) {
-    text-align: left;
-}
-
-//centered flyout for last flyout
-.droplocationlast(@dropdowncentered) when (@dropdowncentered =false) {
-    left: auto;
-    right: @dropdownoffset / -20em;
-}
-
-//text-align for centered  last flyout
-.droptextalignlast(@dropdowncentered) when (@dropdowncentered =true) {
-    text-align: center;
-}
-
-.droptextalignlast(@dropdowncentered) when (@dropdowncentered =false) {
-    text-align: right;
-}
-
-
-//tertiary-nav side orientation
-.tertside(@tertside) when (@tertside =right) {
-    left: 100%;
-}
-
-.tertside(@tertside) when (@tertside =left) {
-    left: auto;
-    right: 100%;
-}
-
-//ul width conditional mixin
-.ulcond(left) {
-    width: auto;
-}
-
-.ulcond(right) {
-    width: auto;
-}
-
-.ulcond(none) {
-    width: 100%;
-}
-
-//ul ul li a padding conditional mixin
-.ululliacond(@a) when (@a =0) {
-    padding: 0 ((@dropdownlinkheight/@secondary)*1em);
-}
-
-.ululliacond(@a) when (@a > 0) {
-    padding: 0 ((@dropdownoffset/@secondary)*1em);
+.buttonreset {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: none;
 }

@@ -9,7 +9,7 @@
 	];
 </script>
 
-<div id="tabpanel" role="tablist">
+<div id="tabpanel" role="tablist" class:mobile-show={iframeState.showMobilePanel}>
 	<div class="panel-tabs">
 		{#each panels as panel, i}
 			<button

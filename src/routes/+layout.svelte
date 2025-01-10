@@ -1,11 +1,10 @@
 <script>
+	import Navigation from '$lib/components/Navigation.svelte';
 	import './styles.less';
 	let { children } = $props();
 </script>
 
-<header id="mainnav">
-	<h1>Layout Builder</h1>
-</header>
+<Navigation />
 <main>
 	{@render children()}
 </main>

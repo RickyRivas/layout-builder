@@ -2,16 +2,15 @@ section#main-view {
     .flex;
     .jc(center);
     .ai(stretch);
-    gap: var(--pos-offset);
     width: 100%;
-    --pos-offset: .5em;
-    --panel-inline-padding: unit((15/20), em);
-    --gap: 2px;
-    --min-tap: 44px;
-    --panel-height: calc(100vh - var(--mainnav-height) - var(--pos-offset)*2);
+    height: calc(100vh - var(--mainnav-height) - var(--gutter));
+    // want to keep static pos for mobile nav
+    width: calc(100% - var(--pos-offset)*2);
+    margin: var(--gutter) auto 0;
 
     @media only screen and (min-width:1024px) {
-        width: calc(100% - var(--pos-offset)*2);
+        margin: 0;
+        gap: var(--pos-offset);
         left: var(--pos-offset);
         position: fixed;
         top: calc(var(--mainnav-height) + var(--pos-offset));
@@ -37,12 +36,29 @@ section#main-view {
     .fdir(column);
     width: 100%;
     max-width: var(--panel-width);
-    height: 100%;
+    height: var(--panel-height);
     z-index: 1;
     overflow: hidden;
     .bc(var(--bg));
     border: 1px solid var(--border-color);
     position: relative;
+    transition: transform .33s ease, opacity .33s ease;
+
+    @media only screen and (max-width:1023px) {
+        position: absolute;
+        top: calc(var(--mainnav-height));
+        right: 0;
+        height: calc(100vh - var(--mainnav-height));
+        min-height: calc(100vh - var(--mainnav-height));
+        z-index: 777;
+        transform: translateX(100%);
+        opacity: 0;
+
+        &.mobile-show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
 
     .panel-tabs {
         display: flex;
@@ -62,6 +78,7 @@ section#main-view {
             .upp;
             position: relative;
             z-index: 1;
+            color: var(--heading);
 
             &::before {
                 content: '';
@@ -116,8 +133,8 @@ section#main-view {
 .panel-group-content {
     .flex;
     flex-wrap: wrap;
-    gap: var(--panel-inline-padding);
-    padding: var(--panel-inline-padding);
+    gap: var(--gutter);
+    padding: var(--gutter);
     padding-top: 0px;
 }
 
@@ -133,7 +150,7 @@ h2.panel-group-tab {
         font: inherit;
         .lh(44px);
         margin: 0;
-        padding: 0 var(--panel-inline-padding);
+        padding: 0 var(--gutter);
         background: none;
         border: 0px;
         border-radius: 0px;
@@ -166,56 +183,6 @@ h2.panel-group-tab {
         .icon,
         svg {
             transform: rotate(-180deg);
-        }
-    }
-}
-
-// spacing widget
-.spacing-tabs .tab-buttons {
-    display: flex;
-    background-color: var(--bg-alternate);
-
-    button {
-        font: inherit;
-        .fs(16px);
-        padding: 0;
-        margin: 0;
-        border: 0px;
-        border-radius: 0px;
-        background: none;
-        width: 100%;
-        .lh(var(--min-tap));
-        .upp;
-        position: relative;
-        z-index: 1;
-
-        &::before {
-            content: '';
-            .overlay;
-            .bc(var(--bg));
-            z-index: -1;
-            transition: transform .33s ease;
-            transform: scaleX(0);
-        }
-
-        &:nth-child(1) {
-            &::before {
-                transform-origin: right;
-            }
-        }
-
-        &:nth-child(2) {
-            &::before {
-                transform-origin: left;
-            }
-        }
-
-        &:hover,
-        &:focus,
-        &.active {
-            &::before {
-                transform: scaleX(1);
-            }
         }
     }
 }
