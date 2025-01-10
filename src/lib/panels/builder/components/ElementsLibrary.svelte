@@ -121,16 +121,18 @@
 <PanelGroup title="Element Library" keepOpen={true}>
 	{#snippet panelContent()}
 		<div id="elements-library">
-			<h3>Add Elements!</h3>
-			{#each elements as element}
-				<button
-					draggable="true"
-					ondragstart={(e) => handleDragStart(e, element)}
-					onclick={() => addElementToFrame(element)}
-				>
-					{element.type}
-				</button>
-			{/each}
+			<div class="elements-library-container">
+				{#each elements as element}
+					<button
+						class="draggable-element-button"
+						draggable="true"
+						ondragstart={(e) => handleDragStart(e, element)}
+						onclick={() => addElementToFrame(element)}
+					>
+						{element.type}
+					</button>
+				{/each}
+			</div>
 		</div>
 	{/snippet}
 </PanelGroup>

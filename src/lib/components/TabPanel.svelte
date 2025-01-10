@@ -8,7 +8,7 @@
 		{ id: 'properties', label: 'Properties', Component: PropertiesPanel }
 	];
 
-	let activeIndex = $state(1);
+	let activeIndex = $state(0);
 	function handleClick(index) {
 		activeIndex = index;
 	}
