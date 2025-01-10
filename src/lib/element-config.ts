@@ -86,40 +86,7 @@ export const elements: ElementConfig[] = [
         allowedChildren: ['span'],
         iconPath: '/icons/elements/link.svg'
     },
-    // Lists
-    {
-        type: 'ul',
-        defaultClass: 'list',
-        allowedChildren: ['li'],
-        iconPath: '/icons/elements/list.svg'
-    },
-    {
-        type: 'ol',
-        defaultClass: 'ordered-list',
-        allowedChildren: ['li'],
-        iconPath: '/icons/elements/ordered-list.svg'
-    },
-    {
-        type: 'li',
-        defaultClass: 'list-item',
-        textContent: 'List item',
-        iconPath: '/icons/elements/list-item.svg',
-        allowedChildren: [],
-    },
-    // Form elements
-    {
-        type: 'input',
-        defaultClass: 'input',
-        iconPath: '/icons/elements/input.svg',
-        allowedChildren: [],
-    },
-    {
-        type: 'label',
-        defaultClass: 'label',
-        textContent: 'Label',
-        iconPath: '/icons/elements/label.svg',
-        allowedChildren: [],
-    },
+
     // non semantic container
     {
         type: 'div',

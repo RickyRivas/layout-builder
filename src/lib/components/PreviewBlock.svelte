@@ -21,8 +21,8 @@
 
 	const codeToDisplay = {
 		html: generateUnformattedHtml() || '',
-		css: generateUnformattedCss() || '',
-		javascript: ''
+		css: generateUnformattedCss() || ''
+		// javascript: ''
 	};
 
 	const beautifyFunctions = {
@@ -80,7 +80,7 @@
 			bind:this={copyBtn}
 			disabled={!selectedSnippet[1]}
 		>
-			copy {selectedSnippet[0]}
+			copy
 		</button>
 		<div class="options">
 			{#each Object.entries(codeToDisplay) as [tech, snippet], i}

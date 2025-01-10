@@ -63,7 +63,46 @@ export function initIframe(iframe) {
         // select base
         selectElement(iframeState.document.querySelector('section'))
 
+        iframeState.document.addEventListener('dblclick', handleDoubleClick);
+
         iframeState.initialized = true;
     });
 }
 
+function handleDoubleClick(e) {
+    const target = e.target;
+
+    // Array of elements that can be content editable
+    const editableElements = [ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN' ];
+
+    if (editableElements.includes(target.tagName)) {
+        target.contentEditable = 'true';
+        target.focus();
+
+        // Set cursor to end of text
+        const range = document.createRange();
+        range.selectNodeContents(target);
+        range.collapse(false);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        // Handle enter to save
+        const handleKeyDown = (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                target.blur();
+            }
+        };
+
+        // Handle losing focus
+        const handleBlur = () => {
+            target.contentEditable = 'false';
+            target.removeEventListener('keydown', handleKeyDown);
+            target.removeEventListener('blur', handleBlur);
+        };
+
+        target.addEventListener('keydown', handleKeyDown);
+        target.addEventListener('blur', handleBlur);
+    }
+}
