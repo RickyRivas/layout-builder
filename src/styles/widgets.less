@@ -385,6 +385,7 @@
 	.dropdown-component {
 	    display: block;
 	    position: relative;
+	    text-align: left;
 
 	    .dropdown-trigger {
 	        display: flex;
@@ -524,5 +525,31 @@
 	                background-color: var(--border-color);
 	            }
 	        }
+	    }
+	}
+
+	#preview-block {
+	    display: block;
+	    width: 100%;
+	    border: 2px solid var(--border-color);
+	    padding: 1em;
+	    background-color: var(--mainnav-bg);
+	    text-align: left;
+
+	    .display {
+	        min-height: (400/20em);
+	        height: (400/20em);
+	        max-height: (400/20em);
+	        padding: 1em;
+	        font-size: 16px;
+	        border: 2px solid var(--border-color);
+	        overflow: auto;
+	        position: relative;
+	        margin-bottom: 1em;
+	    }
+
+	    .preview-container {
+	        display: flex;
+	        justify-content: space-between;
 	    }
 	}

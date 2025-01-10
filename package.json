@@ -30,7 +30,9 @@
 		"vite": "^5.4.11"
 	},
 	"dependencies": {
+		"js-beautify": "^1.15.1",
 		"less": "^4.2.1",
+		"prismjs": "^1.29.0",
 		"svelte-preprocess": "^6.0.3"
 	}
 }

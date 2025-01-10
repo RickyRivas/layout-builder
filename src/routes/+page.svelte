@@ -7,6 +7,7 @@
 	import DragOverlay from '$lib/overlays/DragOverlay.svelte';
 	import TabPanel from '$lib/components/TabPanel.svelte';
 	import Modal from '$lib/components/Modal.svelte';
+	import PreviewBlock from '$lib/components/PreviewBlock.svelte';
 
 	let iframeElement;
 
@@ -51,10 +52,6 @@
 			iframeState.showCodeModal = false;
 		}}
 	>
-		<h2>Generated Code</h2>
-		<h3>HTML</h3>
-		<div class="html-output"></div>
-		<h3>CSS</h3>
-		<div class="css-output"></div>
+		<PreviewBlock />
 	</Modal>
 {/if}

@@ -121,8 +121,18 @@ export function generateUnformattedCss() {
         cssContent += `${rule.selectorText} { ${rule.style.cssText} }\n`;
     });
 
-    console.log('generating', cssContent)
     return cssContent;
+}
+
+export function generateUnformattedHtml() {
+    if (!iframeState.document) return '';
+
+    // Get just the contents of the section
+    const section = iframeState.document.body.querySelector('section');
+    if (!section) return '';
+
+    // Return raw HTML string without formatting
+    return section.outerHTML.replace('data-builder-selected="true"', '');
 }
 
 
