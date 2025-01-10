@@ -18,7 +18,19 @@
 		initIframe(iframeElement);
 
 		window.addEventListener('resize', onResize);
+
 		return () => window.removeEventListener('resize', onResize);
+	});
+
+	$effect(() => {
+		if (iframeState.initialized && iframeState.document) {
+			// Now we know the document is available
+			iframeState.document.addEventListener('scroll', onResize);
+
+			return () => {
+				iframeState.document.removeEventListener('scroll', onResize);
+			};
+		}
 	});
 </script>
 

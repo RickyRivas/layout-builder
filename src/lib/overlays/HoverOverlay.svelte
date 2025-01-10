@@ -1,8 +1,6 @@
 <script>
-	import { getElementSelector } from '$lib/helpers';
 	import { iframeState } from '$lib/shared.svelte';
 
-	let hoveredElementSelector = $state();
 	let overlay = $state({
 		top: 0,
 		left: 0,
@@ -30,20 +28,20 @@
 			const target = e.target;
 			if (target === iframeState.selected) return;
 
-			hoveredElementSelector = getElementSelector(target);
 			updatePosition(target);
 		}
 		function handleMouseOut() {
-			hoveredElementSelector = null;
 			overlay.visible = false;
 		}
 
 		iframeState.document.body.addEventListener('mouseover', handleMouseOver);
 		iframeState.document.body.addEventListener('mouseout', handleMouseOut);
+		iframeState.document.addEventListener('scroll', handleMouseOut);
 
 		return () => {
 			iframeState.document.body.removeEventListener('mouseover', handleMouseOver);
 			iframeState.document.body.removeEventListener('mouseout', handleMouseOut);
+			iframeState.document.removeEventListener('scroll', handleMouseOut);
 		};
 	});
 </script>
@@ -55,11 +53,7 @@
 	style:width={overlay.width + 'px'}
 	style:height={overlay.height + 'px'}
 	style:opacity={overlay.visible ? 1 : 0}
->
-	{#if hoveredElementSelector}
-		<span class="tag">{hoveredElementSelector}</span>
-	{/if}
-</div>
+></div>
 
 <style>
 	.hover-overlay {
@@ -82,20 +76,5 @@
 		position: absolute;
 		pointer-events: none;
 		z-index: 2;
-	}
-
-	.tag {
-		display: block;
-		position: absolute;
-		bottom: calc(100% + 0px);
-		left: -1px;
-		background-color: #00cea8;
-		font-size: 12px;
-		line-height: 14px;
-		text-transform: uppercase;
-		font-weight: bold;
-		padding: 0 5px;
-		white-space: nowrap;
-		color: #000;
 	}
 </style>

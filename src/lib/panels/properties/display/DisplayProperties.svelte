@@ -72,7 +72,7 @@
 </script>
 
 <!-- Main Displays -->
-<PanelGroup title="Display" keepOpen={true}>
+<PanelGroup title="Display">
 	{#snippet panelContent()}
 		<RadioButtonGroup>
 			{#snippet content()}
