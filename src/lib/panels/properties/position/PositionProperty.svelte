@@ -6,6 +6,7 @@
 	import { getPropertyValue } from '$lib/helpers';
 	import UnitInput from '../UnitInput.svelte';
 	import { positionUnits } from '$lib/units';
+	import RadioButton from '$lib/components/RadioButton.svelte';
 
 	let positionValue = $state();
 	let prevPositionValue = $state();
@@ -41,19 +42,16 @@
 		<RadioButtonGroup style="text">
 			{#snippet content()}
 				{#each positionValues as value, i}
-					<div class="radio-button">
-						<input
-							type="radio"
-							name="position-property"
-							id="position-property-{value}"
-							{value}
-							bind:group={positionValue}
-							onchange={() => updateIframeStylesheet('position', value)}
-						/>
-						<label for="position-property-{value}">
-							{value}
-						</label>
-					</div>
+					<RadioButton
+						group={positionValue}
+						{value}
+						label={value}
+						style="text"
+						property="position"
+						onChange={(newValue) => {
+							updateIframeStylesheet('position', newValue);
+						}}
+					/>
 				{/each}
 			{/snippet}
 		</RadioButtonGroup>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DynamicIcon from '$lib/components/DynamicIcon.svelte';
+	import RadioButton from '$lib/components/RadioButton.svelte';
 	import RadioButtonGroup from '$lib/components/RadioButtonGroup.svelte';
 	import { getPropertyValue } from '$lib/helpers';
 	import { textTransforms } from '$lib/properties';
@@ -22,22 +22,16 @@
 <RadioButtonGroup label={'Text Transform'}>
 	{#snippet content()}
 		{#each textTransforms as { value, label, path }}
-			<div class="radio-button">
-				<input
-					type="radio"
-					id="text-transform-{value}"
-					name="text-transform-{value}"
-					{value}
-					bind:group={textTransformValue}
-					onchange={() => {
-						updateIframeStylesheet('text-transform', value);
-					}}
-				/>
-				<label for="text-transform-{value}">
-					<DynamicIcon {path} fill={'currentcolor'} />
-					<span class="tooltip">{label}</span>
-				</label>
-			</div>
+			<RadioButton
+				group={textTransformValue}
+				{value}
+				{label}
+				{path}
+				property="text-transform"
+				onChange={(newValue) => {
+					updateIframeStylesheet('text-transform', newValue);
+				}}
+			/>
 		{/each}
 	{/snippet}
 </RadioButtonGroup>

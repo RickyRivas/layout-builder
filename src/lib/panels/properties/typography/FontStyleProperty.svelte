@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DynamicIcon from '$lib/components/DynamicIcon.svelte';
+	import RadioButton from '$lib/components/RadioButton.svelte';
 	import RadioButtonGroup from '$lib/components/RadioButtonGroup.svelte';
 	import { getPropertyValue } from '$lib/helpers';
 	import { fontStyles } from '$lib/properties';
@@ -20,22 +21,16 @@
 <RadioButtonGroup label={'Font Style'}>
 	{#snippet content()}
 		{#each fontStyles as { value, label, path }}
-			<div class="radio-button">
-				<input
-					type="radio"
-					id="font-style-{value}"
-					name="font-style-{value}"
-					{value}
-					bind:group={fontStyle}
-					onchange={() => {
-						updateIframeStylesheet('font-style', value);
-					}}
-				/>
-				<label for="font-style-{value}">
-					<DynamicIcon {path} fill={'currentcolor'} />
-					<span class="tooltip">{label}</span>
-				</label>
-			</div>
+			<RadioButton
+				group={fontStyle}
+				{value}
+				{label}
+				{path}
+				property="font-style"
+				onChange={(newValue) => {
+					updateIframeStylesheet('font-style', newValue);
+				}}
+			/>
 		{/each}
 	{/snippet}
 </RadioButtonGroup>

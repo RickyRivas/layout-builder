@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DynamicIcon from '$lib/components/DynamicIcon.svelte';
+	import RadioButton from '$lib/components/RadioButton.svelte';
 	import RadioButtonGroup from '$lib/components/RadioButtonGroup.svelte';
 	import { getPropertyValue } from '$lib/helpers';
 	import { textAlignValues } from '$lib/properties';
@@ -20,22 +20,16 @@
 <RadioButtonGroup label="Text Align">
 	{#snippet content()}
 		{#each textAlignValues as { value, label, path }}
-			<div class="radio-button">
-				<input
-					type="radio"
-					name="text-align-{value}"
-					id="text-align-{value}"
-					{value}
-					bind:group={textAlignValue}
-					onchange={() => {
-						updateIframeStylesheet('text-align', value);
-					}}
-				/>
-				<label for="text-align-{value}">
-					<DynamicIcon {path} fill={'currentcolor'} />
-					<span class="tooltip">{label}</span>
-				</label>
-			</div>
+			<RadioButton
+				group={textAlignValue}
+				{value}
+				{label}
+				{path}
+				property="text-align"
+				onChange={(newValue) => {
+					updateIframeStylesheet('text-align', newValue);
+				}}
+			/>
 		{/each}
 	{/snippet}
 </RadioButtonGroup>

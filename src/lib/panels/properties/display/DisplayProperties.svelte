@@ -3,7 +3,6 @@
 	import PanelGroup from '$lib/components/PanelGroup.svelte';
 	import RadioButtonGroup from '$lib/components/RadioButtonGroup.svelte';
 	import { getPropertyValue } from '$lib/helpers';
-	import DynamicIcon from '$lib/components/DynamicIcon.svelte';
 	import {
 		displayValues,
 		flexDirectionValues,
@@ -12,6 +11,7 @@
 		justifyContentValues,
 		gridTemplateColumnsPresets
 	} from '$lib/properties';
+	import RadioButton from '$lib/components/RadioButton.svelte';
 
 	let selectedDisplayValue = $state('');
 	let prevDisplayValue = null;
@@ -77,22 +77,16 @@
 		<RadioButtonGroup>
 			{#snippet content()}
 				{#each displayValues as { value, label, path }}
-					<div class="radio-button">
-						<input
-							type="radio"
-							name="display-property-{value}"
-							id="display-property-{value}"
-							{value}
-							bind:group={selectedDisplayValue}
-							onchange={() => {
-								updateIframeStylesheet('display', value);
-							}}
-						/>
-						<label for="display-property-{value}">
-							<DynamicIcon {path} fill={'currentcolor'} />
-							<span class="tooltip">{label}</span>
-						</label>
-					</div>
+					<RadioButton
+						group={selectedDisplayValue}
+						{value}
+						{label}
+						{path}
+						property="display"
+						onChange={(newValue) => {
+							updateIframeStylesheet('display', newValue);
+						}}
+					/>
 				{/each}
 			{/snippet}
 		</RadioButtonGroup>
@@ -103,23 +97,16 @@
 				<RadioButtonGroup label={selectedFlexProps[property].label}>
 					{#snippet content()}
 						{#each selectedFlexProps[property].values as { value, label, path }}
-							<div class="radio-button">
-								<input
-									type="radio"
-									name="display-flex-{property}-{value}"
-									id="display-flex-{property}-{value}"
-									{value}
-									data-checked={value === selectedFlexProps[property].value}
-									bind:group={selectedFlexProps[property].value}
-									onchange={() => {
-										updateIframeStylesheet(property, value);
-									}}
-								/>
-								<label for="display-flex-{property}-{value}">
-									<DynamicIcon {path} fill={'currentcolor'} />
-									<span class="tooltip">{label}</span>
-								</label>
-							</div>
+							<RadioButton
+								group={selectedFlexProps[property].value}
+								{value}
+								{label}
+								{path}
+								{property}
+								onChange={(newValue) => {
+									updateIframeStylesheet(property, newValue);
+								}}
+							/>
 						{/each}
 					{/snippet}
 				</RadioButtonGroup>
@@ -132,23 +119,16 @@
 				<RadioButtonGroup label={selectedGridProps[property].label}>
 					{#snippet content()}
 						{#each selectedGridProps[property].values as { value, label, path }}
-							<div class="radio-button">
-								<input
-									type="radio"
-									name="grid-property-{property}-{value}"
-									id="grid-property-{property}-{value}"
-									{value}
-									data-checked={value === selectedGridProps[property].value}
-									bind:group={selectedGridProps[property].value}
-									onchange={() => {
-										updateIframeStylesheet(property, value);
-									}}
-								/>
-								<label for="grid-property-{property}-{value}">
-									<DynamicIcon {path} fill={'currentcolor'} />
-									<span class="tooltip">{label}</span>
-								</label>
-							</div>
+							<RadioButton
+								group={selectedGridProps[property].value}
+								{value}
+								{label}
+								{path}
+								{property}
+								onChange={(newValue) => {
+									updateIframeStylesheet(property, newValue);
+								}}
+							/>
 						{/each}
 					{/snippet}
 				</RadioButtonGroup>
