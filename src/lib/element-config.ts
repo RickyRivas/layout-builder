@@ -147,7 +147,7 @@ export const elements: ElementConfig[] = [
     {
         type: 'div',
         defaultClass: 'container',
-        allowedChildren: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'button', 'div', 'ul', 'ol', 'a'],
+        allowedChildren: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'button', 'div', 'ul', 'ol', 'a', 'img'],
         iconPath: '/icons/elements/container.svg'
     }
 ];
