@@ -52,7 +52,6 @@
 			iframeState.showCodeModal = false;
 		}}
 	>
-		<h2>Generated Code</h2>
 		<PreviewBlock />
 	</Modal>
 {/if}

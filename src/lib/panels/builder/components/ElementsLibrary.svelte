@@ -194,7 +194,11 @@
 		const section = iframeState.document.querySelector('body > section');
 
 		// If no element is selected or section is empty, add to section
-		if (!iframeState.selected || section.children.length === 0) {
+		if (
+			!iframeState.selected ||
+			section.children.length === 0 ||
+			iframeState.selected === section
+		) {
 			section.appendChild(newElement);
 		} else {
 			// Check if selected element can accept this type as a child
@@ -291,6 +295,7 @@
 
 <PanelGroup title="Element Library" keepOpen={true}>
 	{#snippet panelContent()}
+		<p class="info">Please click or drag an element.</p>
 		<div id="elements-library">
 			<div class="elements-library-container">
 				{#each elements as element}
