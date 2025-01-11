@@ -1,0 +1,67 @@
+#tree {
+    display: block;
+    width: 100%;
+
+    ul {
+        --tree-gap: 20px;
+        --tree-height: 40px;
+        margin-left: var(--tree-gap);
+        list-style: none;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: calc(100%);
+            background-color: var(--border-color);
+        }
+
+        &:nth-child(1) {
+            margin-left: 0;
+        }
+    }
+
+    .tree-node button {
+        font: inherit;
+        width: 100%;
+        font-size: 14px;
+        line-height: var(--tree-height);
+        .flex;
+        .ai(center);
+        gap: 10px;
+        background: none;
+        border: 0;
+        border-radius: 0;
+        padding: 0 0 0 var(--panel-inline-padding);
+        margin: 0;
+        text-transform: capitalize;
+        text-align: left;
+        color: var(--text);
+    }
+
+    .tree-node.active>button {
+        background-color: var(--form-field-bg);
+    }
+
+    .tree-tag {
+        .ib;
+        .va(middle);
+        font-size: 12px;
+        line-height: 20px;
+        background-color: var(--secondary);
+        color: #fff;
+        padding: 0 calc(var(--panel-inline-padding)/2);
+        .upp;
+
+        &.id-tag {
+            background-color: var(--primary);
+        }
+    }
+
+    .class-tag {}
+
+    .id-tag {}
+}
