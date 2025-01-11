@@ -44,6 +44,7 @@ A visual interface for building and editing layouts directly in the browser. Bui
 - CSSOM for real-time style management
 - Native drag and drop API
 - Cookie storage for theme preferences
+- No Tailwind, I enjoy writing CSS/LESS
 
 ## Project Structure
 
