@@ -5,7 +5,7 @@
 
 	const panels = [
 		{ id: 'layout', label: 'Layout', Component: BuilderPanel },
-		{ id: 'properties', label: 'Properties', Component: PropertiesPanel }
+		{ id: 'properties', label: 'Styling', Component: PropertiesPanel }
 	];
 </script>
 
