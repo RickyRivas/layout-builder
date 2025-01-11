@@ -69,6 +69,18 @@
 	}
 
 	function updateClasses(newClasses) {
+		if (!newClasses.trim() || /^\d/.test(newClasses)) {
+			// Get all existing elements of this type in the iframe
+			const tagname = iframeState.selected.tagName.toLowerCase();
+			const existingElements = iframeState.document.getElementsByTagName(tagname);
+			const tagIndex = existingElements.length + 1;
+
+			// Add the indexed class based on tag name
+			const indexedClass = `${tagname}-${tagIndex}`;
+			newClasses = indexedClass;
+			currentClasses = indexedClass;
+		}
+
 		if (!iframeState.selected) return;
 
 		iframeState.updating = true;
@@ -116,7 +128,12 @@
 					name="element-classes"
 					id="element-classes"
 					bind:value={currentClasses}
-					oninput={(e) => updateClasses(e.target.value)}
+					onkeydown={(e) => {
+						if (e.key === 'Enter') {
+							updateClasses(e.target.value);
+						}
+					}}
+					onblur={(e) => updateClasses(e.target.value)}
 				/>
 			</label>
 		</div>
@@ -129,7 +146,12 @@
 					name="element-id"
 					id="element-id"
 					bind:value={currentId}
-					oninput={(e) => updateId(e.target.value)}
+					onkeydown={(e) => {
+						if (e.key === 'Enter') {
+							updateId(e.target.value);
+						}
+					}}
+					onblur={(e) => updateId(e.target.value)}
 				/>
 			</label>
 		</div>

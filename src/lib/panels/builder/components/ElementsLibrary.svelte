@@ -270,6 +270,14 @@
 	function createElementFromConfig(elementConfig) {
 		const element = document.createElement(elementConfig.type);
 
+		// Get all existing elements of this type in the iframe
+		const existingElements = iframeState.document.getElementsByTagName(elementConfig.type);
+		const tagIndex = existingElements.length + 1;
+
+		// Add the indexed class based on tag name
+		const indexedClass = `${elementConfig.type}-${tagIndex}`;
+		element.classList.add(indexedClass);
+
 		if (elementConfig.defaultClass) {
 			element.classList.add(elementConfig.defaultClass);
 		}

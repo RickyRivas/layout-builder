@@ -90,7 +90,6 @@ export function getSelectorForStyle() {
     return fullSelector
 }
 
-
 export function updateStyleRule(property, value) {
     const selector = getSelectorForStyle();
     const rules = Array.from(iframeState.stylesheet.cssRules);
