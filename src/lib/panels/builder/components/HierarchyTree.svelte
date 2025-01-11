@@ -69,7 +69,7 @@
 		<div id="tree">
 			<!-- recursively render -->
 			{#if treeNodes.length > 0}
-				<ul in:fly={{ x: 200 }}>
+				<ul>
 					{#each treeNodes as node}
 						<TreeNode {node} {onclick} {removeElement} />
 					{/each}

@@ -185,7 +185,9 @@
 	// tree
 	#tree {
 	    display: block;
+	    // svelte animation
 	    width: 100%;
+	    position: relative;
 
 	    ul {
 	        --tree-gap: 20px;
@@ -193,6 +195,12 @@
 	        margin-left: var(--tree-gap);
 	        list-style: none;
 	        position: relative;
+
+	        li {
+	            display: block;
+	            width: 100%;
+	            position: relative;
+	        }
 
 	        &::before {
 	            content: '';
@@ -211,10 +219,10 @@
 	    }
 
 	    .tree-node {
-	        display: block;
-	        position: relative;
-	        width: 100%;
-	    }
+       display: block;
+       position: relative;
+       width: 100%;
+   }
 
 	    .tree-node-btn {
 	        .buttonreset;

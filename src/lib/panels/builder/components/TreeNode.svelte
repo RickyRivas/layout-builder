@@ -6,11 +6,7 @@
 </script>
 
 <li>
-	<div
-		class="tree-node"
-		class:active={node.element === iframeState.selected}
-		transition:fly={{ x: 200 }}
-	>
+	<div class="tree-node" class:active={node.element === iframeState.selected}>
 		<button class="tree-node-btn" onclick={() => selectElement(node.element)}>
 			<span>{node.element.tagName.toLowerCase()}</span>
 			{#if node.element.id}
