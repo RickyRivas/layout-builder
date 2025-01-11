@@ -107,7 +107,12 @@
 
 	function handleDrop(e: DragEvent) {
 		e.preventDefault();
-		if (!dropTarget) return;
+		const section = iframeState.document.querySelector('body > section');
+		// If dropping outside valid targets or onto section/body, use section as target
+		if (!dropTarget || dropTarget.tagName === 'BODY' || dropTarget === section) {
+			dropTarget = section;
+			position = INSIDE_AT_BOTTOM;
+		}
 
 		// Check if we're dropping a new element or moving an existing one
 		const elementConfigJson = e.dataTransfer.getData('application/json');
@@ -144,19 +149,24 @@
 		const canAcceptChild = targetConfig?.allowedChildren?.includes(elementType);
 
 		// Handle the insertion
-		if (position === INSIDE_AT_START || position === INSIDE_AT_BOTTOM) {
-			if (canAcceptChild || dropTarget.tagName === 'SECTION') {
-				if (position === INSIDE_AT_START) {
-					dropTarget.insertBefore(newElement, dropTarget.firstChild);
+		if (dropTarget === section) {
+			section.appendChild(newElement);
+		} else {
+			// Your existing position handling for other elements
+			if (position === INSIDE_AT_START || position === INSIDE_AT_BOTTOM) {
+				if (canAcceptChild) {
+					if (position === INSIDE_AT_START) {
+						dropTarget.insertBefore(newElement, dropTarget.firstChild);
+					} else {
+						dropTarget.appendChild(newElement);
+					}
 				} else {
-					dropTarget.appendChild(newElement);
+					// If can't insert inside, append to section
+					section.appendChild(newElement);
 				}
 			} else {
-				// If can't insert inside, insert as sibling instead
-				dropTarget.insertAdjacentElement(BELOW, newElement);
+				dropTarget.insertAdjacentElement(position, newElement);
 			}
-		} else {
-			dropTarget.insertAdjacentElement(position, newElement);
 		}
 
 		// Cleanup
