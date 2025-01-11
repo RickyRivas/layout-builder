@@ -1,7 +1,5 @@
 #mainnav {
-    .flex;
-    .ai(center);
-    .jc(space-between);
+    empty-cells: show;
     width: 100%;
     min-height: var(--mainnav-height);
     background-color: var(--bg);
@@ -13,6 +11,15 @@
     @media only screen and (min-width:1024px) {
         padding: 0 var(--gutter);
     }
+}
+
+.container {
+    width: 100%;
+    max-width: 2000px;
+    margin: 0 auto;
+    .flex;
+    .ai(center);
+    .jc(space-between);
 }
 
 #logo {

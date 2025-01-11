@@ -120,7 +120,7 @@ export function generateUnformattedCss() {
         cssContent += `${rule.selectorText} { ${rule.style.cssText} }\n`;
     });
 
-    return cssContent;
+    return `/* Base and updated styles */` + cssContent;
 }
 
 export function generateUnformattedHtml() {
