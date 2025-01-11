@@ -106,6 +106,8 @@
 	}
 
 	function handleDrop(e: DragEvent) {
+		iframeState.updating = true;
+
 		e.preventDefault();
 		const section = iframeState.document.querySelector('body > section');
 		// If dropping outside valid targets or onto section/body, use section as target
@@ -177,9 +179,13 @@
 		}
 
 		draggedType = null;
+
+		iframeState.updating = false;
 	}
 
 	function addElementToFrame(elementConfig) {
+		iframeState.updating = true;
+
 		// create new element
 		const newElement = createElementFromConfig(elementConfig);
 		// if no elements add to section
@@ -208,6 +214,8 @@
 		}
 
 		selectElement(newElement);
+
+		iframeState.updating = false;
 	}
 
 	function updateIndicator(target, canAcceptChild, cursorY, position) {
@@ -268,6 +276,12 @@
 
 		if (elementConfig.textContent) {
 			element.textContent = elementConfig.textContent;
+		}
+
+		if (elementConfig.defaultProps) {
+			Object.entries(elementConfig.defaultProps).forEach(([key, value]) => {
+				element.setAttribute(key, value);
+			});
 		}
 
 		// Add default children if specified

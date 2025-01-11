@@ -5,6 +5,7 @@ type ElementConfig = {
     allowedChildren?: string[];
     iconPath?: string;
     defaultChildren?: object[];
+    defaultProps?: object
 }
 
 export const containers: ElementConfig[] = [
@@ -86,6 +87,17 @@ export const elements: ElementConfig[] = [
         textContent: 'Link',
         allowedChildren: ['span'],
         iconPath: '/icons/elements/link.svg'
+    },
+    {
+        type: 'img',
+        defaultClass: 'default-image',
+        iconPath: '/icons/elements/image.svg',
+        allowedChildren: [],
+        // Using a placeholder service - or you could host your own placeholder
+        defaultProps: {
+            src: 'https://placehold.co/500x500', // Assuming you have this placeholder API endpoint
+            alt: 'Image description'
+        }
     },
     // Lists
     {

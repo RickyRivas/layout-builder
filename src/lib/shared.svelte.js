@@ -73,7 +73,7 @@ function handleDoubleClick(e) {
     const target = e.target;
 
     // Array of elements that can be content editable
-    const editableElements = [ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN' ];
+    const editableElements = [ 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'LI' ];
 
     if (editableElements.includes(target.tagName)) {
         target.contentEditable = 'true';

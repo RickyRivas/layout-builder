@@ -209,25 +209,43 @@
 	        }
 	    }
 
-	    .tree-node button {
-	        font: inherit;
+	    .tree-node {
+	        display: block;
+	        position: relative;
+	        width: 100%;
+	    }
+
+	    .tree-node-btn {
+	        .buttonreset;
 	        width: 100%;
 	        font-size: 14px;
 	        line-height: var(--tree-height);
 	        .flex;
 	        .ai(center);
 	        gap: 10px;
-	        background: none;
-	        border: 0;
-	        border-radius: 0;
 	        padding: 0 0 0 var(--gutter);
-	        margin: 0;
 	        text-transform: capitalize;
 	        text-align: left;
 	        color: var(--text);
+	        transition: color .33s ease, background-color .33s ease
 	    }
 
-	    .tree-node.active>button {
+	    .remove-btn {
+	        .buttonreset;
+	        position: absolute;
+	        top: 50%;
+	        right: var(--gutter);
+	        transform: translateY(-50%);
+	        transition: color .33s ease;
+	        color: var(--text);
+	        z-index: 1;
+
+	        &:hover {
+	            color: var(--primary);
+	        }
+	    }
+
+	    .tree-node.active .tree-node-btn {
 	        background-color: var(--form-field-bg);
 	    }
 

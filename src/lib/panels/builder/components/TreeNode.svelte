@@ -6,8 +6,12 @@
 </script>
 
 <li>
-	<div class="tree-node" class:active={node.element === iframeState.selected} in:fly={{ x: 200 }}>
-		<button onclick={() => selectElement(node.element)}>
+	<div
+		class="tree-node"
+		class:active={node.element === iframeState.selected}
+		transition:fly={{ x: 200 }}
+	>
+		<button class="tree-node-btn" onclick={() => selectElement(node.element)}>
 			<span>{node.element.tagName.toLowerCase()}</span>
 			{#if node.element.id}
 				<span class="tree-tag id-tag">{node.element.id}</span>
@@ -19,6 +23,14 @@
 				{/each}
 			{/if}
 		</button>
+		{#if node.element.tagName !== 'SECTION'}
+			<button
+				class="remove-btn"
+				onclick={() => {
+					removeElement(node.element);
+				}}>Remove</button
+			>
+		{/if}
 	</div>
 	{#if node.children.length > 0}
 		<ul in:fly={{ x: 200 }}>
