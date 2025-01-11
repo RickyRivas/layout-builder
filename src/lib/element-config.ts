@@ -4,6 +4,7 @@ type ElementConfig = {
     textContent?: string;
     allowedChildren?: string[];
     iconPath?: string;
+    defaultChildren?: object[];
 }
 
 export const containers: ElementConfig[] = [
@@ -86,12 +87,55 @@ export const elements: ElementConfig[] = [
         allowedChildren: ['span'],
         iconPath: '/icons/elements/link.svg'
     },
-
+    // Lists
+    {
+        type: 'ul',
+        defaultClass: 'list',
+        allowedChildren: ['li'],
+        iconPath: '/icons/elements/list.svg',
+        defaultChildren: [
+            { type: 'li', defaultClass: 'list-item', textContent: 'List item 1' },
+            { type: 'li', defaultClass: 'list-item', textContent: 'List item 2' },
+            { type: 'li', defaultClass: 'list-item', textContent: 'List item 3' }
+        ]
+    },
+    {
+        type: 'ol',
+        defaultClass: 'ordered-list',
+        allowedChildren: ['li'],
+        iconPath: '/icons/elements/ordered-list.svg',
+        defaultChildren: [
+            { type: 'li', defaultClass: 'list-item', textContent: 'List item 1' },
+            { type: 'li', defaultClass: 'list-item', textContent: 'List item 2' },
+            { type: 'li', defaultClass: 'list-item', textContent: 'List item 3' }
+        ]
+    },
+    {
+        type: 'li',
+        defaultClass: 'list-item',
+        textContent: 'List item',
+        iconPath: '/icons/elements/list-item.svg',
+        allowedChildren: [],
+    },
+    // Form elements
+    {
+        type: 'input',
+        defaultClass: 'input',
+        iconPath: '/icons/elements/input.svg',
+        allowedChildren: [],
+    },
+    {
+        type: 'label',
+        defaultClass: 'label',
+        textContent: 'Label',
+        iconPath: '/icons/elements/label.svg',
+        allowedChildren: [],
+    },
     // non semantic container
     {
         type: 'div',
         defaultClass: 'container',
-        allowedChildren: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'button', 'div', 'ul', 'ol'],
+        allowedChildren: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'button', 'div', 'ul', 'ol', 'a'],
         iconPath: '/icons/elements/container.svg'
     }
 ];

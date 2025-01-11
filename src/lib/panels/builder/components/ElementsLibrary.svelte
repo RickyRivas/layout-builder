@@ -122,19 +122,10 @@
 		let elementType;
 
 		if (elementConfigJson) {
-			// Dropping new element from panel
 			const elementConfig = JSON.parse(elementConfigJson);
 			elementType = elementConfig.type;
-			newElement = document.createElement(elementConfig.type);
-
-			if (elementConfig.defaultClass) {
-				newElement.classList.add(elementConfig.defaultClass);
-			}
-			if (elementConfig.textContent) {
-				newElement.textContent = elementConfig.textContent;
-			}
+			newElement = createElementFromConfig(elementConfig);
 		} else if (existingElementHtml && draggedElement) {
-			// Moving existing element
 			newElement = draggedElement;
 			elementType = draggedElement.tagName.toLowerCase();
 		} else {
@@ -190,16 +181,7 @@
 
 	function addElementToFrame(elementConfig) {
 		// create new element
-		const newElement = document.createElement(elementConfig.type);
-
-		// Add default class
-		if (elementConfig.defaultClass) {
-			newElement.classList.add(elementConfig.defaultClass);
-		}
-
-		// Add text content if specified
-		if (elementConfig.textContent) newElement.textContent = elementConfig.textContent;
-
+		const newElement = createElementFromConfig(elementConfig);
 		// if no elements add to section
 		const section = iframeState.document.querySelector('body > section');
 
@@ -221,11 +203,7 @@
 				// Add as child of selected element
 				iframeState.selected.appendChild(newElement);
 			} else {
-				// Add as sibling after selected element
-				iframeState.selected.parentElement.insertBefore(
-					newElement,
-					iframeState.selected.nextSibling
-				);
+				section.appendChild(newElement);
 			}
 		}
 
@@ -279,6 +257,28 @@
 			indicator.style.width = rect.width + 'px';
 			indicator.style.height = '0';
 		}
+	}
+
+	function createElementFromConfig(elementConfig) {
+		const element = document.createElement(elementConfig.type);
+
+		if (elementConfig.defaultClass) {
+			element.classList.add(elementConfig.defaultClass);
+		}
+
+		if (elementConfig.textContent) {
+			element.textContent = elementConfig.textContent;
+		}
+
+		// Add default children if specified
+		if (elementConfig.defaultChildren) {
+			elementConfig.defaultChildren.forEach((childConfig) => {
+				const childElement = createElementFromConfig(childConfig);
+				element.appendChild(childElement);
+			});
+		}
+
+		return element;
 	}
 
 	// init drag/drop when iframe is ready
