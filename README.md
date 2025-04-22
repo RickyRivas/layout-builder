@@ -45,7 +45,3 @@ A visual interface for building and editing layouts directly in the browser. Bui
 - Native drag and drop API
 - Cookie storage for theme preferences
 - No Tailwind, I enjoy writing CSS/LESS
-
-## Project Structure
-
-## Forgive me for any wierd logic. this is the biggest app I've put together.
